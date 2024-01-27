@@ -112,7 +112,7 @@ const SearchResultPage = () => {
                 <img
                   className={styles.xmlid222Icon1}
                   alt=""
-                  src="/xmlid-222.svg"
+                  src="/xmlid-2221.svg"
                 />
               </div>
               <div className={styles.ellipseParent}>
