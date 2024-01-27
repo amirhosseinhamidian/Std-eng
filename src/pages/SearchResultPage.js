@@ -85,14 +85,18 @@ const SearchResultPage = () => {
           </section>
         </div>
         <div className={styles.searchresultpageInner}>
-          <section className={styles.rectangleParent}>
-            <div className={styles.frameChild} />
+          <section className={styles.publishercoverParent}>
+            <img
+              className={styles.publishercoverIcon}
+              alt=""
+              src="/publisher-cover@2x.png"
+            />
             <section className={styles.titleParent}>
               <b className={styles.title}>Title</b>
               <div className={styles.search}>Designation: D 3951 – 98</div>
-              <div className={styles.xmlid222Parent}>
+              <div className={styles.leftArrowParent}>
                 <img
-                  className={styles.xmlid222Icon}
+                  className={styles.leftArrowIcon}
                   alt=""
                   src="/xmlid-222.svg"
                 />
@@ -110,15 +114,15 @@ const SearchResultPage = () => {
                   </span>
                 </div>
                 <img
-                  className={styles.xmlid222Icon1}
+                  className={styles.rightArrowIcon}
                   alt=""
                   src="/xmlid-2221.svg"
                 />
               </div>
               <div className={styles.ellipseParent}>
-                <div className={styles.frameItem} />
-                <div className={styles.frameItem} />
-                <div className={styles.frameItem} />
+                <div className={styles.frameChild} />
+                <div className={styles.frameChild} />
+                <div className={styles.frameChild} />
               </div>
             </section>
           </section>
