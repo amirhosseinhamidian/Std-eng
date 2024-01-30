@@ -85,18 +85,17 @@ const SearchResultPage = () => {
           </section>
         </div>
         <div className={styles.searchresultpageInner}>
-          <section className={styles.rectangleParent}>
-            <div className={styles.frameChild} />
-            <section className={styles.titleParent}>
-              <b className={styles.title}>Title</b>
-              <div className={styles.search}>Designation: D 3951 – 98</div>
-              <div className={styles.xmlid222Parent}>
-                <img
-                  className={styles.xmlid222Icon}
-                  alt=""
-                  src="/xmlid-222.svg"
-                />
-                <div className={styles.pageParent}>
+          <section className={styles.frameContainer}>
+            <div className={styles.nave}>
+              <img
+                className={styles.publishercoverIcon}
+                alt=""
+                src="/publisher-cover@2x.png"
+              />
+              <section className={styles.titleParent}>
+                <b className={styles.title}>Title</b>
+                <div className={styles.search}>Designation: D 3951 – 98</div>
+                <div className={styles.slider}>
                   <b className={styles.search}>PAGE: 5</b>
                   <span className={styles.result}>
                     <span>{`There is no one who loves pain itself, who seeks after `}</span>
@@ -109,18 +108,9 @@ const SearchResultPage = () => {
                     </span>
                   </span>
                 </div>
-                <img
-                  className={styles.xmlid222Icon1}
-                  alt=""
-                  src="/xmlid-222.svg"
-                />
-              </div>
-              <div className={styles.ellipseParent}>
-                <div className={styles.frameItem} />
-                <div className={styles.frameItem} />
-                <div className={styles.frameItem} />
-              </div>
-            </section>
+              </section>
+            </div>
+            <div className={styles.frameChild} />
           </section>
         </div>
       </div>
