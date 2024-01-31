@@ -1,8 +1,9 @@
 import { useCallback } from "react";
 import styles from "./SearchSection.module.css";
 import React, { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import generateMockData from '../utils/mockData.js';
 
 const SearchSection = () => {
   const onSearchButtonClick = useCallback(() => {
@@ -34,7 +35,8 @@ const SearchSection = () => {
       //   console.error('Error making request:', error);
       // });
 
-      navigate('./searchresultpage');
+      const mockData = generateMockData();
+      navigate('./searchresultpage',  { state: { searchData: mockData } });
     } else {
         // Handle case where searchText is empty
       console.warn('Please enter a search text before searching.');

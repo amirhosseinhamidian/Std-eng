@@ -2,10 +2,15 @@ import { useState, useCallback } from "react";
 import Drawer from "../components/Drawer";
 import PortalDrawer from "../components/PortalDrawer";
 import styles from "./SearchResultPage.module.css";
+import { useLocation } from 'react-router-dom';
+import SliderComponent from "../components/SearchResultSlider";
 
 const SearchResultPage = () => {
+  console.clear()
+  const location = useLocation();
+  const searchData = location.state?.searchData || null;
+  console.log(searchData)
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-
   const openDrawer = useCallback(() => {
     setDrawerOpen(true);
   }, []);
@@ -17,6 +22,14 @@ const SearchResultPage = () => {
   const onSearchButtonClick = useCallback(() => {
     // Please sync "search result" to the project
   }, []);
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    
+  };
 
   return (
     <>
@@ -84,49 +97,29 @@ const SearchResultPage = () => {
             </button>
           </section>
         </div>
-        <div className={styles.searchresultpageInner}>
-          <section className={styles.publishercoverParent}>
-            <img
-              className={styles.publishercoverIcon}
-              alt=""
-              src="/publisher-cover@2x.png"
-            />
-            <section className={styles.titleParent}>
-              <b className={styles.title}>Title</b>
-              <div className={styles.search}>Designation: D 3951 – 98</div>
-              <div className={styles.leftArrowParent}>
-                <img
-                  className={styles.leftArrowIcon}
-                  alt=""
-                  src="/xmlid-222.svg"
-                />
-                <div className={styles.pageParent}>
-                  <b className={styles.search}>PAGE: 5</b>
-                  <span className={styles.result}>
-                    <span>{`There is no one who loves pain itself, who seeks after `}</span>
-                    <span className={styles.keyword}>keyword</span>
-                    <span>
-                      {" "}
-                      and wants to have it, simply because it is pain fdsfdsfadf
-                      dsafdsfdsfdsfadfsdfdsfdsaf dsafdsfsadf fdafdsfadsffaf a fs
-                      dfadsfasfsdf fdsafdsf fdafds dsafdsf dsfdsaf
-                    </span>
-                  </span>
-                </div>
-                <img
-                  className={styles.rightArrowIcon}
-                  alt=""
-                  src="/xmlid-2221.svg"
-                />
+        <ul>
+          {searchData.map((result) =>(
+            <li key={result.id}>
+               <div className={styles.searchresultpageInner}>
+                <section className={styles.frameContainer}>
+                  <div className={styles.nave}>
+                    <img
+                      className={styles.publishercoverIcon}
+                      alt={result.title}
+                      src={result.coverPhoto}
+                    />
+                    <section className={styles.titleParent}>
+                      <b className={styles.title}>{result.title}</b>
+                      <div className={styles.designation}>Designation: {result.designation}</div>
+                      <SliderComponent details={result.details} />
+                    </section>
+                  </div>
+                  <div className={styles.frameChild} />
+                </section>
               </div>
-              <div className={styles.ellipseParent}>
-                <div className={styles.frameChild} />
-                <div className={styles.frameChild} />
-                <div className={styles.frameChild} />
-              </div>
-            </section>
-          </section>
-        </div>
+            </li>
+          ))}
+        </ul>
       </div>
       {isDrawerOpen && (
         <PortalDrawer

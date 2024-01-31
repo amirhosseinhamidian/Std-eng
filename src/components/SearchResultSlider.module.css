@@ -1,0 +1,19 @@
+.slider {
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .slide {
+    text-align: left;
+    padding: 10px; /* Add padding for spacing */
+  }
+  
+  .pageNumber {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .sentence {
+    /* Add styles for the sentence as needed */
+  }

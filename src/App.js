@@ -50,8 +50,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<SearchResultPage />} />
-      <Route path="/searchpage" element={<SearchPage />} />
+      <Route path="/" element={<SearchPage />} />
+      <Route path="/searchresultpage" element={<SearchResultPage />} />
     </Routes>
   );
 }
