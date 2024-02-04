@@ -5,9 +5,25 @@
   
   .slide {
     text-align: left;
-    padding: 10px; /* Add padding for spacing */
+    padding: 0px; /* Add padding for spacing */
   }
-  
+
+  .slick-list {
+    padding-right: 16px; /* Adjust the padding value as needed */
+  }
+
+  .slick-arrow.slick-prev,
+  .slick-arrow.slick-next {
+     font-size: 24px; /* Adjust the font size */
+     color: #333; /* Adjust the color */
+     background-color: #fff; /* Adjust the background color */
+     border: 2px solid #333; /* Adjust the border */
+     border-radius: 50%; /* Adjust the border-radius for a circular shape */
+     width: 40px; /* Adjust the width */
+     height: 40px; /* Adjust the height */
+   }
+
+
   .pageNumber {
     display: block;
     font-weight: bold;
@@ -15,5 +31,12 @@
   }
   
   .sentence {
-    /* Add styles for the sentence as needed */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit to three lines */
+    -webkit-box-orient: vertical;
+    max-height: 4.5em; /* Adjust based on your font size */
+    text-overflow: ellipsis;
+    white-space: normal;
+    padding-right: 16px;
   }

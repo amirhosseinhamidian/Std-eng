@@ -12,6 +12,8 @@ const SearchResultSlider = ({ details }) => {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
+      prevArrow: <div className={`slick-arrow slick-prev ${styles.customArrow}`}>&#8592;</div>,
+      nextArrow: <div className={`slick-arrow slick-next ${styles.customArrow}`}>&#8594;</div>,
     };
     return (
         <Slider {...sliderSettings} className={styles.slider}>
