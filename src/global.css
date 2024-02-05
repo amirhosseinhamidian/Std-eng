@@ -18,6 +18,7 @@ body {
   --font-size-mini: 15px;
   --font-size-smi: 13px;
   --font-size-17xl: 36px;
+  --font-size-base-button: 20px;
 
   /* Colors */
   --color-white: #fff;

@@ -5,12 +5,11 @@
   border-radius: 50%;
 }
 .standardEngineering {
-  height: 22px;
-  width: 189px;
   position: relative;
   display: inline-block;
   flex-shrink: 0;
   margin-top: 4;
+  font-size: medium;
 }
 .logoName {
   height: 48px;
@@ -114,11 +113,11 @@
   margin: 0;
   flex: 1;
   background-color: var(--color-white);
-  height: 95px;
+  height: 100px;
   overflow: hidden;
   flex-direction: column;
   align-items: flex-start;
-  padding: var(--padding-21xl) var(--padding-75xl);
+  padding: var(--padding-5xl);
   box-sizing: border-box;
   text-align: left;
   font-size: var(--font-size-lg);
