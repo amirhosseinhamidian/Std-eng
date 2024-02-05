@@ -63,3 +63,18 @@
   flex-wrap: wrap;
   gap: 10px 61px;
 }
+
+.sidebarOption {
+  color: black; /* Default color for unselected options */
+  cursor: default;
+
+}
+
+.sidebarOption.selected {
+  color: orange; /* Color for selected option */
+}
+
+.sidebarOption:hover {
+  color: var(--color-darkgray); /* Change color on hover */
+  cursor: pointer;
+}
