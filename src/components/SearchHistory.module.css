@@ -1,0 +1,15 @@
+.searchHistory1 {
+  position: absolute;
+  top: 445px;
+  left: 437px;
+}
+.searchHistory {
+  width: 1135px;
+  background-color: var(--color-white);
+  height: 961px;
+  overflow: hidden;
+  text-align: left;
+  font-size: var(--font-size-17xl);
+  color: var(--color-black);
+  font-family: var(--font-inter);
+}

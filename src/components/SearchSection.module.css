@@ -145,7 +145,7 @@
   }
   .textinput {
     flex-direction: column;
-    gap: var(--gap-base);
+    gap: var(--gap-3xs);
     padding-top: var(--padding-5xs);
     padding-right: 4;
     padding-bottom: var(--padding-5xs);
