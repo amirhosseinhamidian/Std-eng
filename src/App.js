@@ -8,6 +8,7 @@ import {
 import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   const action = useNavigationType();
@@ -37,6 +38,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/loginpage":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
@@ -55,9 +60,10 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<ProfilePage />} />
+      <Route path="/" element={<SearchPage />} />
       <Route path="/searchresultpage" element={<SearchResultPage />} />
-      <Route path="/profilepage" element={<SearchPage />} />
+      <Route path="/profilepage" element={<ProfilePage />} />
+      <Route path="/loginpage" element={<LoginPage />} />
     </Routes>
   );
 }

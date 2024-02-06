@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 body {
@@ -18,6 +18,8 @@ body {
   --font-size-mini: 15px;
   --font-size-smi: 13px;
   --font-size-17xl: 36px;
+  --font-size-2xs: 11px;
+  --font-size-3xs: 10px;
   --font-size-base-button: 20px;
 
   /* Colors */
@@ -27,11 +29,17 @@ body {
   --color-peru-200: #d89140;
   --color-peru-300: #d68f3d;
   --color-whitesmoke: #f8f8f8;
+  --color-whitesmoke-100: #ebe9e9;
   --color-dimgray-100: #707070;
   --color-dimgray-200: #505050;
   --color-darkgray: #b0b0b0;
   --color-black: #000;
   --color-darkorange: #f69a32;
+  --color-dodgerblue: #4889f4;
+  --color-cadetblue: #44b6c6;
+  --color-red: #f60e0e;
+  --color-gainsboro: #d9d9d9;
+  --color-cornflowerblue: #4897f4;
 
   /* Gaps */
   --gap-5xs: 8px;
@@ -43,6 +51,9 @@ body {
   --gap-sm: 14px;
   --gap-30xl: 49px;
   --gap-43xl: 62px;
+  --gap-lg: 18px;
+  --gap-13xl: 32px;
+  --gap-4xs: 9px;
 
   /* Paddings */
   --padding-base: 16px;
@@ -61,6 +72,8 @@ body {
   --padding-531xl: 550px;
   --padding-xs: 12px;
   --padding-175xl: 194px;
+  --padding-16xl: 35px;
+  --padding-119xl: 138px;
 
   /* Border radiuses */
   --br-5xs: 8px;
