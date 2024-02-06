@@ -2,7 +2,7 @@
   width: 46px;
   position: relative;
   border-radius: 50%;
-  background-color: #d9d9d9;
+  background-color: var(--color-gainsboro);
   height: 46px;
 }
 .standardEngineering {
@@ -54,14 +54,14 @@
 .errorMassage {
   position: relative;
   font-size: var(--font-size-2xs);
-  color: #f60e0e;
+  color: var(--color-red);
 }
 .loginwithphone {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 9px;
+  gap: var(--gap-4xs);
   font-size: var(--font-size-smi);
 }
 .logIn1 {
@@ -74,7 +74,7 @@
 .logInWrapper {
   cursor: pointer;
   border: 0;
-  padding: var(--padding-3xs) 138px;
+  padding: var(--padding-3xs) var(--padding-119xl);
   background-color: var(--color-sandybrown);
   border-radius: var(--br-5xs);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -91,7 +91,7 @@
 }
 .yourEntryMeansContainer {
   position: relative;
-  font-size: 10px;
+  font-size: var(--font-size-3xs);
   color: var(--color-dimgray-100);
 }
 .logindivaiderChild,
@@ -168,12 +168,10 @@
 .anotherlogin,
 .loginsignupmodal {
   display: flex;
-  justify-content: flex-start;
-}
-.anotherlogin {
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  justify-content: flex-start;
+  gap: var(--gap-13xl);
   font-size: var(--font-size-2xs);
 }
 .loginsignupmodal {
@@ -186,7 +184,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
-  padding: var(--padding-21xl) 35px;
+  padding: var(--padding-21xl) var(--padding-16xl);
   box-sizing: border-box;
   gap: var(--gap-lg);
   max-width: 100%;

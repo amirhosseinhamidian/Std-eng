@@ -1,8 +1,16 @@
 import MainHeader from "../components/MainHeader";
 import Information from "../components/Information";
+import Subscription from "../components/Subscription";
+import SearchHistory from "../components/SearchHistory";
+import ConversationHistory from "../components/ConversationHistory";
 import styles from "./ProfilePage.module.css";
+import React, {useState} from "react";
 
 const ProfilePage = () => {
+  const [selectedOption, setSelectedOption] = useState('information')
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+  };
   return (
     <div className={styles.profilepage}>
       <MainHeader />
@@ -10,25 +18,41 @@ const ProfilePage = () => {
       <section className={styles.profilepageInner}>
         <div className={styles.frameParent}>
           <div className={styles.informationParent}>
-            <button className={styles.information} id="info_btn">
-              Information
-            </button>
-            <button className={styles.subscriptionPlan} id="sub_btn">
-              Subscription Plan
-            </button>
-            <button className={styles.subscriptionPlan} id="search_his_btn">
-              Search History
-            </button>
-            <button className={styles.subscriptionPlan} id="chat_his_btn">
-              Chat History
-            </button>
+          <a 
+            className={`${styles.sidebarOption} ${selectedOption === 'information' ? styles.selected : ''}`} 
+            onClick={() => handleOptionClick('information')}
+            muted
+          >
+            Information
+          </a>
+          <div 
+            className={`${styles.sidebarOption} ${selectedOption === 'subscription' ? styles.selected : ''}`} 
+            onClick={() => handleOptionClick('subscription')}
+          >
+            Subscription Plan
+          </div>
+          <div 
+            className={`${styles.sidebarOption} ${selectedOption === 'searchHistory' ? styles.selected : ''}`} 
+            onClick={() => handleOptionClick('searchHistory')}
+          >
+            Search History
+          </div>
+          <div 
+            className={`${styles.sidebarOption} ${selectedOption === 'conversationHistory' ? styles.selected : ''}`}
+            onClick={() => handleOptionClick('conversationHistory')}
+          >
+            Chat History
+          </div>
           </div>
           <button className={styles.subscriptionPlan} id="log_out_btn">
             Log Out
           </button>
         </div>
       </section>
-      <Information />
+      {selectedOption === 'information' && <Information />}
+      {selectedOption === 'subscription' && <Subscription />}
+      {selectedOption === 'searchHistory' && <SearchHistory />}
+      {selectedOption === 'conversationHistory' && <ConversationHistory />}
     </div>
   );
 };

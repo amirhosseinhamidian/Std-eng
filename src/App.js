@@ -6,8 +6,10 @@ import {
   useLocation,
 } from "react-router-dom";
 import SearchPage from "./pages/SearchPage";
+import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   const action = useNavigationType();
@@ -37,6 +39,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/loginpage":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
@@ -58,6 +64,7 @@ function App() {
       <Route path="/" element={<SearchPage />} />
       <Route path="/searchresultpage" element={<SearchResultPage />} />
       <Route path="/profilepage" element={<ProfilePage />} />
+      <Route path="/loginpage" element={<LoginPage />} />
     </Routes>
   );
 }
