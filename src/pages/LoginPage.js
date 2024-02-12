@@ -14,10 +14,21 @@ const LoginPage = () => {
   const [showAnotherCodeMessage, setShowAnotherCodeMessage] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(TIMER_CODE_DURATION);
   const [codeErrorMessage, setCodeErrorMessage] = useState('');
-  const [confirmationCode, setConfirmationCode] = useState("")
+  const [confirmationCode, setConfirmationCode] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const timerIntervalRef = useRef(null);
   const navigate = useNavigate();
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    // After successful login, navigate to the profile page
+    navigate.navigate('./profilepage');
+  };
+
+  if (isLoggedIn) {
+    return null; // or any loading component
+  }
 
   const handlePhoneInputChange = (event) => {
     setPhoneInputValue(event.target.value);
@@ -118,7 +129,7 @@ const LoginPage = () => {
       setCodeErrorMessage('Verification code must be exactly 5 characters');
       return; // Exit function early if code is invalid
     }  
-    navigate('./profilepage')
+    handleLogin()
   }
   
 
