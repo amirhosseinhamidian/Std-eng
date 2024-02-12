@@ -35,14 +35,15 @@
   box-sizing: border-box;
   width: 324px;
   height: 42px;
-  padding: 8;
+  padding-block: 8px;
+  padding-inline: 20px;
   font-weight: 700;
   color: var(--color-dimgray-200);
-  font-size: 16;
+  font-size: 20px;
 }
 .codetimer {
   position: absolute;
-  top: 105px;
+  top: 125px;
   left: -1px;
   font-size: var(--font-size-mini);
   font-weight: 500;
@@ -53,20 +54,20 @@
 .enterWithPassword,
 .sendCodeAgain {
   position: absolute;
-  top: 21px;
+  top: 24px;
   left: 0;
   font-weight: 500;
+  cursor: pointer;
 }
 .sendCodeAgain {
   top: 4px;
 }
 .tryagain {
   position: absolute;
-  top: 90.5px;
+  top: 100px;
   left: 0;
-  width: 108px;
+  width: 198px;
   height: 34px;
-  display: none;
   font-size: var(--font-size-2xs);
   color: var(--color-cornflowerblue);
 }
@@ -83,7 +84,7 @@
   padding: var(--padding-3xs) var(--padding-119xl);
   background-color: var(--color-sandybrown);
   position: absolute;
-  top: 140px;
+  top: 160px;
   left: -1px;
   border-radius: var(--br-5xs);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -99,7 +100,6 @@
   width: 326px;
   position: relative;
   height: 200px;
-  display: none;
   text-align: center;
 }
 .pleaseEnterYour {
@@ -152,7 +152,6 @@
   width: 326px;
   position: relative;
   height: 200px;
-  display: none;
 }
 .logIn2 {
   position: absolute;
@@ -169,7 +168,7 @@
   height: 20px;
   width: 26px;
   object-fit: cover;
-  visibility: hidden;
+  visibility: visible;
 }
 .phonenumbersectionChild {
   border: 1px solid var(--color-whitesmoke-100);
@@ -180,10 +179,11 @@
   position: relative;
   border-radius: var(--br-5xs);
   box-sizing: border-box;
-  padding: 8;
+  padding-block: 8px;
+  padding-inline: 16px;
   color: var(--color-dimgray-200);
   font-weight: 700;
-  font-size: 14;
+  font-size: 20px;
 }
 .phonenumbersection {
   display: flex;
@@ -194,15 +194,22 @@
   margin-top: 8;
 }
 .errorMassage {
-  width: 75px;
   height: 13px;
   position: relative;
   font-size: var(--font-size-2xs);
   font-weight: 400;
   font-family: inherit;
   color: var(--color-red);
-  display: none;
-  margin: 0 0 0 42;
+  top: -25px;
+}
+.codeErrorMassage {
+  height: 13px;
+  position: absolute;
+  font-size: var(--font-size-2xs);
+  font-weight: 400;
+  font-family: inherit;
+  color: var(--color-red);
+  margin-top: 32px;
 }
 .loginwithphone,
 .sendcodebutton {
@@ -223,7 +230,7 @@
   border: 0;
   padding: var(--padding-3xs) var(--padding-119xl);
   background-color: var(--color-sandybrown);
-  top: 132px;
+  top: 152px;
   border-radius: var(--br-5xs);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   width: 324px;
@@ -233,12 +240,19 @@
   align-items: center;
   box-sizing: border-box;
 }
+
+.sendcodebutton:active,
+.loginbutton1:active,
+.loginbutton:active {
+  background-color: var(--color-peru-300);
+}
+
 .terms {
   color: var(--color-cadetblue);
 }
 .yourEntryMeansContainer {
   position: absolute;
-  top: 192px;
+  top: 212px;
   left: 0;
   font-size: var(--font-size-3xs);
   color: var(--color-dimgray-100);
@@ -305,6 +319,9 @@
   width: 324px;
   height: 42px;
 }
+.rectangleParent:active {
+  background-color: var(--color-dodgerblueactive);
+}
 .googleloginbutton {
   cursor: pointer;
   border: 0;
@@ -316,7 +333,7 @@
 }
 .anotherlogin {
   position: absolute;
-  top: 222px;
+  top: 252px;
   left: 0;
   display: flex;
   flex-direction: column;
@@ -328,7 +345,7 @@
 .loginmethod {
   width: 326px;
   position: relative;
-  height: 309px;
+  height: 350px;
   font-size: var(--font-size-5xl);
 }
 .loginpage,
@@ -348,7 +365,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   padding: var(--padding-21xl) var(--padding-16xl);
-  gap: var(--gap-lg);
+  gap: var(--gap-13xl);
   max-width: 100%;
   max-height: 100%;
 }
@@ -356,7 +373,7 @@
   width: 100%;
   position: relative;
   background-color: var(--color-whitesmoke);
-  height: 868px;
+  height: 720px;
   align-items: center;
   justify-content: center;
   padding: 36px 0;

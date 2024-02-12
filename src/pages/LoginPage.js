@@ -1,6 +1,127 @@
 import styles from "./LoginPage.module.css";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate  } from "react-router-dom";
 
-const LoginPage = ({ onClose }) => {
+const LoginPage = () => {
+  const TIMER_CODE_DURATION = 10;
+
+  const [phoneInputValue, setPhoneInputValue] = useState("");
+  const [phoenErrorMessage, setPhoneErrorMessage] = useState('');
+  const [showPhoneNumberInput, setShowPhoneNumberInput] = useState(true);
+  const [showConfirmationCodeInput, setShowConfirmationCodeInput] = useState(false);
+  const [showPasswordInput, setShowPasswordInput] = useState(false);
+  const [showCodeTimer, setShowCodeTimer] = useState(false);
+  const [showAnotherCodeMessage, setShowAnotherCodeMessage] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(TIMER_CODE_DURATION);
+  const [codeErrorMessage, setCodeErrorMessage] = useState('');
+  const [confirmationCode, setConfirmationCode] = useState("")
+
+  const timerIntervalRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handlePhoneInputChange = (event) => {
+    setPhoneInputValue(event.target.value);
+    setPhoneErrorMessage('');
+  };
+
+  const handleConfirm = () => {
+    if (phoneInputValue.startsWith('09') && phoneInputValue.length === 11) {
+      // Valid 09-starting number
+      setPhoneErrorMessage('')
+      setShowPhoneNumberInput(false);
+      setShowConfirmationCodeInput(true);
+    } else if (phoneInputValue.startsWith('+98') && phoneInputValue.length === 13) {
+      // Valid +98-starting number
+      setPhoneErrorMessage('')
+      setShowPhoneNumberInput(false);
+      setShowConfirmationCodeInput(true);
+    }  else {
+      // Invalid number
+      setPhoneErrorMessage('Invalid phone number');
+    }
+  };
+
+  const getMaxInputLength = () => {
+    if (phoneInputValue.startsWith('09')) {
+      return 11;
+    } else if (phoneInputValue.startsWith('+98')) {
+      return 13;
+    } else {
+      return 11;
+    }
+  };
+
+  useEffect(() => {
+    if (showConfirmationCodeInput) {
+      setShowCodeTimer(true)
+      setShowAnotherCodeMessage(false)
+      // Start the timer when confirmation code input is shown
+      timerIntervalRef.current = setInterval(() => {
+        setTimeRemaining((prevTime) => {
+          if (prevTime === 0) {
+            clearInterval(timerIntervalRef.current);
+            return prevTime;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    } else {
+      // Clear timer interval if confirmation code input is hidden
+      clearInterval(timerIntervalRef.current);
+    }
+
+    return () => clearInterval(timerIntervalRef.current);
+  }, [showConfirmationCodeInput]);
+
+  useEffect(() => {
+    if (timeRemaining === 0) {
+      clearInterval(timerIntervalRef.current);
+      setShowCodeTimer(false);
+      setShowAnotherCodeMessage(true);
+    }
+  }, [timeRemaining]);
+
+  const minutes = Math.floor(timeRemaining / 60);
+  const seconds = timeRemaining % 60;
+
+  const handleSendCodeAgainClick = () => {
+    clearInterval(timerIntervalRef.current);
+    setShowCodeTimer(true);
+    setShowAnotherCodeMessage(false);
+    setTimeRemaining(TIMER_CODE_DURATION);
+
+    // Start the timer again
+    timerIntervalRef.current = setInterval(() => {
+        setTimeRemaining((prevTime) => {
+            if (prevTime === 0) {
+                clearInterval(timerIntervalRef.current);
+                setShowTimeoutMessage(true);
+                return prevTime;
+            }
+            return prevTime - 1;
+        });
+    }, 1000);
+  }
+
+  const handleChangeConfirmationCode = (event) => {
+    let code = event.target.value;
+    // Ensure code contains only digits
+    code = code.replace(/\D/g, '');
+    // Ensure code does not exceed 5 digits
+    code = code.slice(0, 5);
+    setConfirmationCode(code);
+    setCodeErrorMessage('');
+  };
+
+  const handleLoginWithCode = () => {
+    if (confirmationCode.length !== 5) {
+      setCodeErrorMessage('Verification code must be exactly 5 characters');
+      return; // Exit function early if code is invalid
+    }  
+    navigate('./profilepage')
+  }
+  
+
   return (
     <div className={styles.loginpage}>
       <div className={styles.loginsignupmodal}>
@@ -8,21 +129,32 @@ const LoginPage = ({ onClose }) => {
           <div className={styles.headerChild} />
           <div className={styles.standardEngineering}>Standard Engineering</div>
         </div>
-        <div className={styles.loginwithcode}>
+        {showConfirmationCodeInput && (<div className={styles.loginwithcode}>
           <div className={styles.pleaseEnterThe}>
             Please enter the SMS code :
           </div>
-          <input className={styles.codeinput} type="number" />
-          <div className={styles.codetimer}>2:00</div>
-          <div className={styles.tryagain}>
-            <div className={styles.enterWithPassword}>Enter with password</div>
-            <div className={styles.sendCodeAgain}>Send Code Again</div>
+          {codeErrorMessage && <h6 className={styles.codeErrorMassage}>{codeErrorMessage}</h6>}
+          <input className={styles.codeinput} 
+                 type="number"
+                 value={confirmationCode}
+                 onChange={handleChangeConfirmationCode}
+                 />
+          {showCodeTimer && (
+            <div className={styles.codetimer}>{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>
+          )}
+          {showAnotherCodeMessage && (
+            <div className={styles.tryagain}>
+            <a className={styles.enterWithPassword}>Enter with password</a>
+            <a className={styles.sendCodeAgain} onClick={handleSendCodeAgainClick}>Send Code Again</a>
           </div>
-          <button className={styles.loginbutton}>
+          )}
+          <button className={styles.loginbutton} onClick={handleLoginWithCode}>
             <b className={styles.logIn}>Log in</b>
           </button>
         </div>
-        <div className={styles.loginwithpassword}>
+        )}
+        {showPasswordInput && (
+          <div className={styles.loginwithpassword}>
           <div className={styles.pleaseEnterYour}>
             Please enter your Password :
           </div>
@@ -37,7 +169,10 @@ const LoginPage = ({ onClose }) => {
             <div className={styles.loginWithSms}>Login with SMS</div>
           </div>
         </div>
-        <div className={styles.loginmethod}>
+        )}
+        
+        {showPhoneNumberInput && (
+          <div className={styles.loginmethod}>
           <div className={styles.logIn2}>Log in / Sign up</div>
           <div className={styles.loginwithphone}>
             <div className={styles.pleaseEnterYour1}>
@@ -49,11 +184,16 @@ const LoginPage = ({ onClose }) => {
                 alt=""
                 src="/iranflag@2x.png"
               />
-              <input className={styles.phonenumbersectionChild} type="tel" />
+              <input className={styles.phonenumbersectionChild} 
+              type="tel" 
+              value={phoneInputValue}
+              onChange={handlePhoneInputChange}
+              maxLength={getMaxInputLength()}
+              />
             </section>
-            <h6 className={styles.errorMassage}>error massage</h6>
+            {phoenErrorMessage && <h6 className={styles.errorMassage}>{phoenErrorMessage}</h6>}
           </div>
-          <button className={styles.sendcodebutton}>
+          <button className={styles.sendcodebutton} onClick={handleConfirm}>
             <b className={styles.logIn}>Confirm</b>
           </button>
           <div className={styles.yourEntryMeansContainer}>
@@ -82,6 +222,7 @@ const LoginPage = ({ onClose }) => {
             </button>
           </div>
         </div>
+        )}
       </div>
     </div>
   );

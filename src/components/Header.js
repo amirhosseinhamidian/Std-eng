@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useNavigate  } from "react-router-dom";
 import Drawer from "./Drawer";
 import PortalDrawer from "./PortalDrawer";
 import styles from "./Header.module.css";
@@ -13,6 +14,12 @@ const Header = () => {
   const closeDrawer = useCallback(() => {
     setDrawerOpen(false);
   }, []);
+
+  const navigate = useNavigate();
+
+  const profileClickHandle = () => {
+    navigate('./loginpage')
+  }
 
   return (
     <>
@@ -34,7 +41,7 @@ const Header = () => {
                 <b className={styles.search}>Search</b>
                 <b className={styles.search}>Standards</b>
                 <b className={styles.search}>About us</b>
-                <b className={styles.search}>Profile</b>
+                <a className={styles.home} onClick={profileClickHandle}>Profile</a>
               </nav>
               <button className={styles.image7} onClick={openDrawer} />
             </div>

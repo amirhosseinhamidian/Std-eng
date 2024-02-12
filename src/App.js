@@ -6,7 +6,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import SearchPage from "./pages/SearchPage";
-import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
