@@ -1,10 +1,16 @@
-import { useState, useCallback } from "react";
-import { useNavigate  } from "react-router-dom";
+import { useState, useMemo, useCallback } from "react";
 import Drawer from "./Drawer";
 import PortalDrawer from "./PortalDrawer";
-import styles from "./Header.module.css";
+import styles from "./MainHeader.module.css";
 
-const Header = () => {
+const MainHeader = ({ naveFlex, naveAlignSelf }) => {
+  const navingStyle = useMemo(() => {
+    return {
+      flex: naveFlex,
+      alignSelf: naveAlignSelf,
+    };
+  }, [naveFlex, naveAlignSelf]);
+
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const openDrawer = useCallback(() => {
@@ -15,15 +21,9 @@ const Header = () => {
     setDrawerOpen(false);
   }, []);
 
-  const navigate = useNavigate();
-
-  const profileClickHandle = () => {
-    navigate('./loginpage')
-  }
-
   return (
     <>
-      <div className={styles.naving}>
+      <nav className={styles.naving} style={navingStyle}>
         <div className={styles.nave}>
           <div className={styles.logoName}>
             <img className={styles.logoNameChild} alt="" src="/ellipse-1.svg" />
@@ -41,13 +41,13 @@ const Header = () => {
                 <b className={styles.search}>Search</b>
                 <b className={styles.search}>Standards</b>
                 <b className={styles.search}>About us</b>
-                <a className={styles.home} onClick={profileClickHandle}>Profile</a>
+                <b className={styles.search}>Profile</b>
               </nav>
               <button className={styles.image7} onClick={openDrawer} />
             </div>
           </div>
         </div>
-      </div>
+      </nav>
       {isDrawerOpen && (
         <PortalDrawer
           overlayColor="rgba(113, 113, 113, 0.3)"
@@ -61,4 +61,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default MainHeader;

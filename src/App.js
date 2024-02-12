@@ -5,8 +5,10 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
-import SearchResultPage from "./pages/SearchResultPage";
 import SearchPage from "./pages/SearchPage";
+import SearchResultPage from "./pages/SearchResultPage";
+import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   const action = useNavigationType();
@@ -28,7 +30,15 @@ function App() {
         title = "";
         metaDescription = "";
         break;
-      case "/searchpage":
+      case "/searchresultpage":
+        title = "";
+        metaDescription = "";
+        break;
+      case "/profilepage":
+        title = "";
+        metaDescription = "";
+        break;
+      case "/loginpage":
         title = "";
         metaDescription = "";
         break;
@@ -52,6 +62,8 @@ function App() {
     <Routes>
       <Route path="/" element={<SearchPage />} />
       <Route path="/searchresultpage" element={<SearchResultPage />} />
+      <Route path="/profilepage" element={<ProfilePage />} />
+      <Route path="/loginpage" element={<LoginPage />} />
     </Routes>
   );
 }
