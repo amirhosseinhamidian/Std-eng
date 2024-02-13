@@ -1,7 +1,7 @@
 .frameChild {
-  width: 100px;
+  width: 96px;
   position: relative;
-  height: 100px;
+  height: 96px;
   object-fit: cover;
 }
 .email {
@@ -15,24 +15,23 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: var(--gap-43xl);
+  gap: 46px;
 }
 .genderParent {
   width: 451px;
 }
 .frameGroup {
   align-self: stretch;
-  height: 347px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 49px 62px;
+  gap: 28px;
 }
 .save {
   position: relative;
-  font-size: var(--font-size-5xl);
+  font-size: var(--font-size-base-button);
   font-family: var(--font-inter);
   color: var(--color-white);
   text-align: left;
@@ -48,6 +47,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  margin-top: 24px;
 }
 .saveButton:active {
   background-color: var(--color-darkorange);
@@ -60,7 +60,7 @@
 }
 .frameParent {
   margin: 0;
-  height: 673px;
+  gap: 20px;
   align-items: center;
 }
 .information {

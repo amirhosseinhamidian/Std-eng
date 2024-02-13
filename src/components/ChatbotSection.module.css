@@ -1,0 +1,109 @@
+.textinput {
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-5xs);
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+    font-size: large;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .send1Icon {
+    height: 40px;
+    width: 40px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-right: 16px;
+    cursor: pointer;
+  }
+  .textinputParent {
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-5xs);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--color-dimgray-200);
+    padding: 0 0 0 var(--padding-base);
+    gap: var(--gap-5xs);
+  }
+  .chatbotSection,
+  .chatbotSectionInner,
+  .textinputParent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .chatbotSectionInner {
+    align-self: stretch;
+    flex: 1;
+  }
+  .chatbotSection {
+    width: 842px;
+    height: 57px;
+  }
+  @media screen and (max-width: 1200px) {
+    .chatbotSection {
+      width: 90%;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  @media screen and (max-width: 960px) {
+    .textinput {
+      height: 3rem;
+    }
+    .chatbotSectionInner {
+      flex: unset;
+      align-self: stretch;
+    }
+    .chatbotSection {
+      flex-direction: column;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .textinput {
+      font-size: 16;
+      padding-left: 10;
+      padding-right: 10;
+    }
+    .chatbotSection {
+      width: 110%;
+    }
+  }
+  @media screen and (max-width: 420px) {
+    .textinput {
+      flex-direction: column;
+      gap: var(--gap-3xs);
+      padding-top: var(--padding-5xs);
+      padding-right: 4;
+      padding-bottom: var(--padding-5xs);
+      box-sizing: border-box;
+      font-size: 13;
+      padding-left: 4;
+    }
+    .textinputParent {
+      flex: unset;
+      align-self: stretch;
+    }
+    .chatbotSectionInner {
+      width: 100%;
+      flex: 1;
+      flex-direction: column;
+    }
+    .chatbotSection {
+      width: 140%;
+    }
+  }
+  @media screen and (max-width: 350px) {
+    .textinputParent {
+      flex: unset;
+      align-self: stretch;
+    }
+    .chatbotSectionInner {
+      flex-direction: column;
+    }
+  }
+  

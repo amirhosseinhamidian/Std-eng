@@ -5,8 +5,7 @@
   border-radius: 50%;
 }
 .standardEngineering {
-  height: 22px;
-  width: 189px;
+  font-size: medium;
   position: relative;
   display: inline-block;
   flex-shrink: 0;

@@ -11,7 +11,7 @@
   top: 10px;
   left: 62px;
   display: inline-block;
-  width: 189px;
+  width: 220px;
   margin-top: 4;
 }
 .logoName {
@@ -114,7 +114,7 @@
   padding: var(--padding-21xl) var(--padding-75xl);
   z-index: 0;
   text-align: left;
-  font-size: var(--font-size-lg);
+  font-size: medium;
   color: var(--color-dimgray-200);
   font-family: var(--font-inter);
 }
