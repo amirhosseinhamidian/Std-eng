@@ -21,22 +21,22 @@ const SearchPage = () => {
         <ToggleMode mode={mode} onModeChange={handleModeChange}/>
         {mode === 'search' &&
           <div className={styles.promotiontext}>
-          <h2 className={styles.searchInMoreContainer}>
-            <span>{`Search in more then 150,000 `}</span>
-            <span className={styles.standard}>Standard</span>
-            <span> documents</span>
-          </h2>
-        </div>
+            <h2 className={styles.searchInMoreContainer}>
+              <span>{`Search in more then 150,000 `}</span>
+              <span className={styles.standard}>Standard</span>
+              <span> documents</span>
+            </h2>
+          </div>
         }
 
         {mode === 'chatbot' &&
           <div className={styles.promotiontext}>
-          <h2 className={styles.searchInMoreContainer}>
-            <span>{`Ask your Standard question, `}</span>
-            <span className={styles.standard}>AI</span>
-            <span> answer</span>
-          </h2>
-        </div>
+            <h2 className={styles.searchInMoreContainer}>
+              <span>{`Ask your Standard question, `}</span>
+              <span className={styles.standard}>AI</span>
+              <span> answer</span>
+            </h2>
+          </div>
         }
         
         {mode === 'search' && <SearchSection />}
