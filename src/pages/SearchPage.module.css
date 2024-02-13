@@ -57,6 +57,19 @@
   color: var(--color-dimgray-200);
   font-family: var(--font-inter);
 }
+.searchRelated {
+  width: 92.36%;
+  margin: 0 !important;
+  position: absolute;
+  top: 158px;
+  right: 3.82%;
+  left: 3.82%;
+  height: 421px;
+  flex-shrink: 0;
+  padding: 63px 90px;
+  box-sizing: border-box;
+  z-index: 2;
+}
 @media screen and (max-width: 960px) {
   .searchInMoreContainer {
     font-size: 22px;
