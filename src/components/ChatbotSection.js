@@ -11,7 +11,8 @@ const ChatbotSection = () => {
             placeholder="Ask your question"
             type="text"
           />
-          <img className={styles.send1Icon} alt="" src="/send.svg" />
+          <img className={styles.send1Icon} alt="" src="/send.svg" 
+              />
         </div>
       </div>
     </section>

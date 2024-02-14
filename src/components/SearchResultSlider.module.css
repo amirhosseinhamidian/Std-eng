@@ -1,6 +1,6 @@
 .slider {
     width: 100%;
-    margin: 20px 0;
+    margin: 20px 28px;
   }
   
   .slide {
@@ -12,17 +12,28 @@
     padding-right: 16px; /* Adjust the padding value as needed */
   }
 
-  .slick-arrow.slick-prev,
-  .slick-arrow.slick-next {
-     font-size: 24px; /* Adjust the font size */
+  .arrowPrev,
+  .arrowNext {
      color: #333; /* Adjust the color */
-     background-color: #fff; /* Adjust the background color */
-     border: 2px solid #333; /* Adjust the border */
-     border-radius: 50%; /* Adjust the border-radius for a circular shape */
-     width: 40px; /* Adjust the width */
-     height: 40px; /* Adjust the height */
+     width: 24px; /* Adjust the width */
+     height: 24px; /* Adjust the height */
+     cursor: pointer;
    }
 
+   .arrowPrev {
+    position: absolute;
+    top: 50%;
+    left: -24px; /* Adjust the distance from the left edge */
+    transform: translateY(-50%);
+   }
+
+   .arrowNext {
+    /* Adjust the styles for the right arrow */
+    position: absolute;
+    top: 50%;
+    right: 16px; /* Adjust the distance from the right edge */
+    transform: translateY(-50%);
+  }
 
   .pageNumber {
     display: block;
@@ -38,5 +49,5 @@
     max-height: 4.5em; /* Adjust based on your font size */
     text-overflow: ellipsis;
     white-space: normal;
-    padding-right: 16px;
+    padding-right: 42px;
   }
