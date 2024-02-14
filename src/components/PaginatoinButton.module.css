@@ -1,0 +1,27 @@
+.active {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: var(--color-sandybrown);
+    width: 24px;
+    position: relative;
+    border-radius: var(--br-9xs);
+    height: 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+    color: white;
+}
+
+.normal {
+    cursor: pointer;
+    border: 1px solid var(--color-dimgray-100);
+    padding: 0;
+    background-color: transparent;
+    width: 24px;
+    position: relative;
+    border-radius: var(--br-9xs);
+    box-sizing: border-box;
+    height: 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+}

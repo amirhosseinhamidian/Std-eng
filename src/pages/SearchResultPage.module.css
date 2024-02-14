@@ -290,18 +290,20 @@
 .searchresultpageInner {
   align-self: stretch;
   flex: 1;
-  border-radius: var(--br-5xs);
-  background-color: var(--color-whitesmoke);
-  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.25);
   padding: 0px 98px;
 }
 .searchresultpage {
   width: 100%;
   position: relative;
   background-color: var(--color-white);
+}
+.mainContent {
+  margin-top: 24px;
+  margin-bottom: 0px;
 
 }
 .designation{
+  font-size: medium;
 }
 @media screen and (max-width: 1200px) {
   .textinput {

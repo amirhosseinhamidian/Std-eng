@@ -12,6 +12,7 @@ const SearchSection = () => {
   const [searchText, setSearchText] = useState('');
   const [selectedPublisher, setSelectedPublisher] = useState('');
   const navigate = useNavigate();
+  const [mockData, setMockData] = useState(null);
 
   const handleSearch = () => {
     // Check if searchText is not empty before making the request
@@ -35,8 +36,10 @@ const SearchSection = () => {
       //   console.error('Error making request:', error);
       // });
 
-      const mockData = generateMockData();
-      navigate('./searchresultpage',  { state: { searchData: mockData } });
+      const { mockData, totalPages, itemsPerPage } = generateMockData();
+      setMockData(mockData);
+      console.log(mockData)
+      navigate('./searchresultpage',   { state: { mockData, totalPages, itemsPerPage }});
     } else {
         // Handle case where searchText is empty
       console.warn('Please enter a search text before searching.');
