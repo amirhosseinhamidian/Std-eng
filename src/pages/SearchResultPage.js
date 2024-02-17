@@ -15,9 +15,6 @@ const SearchResultPage = () => {
   console.log(mockData)
 
   const [currentPage, setCurrentPage] = useState(1);
-  // Calculate index range for current page
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, mockData.length);
   // Slice data for current page
   const currentPageData = mockData[currentPage - 1];
   // Pagination click handler
