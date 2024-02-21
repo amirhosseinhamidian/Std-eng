@@ -1,0 +1,93 @@
+.dialogOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(235, 233, 233, 0.8); /* Assuming bg-background/80 corresponds to this color */
+    backdrop-filter: blur(4px); /* Assuming backdrop-blur-sm corresponds to this blur value */
+    transition: opacity 0.3s;
+  }
+  
+  .dialogOverlay[data-state="open"] {
+    opacity: 1;
+  }
+  
+  .dialogOverlay[data-state="closed"] {
+    opacity: 0;
+  }
+
+  .dialogClose {
+    position: absolute;
+    right: 1rem; /* Corresponds to right-4 */
+    top: 1rem; /* Corresponds to top-4 */
+    opacity: 0.7;
+    transition: opacity 0.3s;
+    background-color: transparent; 
+    border-color: transparent;
+    cursor: pointer;
+    z-index: 555;
+  }
+  
+  .dialogClose:hover {
+    opacity: 1;
+  }
+
+  .dialogContent {
+    width: 100%;
+    transform: translate(-50%, -50%);
+    gap: 1rem; /* Corresponds to gap-4 */
+    border: 1px solid #ebe9e9; /* Corresponds to border */
+    background-color: #fff; /* Corresponds to bg-background */
+    padding: 1.5rem; /* Corresponds to p-6 */
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* Corresponds to shadow-lg */
+    transition: opacity 0.3s;
+    
+  }
+  
+  .dialogContent[data-state="open"] {
+    opacity: 1;
+  }
+  
+  .dialogContent[data-state="closed"] {
+    opacity: 0;
+  }
+
+  .dialogHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Corresponds to space-y-1.5 */
+    text-align: center;
+  }
+
+  .smallWH {
+    height: 1rem;
+    width: 1rem; 
+  }
+
+  .close {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  
+  @media (min-width: 640px) {
+    .dialogHeader {
+      text-align: left;
+    }
+  }
+  
+  .dialogFooter {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  
+  @media (min-width: 640px) {
+    .dialogFooter {
+      flex-direction: row;
+      justify-content: end; /* Corresponds to sm:flex-row sm:justify-end */
+      gap: 0.5rem; /* Corresponds to sm:space-x-2 */
+    }
+  }

@@ -9,6 +9,7 @@ import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
+import StandardDetailPage from "./pages/StandardDetailPage";
 
 function App() {
   const action = useNavigationType();
@@ -42,6 +43,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/standarddetailpage":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
@@ -60,10 +65,11 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<SearchPage />} />
+      <Route path="/" element={<StandardDetailPage />} />
       <Route path="/searchresultpage" element={<SearchResultPage />} />
       <Route path="/profilepage" element={<ProfilePage />} />
       <Route path="/loginpage" element={<LoginPage />} />
+      <Route path="/standarddetailpage" element={<StandardDetailPage />} />
     </Routes>
   );
 }
