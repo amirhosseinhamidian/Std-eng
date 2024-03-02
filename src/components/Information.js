@@ -43,7 +43,7 @@ const Information = () => {
           <div className={styles.emailParent}>
             <TextField
               className={styles.email}
-              color="primary"
+              color="warning"
               label="First name"
               variant="outlined"
               sx={{
@@ -101,6 +101,7 @@ const Information = () => {
                 "& .MuiInputBase-input": {
                   textAlign: "left",
                   p: "0 !important",
+                  padding: "8px 16px"
                 },
               }}
             >
@@ -169,6 +170,7 @@ const Information = () => {
                 "& .MuiInputBase-input": {
                   textAlign: "left",
                   p: "0 !important",
+                  padding: "8px 16px"
                 },
               }}
             >
@@ -178,6 +180,7 @@ const Information = () => {
                 label="Gender"
                 disableUnderline
                 displayEmpty
+
               >
                 <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Female</MenuItem>

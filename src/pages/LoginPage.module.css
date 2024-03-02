@@ -382,3 +382,8 @@
   color: var(--color-dimgray-200);
   font-family: var(--font-inter);
 }
+
+.confirmationCode {
+  align-items: center;
+  justify-content: center;
+}

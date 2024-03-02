@@ -1,4 +1,4 @@
-import MainHeader from "../components/MainHeader";
+import Header from "../components/MainHeader";
 import Information from "../components/Information";
 import Subscription from "../components/Subscription";
 import SearchHistory from "../components/SearchHistory";
@@ -13,7 +13,7 @@ const ProfilePage = () => {
   };
   return (
     <div className={styles.profilepage}>
-      <MainHeader />
+      <Header/>
       <div className={styles.profilepageChild} />
       <section className={styles.profilepageInner}>
         <div className={styles.frameParent}>

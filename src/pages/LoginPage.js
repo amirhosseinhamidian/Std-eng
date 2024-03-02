@@ -1,9 +1,11 @@
 import styles from "./LoginPage.module.css";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate  } from "react-router-dom";
+import { navigate } from '@reach/router'
+import {loginRequest, verifyRequest} from "../services/apiService"
+import LoadingModal from "../components/ui/LoadingModal";
 
 const LoginPage = () => {
-  const TIMER_CODE_DURATION = 10;
+  const TIMER_CODE_DURATION = 120; // base on second
 
   const [phoneInputValue, setPhoneInputValue] = useState("");
   const [phoenErrorMessage, setPhoneErrorMessage] = useState('');
@@ -16,14 +18,15 @@ const LoginPage = () => {
   const [codeErrorMessage, setCodeErrorMessage] = useState('');
   const [confirmationCode, setConfirmationCode] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginResponse, setLogginResponse] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const timerIntervalRef = useRef(null);
-  const navigate = useNavigate();
 
   const handleLogin = () => {
     setIsLoggedIn(true);
     // After successful login, navigate to the profile page
-    navigate.navigate('./profilepage');
+    // navigate('./profilepage', {replace: true});
   };
 
   if (isLoggedIn) {
@@ -35,26 +38,41 @@ const LoginPage = () => {
     setPhoneErrorMessage('');
   };
 
-  const handleConfirm = () => {
-    if (phoneInputValue.startsWith('09') && phoneInputValue.length === 11) {
-      // Valid 09-starting number
-      setPhoneErrorMessage('')
-      setShowPhoneNumberInput(false);
-      setShowConfirmationCodeInput(true);
-    } else if (phoneInputValue.startsWith('+98') && phoneInputValue.length === 13) {
-      // Valid +98-starting number
-      setPhoneErrorMessage('')
-      setShowPhoneNumberInput(false);
-      setShowConfirmationCodeInput(true);
-    }  else {
-      // Invalid number
-      setPhoneErrorMessage('Invalid phone number');
+  const handleConfirm = async () => {
+    if ((phoneInputValue.startsWith('09') && phoneInputValue.length === 11) ||
+        (phoneInputValue.startsWith('98') && phoneInputValue.length === 12) ||
+        (phoneInputValue.startsWith('+98') && phoneInputValue.length === 13)) {
+        
+        setPhoneErrorMessage('');
+        setShowPhoneNumberInput(false);
+        setShowConfirmationCodeInput(true);
+        
+        let formattedPhone = '';
+        if (phoneInputValue.startsWith('09')) {
+            formattedPhone = '98' + phoneInputValue.slice(1);
+        } else if (phoneInputValue.startsWith('+98')) {
+            formattedPhone = phoneInputValue.slice(1);
+        }
+        
+        try {
+            console.log(formattedPhone);
+            const data = await loginRequest(formattedPhone);
+            setLogginResponse(data);
+            console.log(data);
+        } catch (error) {
+            console.error('Error Login:', error);
+        }
+    } else {
+        // Invalid number
+        setPhoneErrorMessage('Invalid phone number');
     }
   };
 
   const getMaxInputLength = () => {
     if (phoneInputValue.startsWith('09')) {
       return 11;
+    } else if (phoneInputValue.startsWith('98')) {
+      return 12;
     } else if (phoneInputValue.startsWith('+98')) {
       return 13;
     } else {
@@ -124,15 +142,23 @@ const LoginPage = () => {
     setCodeErrorMessage('');
   };
 
-  const handleLoginWithCode = () => {
+  const handleLoginWithCode = async () => {
     if (confirmationCode.length !== 5) {
       setCodeErrorMessage('Verification code must be exactly 5 characters');
       return; // Exit function early if code is invalid
-    }  
-    handleLogin()
+    }
+    try {
+      setIsLoading(true);
+      const data = await verifyRequest(loginResponse.verification.hash, confirmationCode);
+      setIsLoading(false);
+      console.log(data);
+      handleLogin()
+    } catch (error) {
+      console.log("Code Response Error: ",error)
+      setIsLoading(false);
+    }
   }
   
-
   return (
     <div className={styles.loginpage}>
       <div className={styles.loginsignupmodal}>
@@ -141,8 +167,11 @@ const LoginPage = () => {
           <div className={styles.standardEngineering}>Standard Engineering</div>
         </div>
         {showConfirmationCodeInput && (<div className={styles.loginwithcode}>
-          <div className={styles.pleaseEnterThe}>
+          <div className={styles.confirmationCode}>
+            {isLoading && <LoadingModal/>}
+            <div className={styles.pleaseEnterThe}>
             Please enter the SMS code :
+            </div>
           </div>
           {codeErrorMessage && <h6 className={styles.codeErrorMassage}>{codeErrorMessage}</h6>}
           <input className={styles.codeinput} 
@@ -200,6 +229,7 @@ const LoginPage = () => {
               value={phoneInputValue}
               onChange={handlePhoneInputChange}
               maxLength={getMaxInputLength()}
+              onKeyDown={(event) => event.key === 'Enter' && handleConfirm()}
               />
             </section>
             {phoenErrorMessage && <h6 className={styles.errorMassage}>{phoenErrorMessage}</h6>}

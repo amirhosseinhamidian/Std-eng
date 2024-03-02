@@ -45,7 +45,7 @@
   flex-direction: row;
 }
 .profilepageInner {
-  width: 220px;
+
   border-radius: 0 var(--br-5xs) 0 0;
   background-color: var(--color-whitesmoke);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -58,7 +58,7 @@
   width: 100%;
   position: relative;
   background-color: var(--color-white);
-  height: 1008px;
+  
   flex-wrap: wrap;
 }
 

@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 // import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import generateMockData from '../utils/mockData.js';
+import {searchStandard} from '../services/apiService.js'
+import LoadingModal from "../components/ui/LoadingModal";
+import LoadingReminderModal from "../components/ui/LoginReminderModal.js";
 
 const SearchSection = () => {
   const onSearchButtonClick = useCallback(() => {
@@ -13,41 +16,52 @@ const SearchSection = () => {
   const [selectedPublisher, setSelectedPublisher] = useState('');
   const navigate = useNavigate();
   const [mockData, setMockData] = useState(null);
+  const [results, setResults] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [goToLoginPage, setGoToLoginPage] = useState(false);
 
-  const handleSearch = () => {
+  const handleSearch = async() => {
     // Check if searchText is not empty before making the request
-    if (searchText.trim() !== '') {
+    
+    if (!searchText.trim()) {
+      return
+    } 
+    try{
       // Log the request data before making the actual API call
-      console.log('Request Data:', { searchText, selectedPublisher });
       // Make a request to the server using Axios
-      // TODO: Add search endpoint
-      // axios.post('/api/search', {
-      //   searchText,
-      //   selectedPublisher,
-      // })
-      // .then(response => {
-      //   // Handle the response from the server
-      //   console.log('Server response:', response.data);
-      //   // Navigate to the SearchResults page and pass data using state
-      //   navigate('/search-results', { state: { searchData: response.data } });
-      // })
-      // .catch(error => {
-      //   // Handle errors
-      //   console.error('Error making request:', error);
-      // });
-
-      const { mockData, totalPages, itemsPerPage } = generateMockData();
-      setMockData(mockData);
-      console.log(mockData)
-      navigate('./searchresultpage',   { state: { mockData, totalPages, itemsPerPage }});
-    } else {
-        // Handle case where searchText is empty
-      console.warn('Please enter a search text before searching.');
+      setLoading(true);
+      setError(null);
+      setIsLoading(true);
+      const data = await searchStandard(searchText);
+      setIsLoading(false);
+      // const { mockData, totalPages, itemsPerPage } = generateMockData();
+      // setMockData(mockData);
+      // console.log(mockData)
+      console.log("data", data)
+      const totalPages = 1;
+      const itemsPerPage = 1;
+      navigate('./searchresultpage',   { state: { data, totalPages, itemsPerPage }});
+    }catch (error) {
+       // Check if the error is a 401 authorization error
+      if (error.response && error.response.status === 401) {
+        // Redirect the user to the login page
+        setIsLoading(false)
+        setGoToLoginPage(true)
+      } else {
+       // Handle other errors
+        console.error('Error searching:', error);
+      }
+    }finally {
+      setLoading(false);
     }
   };
 
   return (
     <section className={styles.searchSection}>
+      {isLoading && <LoadingModal/>}
+      {goToLoginPage && <LoadingReminderModal/>}
       <div className={styles.frameParent}>
         <div className={styles.searchiconParent}>
           <img className={styles.searchicon} alt="" src="/searchicon.svg" />

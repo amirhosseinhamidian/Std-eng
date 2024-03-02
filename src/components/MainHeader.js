@@ -21,6 +21,14 @@ const MainHeader = ({ naveFlex, naveAlignSelf }) => {
     setDrawerOpen(false);
   }, []);
 
+  const profileClickHandle = () => {
+    if (getAccessToken()) {
+      navigate('./profilepage')
+    } else {
+      navigate('./loginpage')
+    }
+  }
+
   return (
     <>
       <nav className={styles.naving} style={navingStyle}>
@@ -41,7 +49,7 @@ const MainHeader = ({ naveFlex, naveAlignSelf }) => {
                 <b className={styles.search}>Search</b>
                 <b className={styles.search}>Standards</b>
                 <b className={styles.search}>About us</b>
-                <b className={styles.search}>Profile</b>
+                <a className={styles.home} onClick={profileClickHandle}>Profile</a>
               </nav>
               <button className={styles.image7} onClick={openDrawer} />
             </div>
