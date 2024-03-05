@@ -9,6 +9,7 @@ import FullscreenPDF from "./FullscreenPdf";
 import styles from "./ReaderPdf.module.css"
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
+import {CircularProgress} from '@mui/material';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
@@ -154,9 +155,12 @@ const RenderPDF = ({ url }) => {
             <Document
               file={url}
               loading={
-                <div className={styles.centerLoading}>
-                  <div className={styles.loadingSpinner} />
-                </div>
+                <CircularProgress 
+                    className={styles.loadingbar}
+                    variant="indeterminate"
+                    size={80} // Adjust the size of the circular progress
+                    thickness={5} // Adjust the thickness of the circular progress
+                />
               }
               onLoadSuccess={({ numPages }) => setNumberPages(numPages)}
               onLoadError={(error) => {

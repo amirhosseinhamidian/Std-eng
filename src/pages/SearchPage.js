@@ -39,7 +39,7 @@ const SearchPage = () => {
           </div>
         }
         
-        {mode === 'search' && <SearchSection />}
+        {mode === 'search' && <SearchSection context="main"/>}
         {mode === 'chatbot' && <ChatbotSection />}
         
       </div>

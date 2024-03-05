@@ -16,7 +16,8 @@ const CustomNextArrow = ({ onClick }) => (
     <b>&gt;</b>
   </div>
 );
-const SearchResultSlider = ({ details }) => {
+const SearchResultSlider = ({ details, keyword }) => {
+  console.log("keyword: ",keyword);
   const sliderSettings = {
     // Configure your slider settings here
     dots: true,
@@ -38,12 +39,27 @@ const SearchResultSlider = ({ details }) => {
       sliderRef.current.slickNext();
     }
   };
+  const highlightKeyword = (sentence, keyword) => {
+    const lowerKeyword = String(keyword).toLowerCase();
+    const regex = new RegExp(`(${lowerKeyword})`, 'gi');
+    return sentence?.split(regex).map((word, index) => {
+      const wordString = String(word); // Cast word to string
+      return (
+        regex.test(wordString?.toLowerCase()) ? 
+        <span key={index} className={styles.highlight}>
+          {wordString}
+        </span> : 
+        word
+      );
+    });
+  };
+
   return (
       <Slider {...sliderSettings} className={styles.slider} ref={sliderRef}>
         {details.map((detail, index) => (
           <div key={index} className={styles.slide}>
             <b className={styles.pageNumber}>PAGE: {detail.page}</b>
-            <span className={styles.sentence}>{detail.sentence}</span>
+            <span className={styles.sentence}>{highlightKeyword(detail.sentence, keyword)}</span>
           </div>
         ))}
       </Slider>

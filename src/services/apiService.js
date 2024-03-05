@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { storeTokens, getAccessToken } from './authService';
 
-const API_BASE_URL = 'http://192.168.100.121:8060/api/v1';
+const API_BASE_URL = 'http://192.168.100.118:8060/api/v1';
 
 const apiService = axios.create({
     baseURL: API_BASE_URL,
@@ -34,10 +34,11 @@ export const authenticatedRequest = async (url, method, data) => {
     }
   };
   
-  const searchStandard = async (keyword) => {
+  const searchStandard = async (keyword, publisherId) => {
     try {
       const accessToken = getAccessToken();
       console.log(accessToken)
+      console.log("id", publisherId)
       const response = await apiService.get("/keyword-search",
       { 
         params: { keyword: keyword },
@@ -73,7 +74,21 @@ export const authenticatedRequest = async (url, method, data) => {
     }
   }
 
-  
+  const publisherListRequest = async () => {
+    try {
+      const response = await apiService.get("/publishers");
+      return response.data;
+    } catch (error) {
+      console.error("Error verify: ", error);
+      throw error;
+    }
+  }
 
-  export { searchStandard, loginRequest, verifyRequest };
+
+  export { 
+    searchStandard,
+    loginRequest, 
+    verifyRequest, 
+    publisherListRequest, 
+  };
  

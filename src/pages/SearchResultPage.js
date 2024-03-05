@@ -10,16 +10,15 @@ import Pagination from "../components/PaginationSection";
 import { useNavigate } from 'react-router-dom';
 import { pdf } from "@react-pdf/renderer";
 
-const API_BASE_URL = "http://192.168.100.121:8060"
+const API_BASE_URL = "http://192.168.100.118:8060"
 
 const SearchResultPage = () => {
-  console.clear()
   const location = useLocation();
   const navigate = useNavigate();
-  const { data, totalPages, itemsPerPage } = location.state || {};
-  console.log(data)
-
+  const { data, totalPages, itemsPerPage, searchText } = location.state || {};
   const [currentPage, setCurrentPage] = useState(1);
+  const [results, setResults] = useState(data);
+  const [keyword, setKeyword] = useState(searchText || '');
   // Pagination click handler
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -46,15 +45,22 @@ const SearchResultPage = () => {
   const pdfClickHandle = (pdfUrl) => {
     const url = API_BASE_URL + pdfUrl
     navigate('./standarddetailpage', { state: {url }});
-  } 
+  }
+  
+  const refreshSearchResults = (newData, searchKey) => {
+    // Update the search results data with the new data
+    setResults(newData);
+    setKeyword(searchKey);
+  };
+
 
   return (
     <>
       <div className={styles.searchresultpage}>
         <Header/>
-        <SearchSection/>
+        <SearchSection context="results" keyword={searchText} refreshSearchResults={refreshSearchResults}/>
         <ul className={styles.mainContent}>
-          {data.data.map((result) =>(
+          {results.data.map((result) =>(
             <li key={result.content_id}>
                <div className={styles.searchresultpageInner}>
                 <section className={styles.frameContainer}>
@@ -68,7 +74,7 @@ const SearchResultPage = () => {
                     <section className={styles.titleParent}>
                       <b className={styles.title}>{result.title}</b>
                       <div className={styles.designation}>Designation: {result.designation_id}</div>
-                      <SliderComponent details={result.details} />
+                      <SliderComponent details={result.details} keyword={keyword} />
                     </section>
                   </div>
                   <div className={styles.frameChild} />

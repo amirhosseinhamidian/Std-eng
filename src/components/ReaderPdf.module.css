@@ -49,6 +49,10 @@
     color: #a0aec0;
   }
 
+  .loadingbar {
+    z-index: 555;
+  }
+
   .spinAnimation {
     animation: spin 1s linear infinite;
   }

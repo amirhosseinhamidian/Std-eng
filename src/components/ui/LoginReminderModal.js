@@ -37,7 +37,7 @@ const LoginReminderModal = () => {
             value={progress} // Set progress value dynamically
             size={80} // Adjust the size of the circular progress
             thickness={5} // Adjust the thickness of the circular progress
-            aria-autocomplete='both'
+            
          />
         </div>
         <p className={Styles.messagetext}>You need to log in to your user account to use this feature.</p>

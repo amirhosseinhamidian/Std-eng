@@ -51,3 +51,6 @@
     white-space: normal;
     padding-right: 42px;
   }
+  .highlight {
+    color: var(--color-sandybrown);
+  }
