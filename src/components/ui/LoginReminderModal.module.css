@@ -34,6 +34,19 @@
   
   /* message text */
   .messagetext {
-    font-size: 16px;
-    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--color-dimgray-200);
+  }
+
+  .loginBtn {
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: var(--color-sandybrown);
+    background-color: transparent;
+    padding-inline: 16px;
+  }
+
+  .loginBtnText {
+    color: var(--color-sandybrown);
   }

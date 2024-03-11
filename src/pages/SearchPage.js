@@ -10,7 +10,6 @@ const SearchPage = () => {
   
   const handleModeChange = (selectedMode) => {
     setMode(selectedMode);
-    console.log("here")
   };
 
   return (

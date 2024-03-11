@@ -155,12 +155,14 @@ const RenderPDF = ({ url }) => {
             <Document
               file={url}
               loading={
-                <CircularProgress 
+                <div className={styles.progressbarContainer}>
+                  <CircularProgress 
                     className={styles.loadingbar}
                     variant="indeterminate"
-                    size={80} // Adjust the size of the circular progress
+                    size={40} // Adjust the size of the circular progress
                     thickness={5} // Adjust the thickness of the circular progress
                 />
+                </div>
               }
               onLoadSuccess={({ numPages }) => setNumberPages(numPages)}
               onLoadError={(error) => {

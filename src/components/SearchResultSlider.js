@@ -17,7 +17,6 @@ const CustomNextArrow = ({ onClick }) => (
   </div>
 );
 const SearchResultSlider = ({ details, keyword }) => {
-  console.log("keyword: ",keyword);
   const sliderSettings = {
     // Configure your slider settings here
     dots: true,

@@ -12,6 +12,7 @@
     width: 100%;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     border-radius: 8px; 
     background-color: #fff; 
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); 
@@ -49,8 +50,19 @@
     color: #a0aec0;
   }
 
+  .progressbarContainer {
+    display: flex;
+    justify-content: center; /* Horizontally center the item */
+    align-items: center; /* Vertically center the item */
+  }
+
   .loadingbar {
     z-index: 555;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    flex-direction: column;
+    margin-block: 32px;
+    display: flex;
   }
 
   .spinAnimation {

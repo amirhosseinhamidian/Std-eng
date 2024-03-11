@@ -25,7 +25,6 @@
 .searchiconParent {
   align-self: stretch;
   flex: 1;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -36,7 +35,6 @@
 .publisherdropdown {
   height: 57px;
   background-color: transparent;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
   overflow: hidden;
   font-size: large;
@@ -73,7 +71,6 @@
   background-color: var(--color-sandybrown);
   width: 168px;
   border-radius: var(--br-5xs);
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   flex-shrink: 0;
   justify-content: center;

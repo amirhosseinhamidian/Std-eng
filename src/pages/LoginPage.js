@@ -1,6 +1,6 @@
 import styles from "./LoginPage.module.css";
 import React, { useState, useEffect, useRef } from "react";
-import { navigate } from '@reach/router'
+import { useNavigate } from 'react-router-dom';
 import {loginRequest, verifyRequest} from "../services/apiService"
 import LoadingModal from "../components/ui/LoadingModal";
 
@@ -22,11 +22,12 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const timerIntervalRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     setIsLoggedIn(true);
     // After successful login, navigate to the profile page
-    // navigate('./profilepage', {replace: true});
+    navigate('/profilepage', {replace: true});
   };
 
   if (isLoggedIn) {

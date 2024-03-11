@@ -28,6 +28,5 @@ export default function calculatePageRange(selectedPage, totalPages) {
             pagesToShow.push(i);
         }
     }
-    console.log("page to show", pagesToShow)
     return pagesToShow;
   }

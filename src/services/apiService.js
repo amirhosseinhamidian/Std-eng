@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { storeTokens, getAccessToken } from './authService';
 
-const API_BASE_URL = 'http://192.168.100.118:8060/api/v1';
+const API_BASE_URL = 'http://172.23.50.114:8060/api/v1';
 
 const apiService = axios.create({
     baseURL: API_BASE_URL,
@@ -34,14 +34,16 @@ export const authenticatedRequest = async (url, method, data) => {
     }
   };
   
-  const searchStandard = async (keyword, publisherId) => {
+  const searchStandard = async (keyword, publisherId, page=1) => {
     try {
       const accessToken = getAccessToken();
-      console.log(accessToken)
-      console.log("id", publisherId)
+      console.log(page)
       const response = await apiService.get("/keyword-search",
       { 
-        params: { keyword: keyword },
+        params: { 
+          keyword: keyword,
+          page: page
+        },
         headers: {Authorization: `Bearer ${accessToken}`}
       }
       );
@@ -76,8 +78,20 @@ export const authenticatedRequest = async (url, method, data) => {
 
   const publisherListRequest = async () => {
     try {
+      const storedData = sessionStorage.getItem('publishersData');
+      if (storedData) {
+          const { data } = JSON.parse(storedData);
+          return data; // Return cached data
+      }
+
+      // If data is not present in session storage, make API request
       const response = await apiService.get("/publishers");
-      return response.data;
+      const newData = response.data;
+
+      // Store new data in session storage
+      sessionStorage.setItem('publishersData', JSON.stringify({ data: newData }));
+
+      return newData;
     } catch (error) {
       console.error("Error verify: ", error);
       throw error;

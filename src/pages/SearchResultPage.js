@@ -9,19 +9,24 @@ import SearchSection from "../components/SearchSection";
 import Pagination from "../components/PaginationSection";
 import { useNavigate } from 'react-router-dom';
 import { pdf } from "@react-pdf/renderer";
+import {searchStandard} from '../services/apiService.js'
+import LoadingModal from "../components/ui/LoadingModal";
 
-const API_BASE_URL = "http://192.168.100.118:8060"
+const API_BASE_URL = "http://172.23.50.114:8060"
 
 const SearchResultPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { data, totalPages, itemsPerPage, searchText } = location.state || {};
+  const { data, totalPages, itemsPerPage, searchText, selectedPublisher } = location.state || {};
   const [currentPage, setCurrentPage] = useState(1);
-  const [results, setResults] = useState(data);
+  const [results, setResults] = useState(data.data);
   const [keyword, setKeyword] = useState(searchText || '');
+  const [publisherId,setPubliserId] = useState(selectedPublisher || null);
+  const [isLoading, setIsLoading] = useState(false);
   // Pagination click handler
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    handlePageChangeData(page);
   };
 
   useEffect(() => {
@@ -47,18 +52,34 @@ const SearchResultPage = () => {
     navigate('./standarddetailpage', { state: {url }});
   }
   
-  const refreshSearchResults = (newData, searchKey) => {
+  const refreshSearchResults = (data, searchKey, publisher_Id) => {
     // Update the search results data with the new data
-    setResults(newData);
+    setResults(data);
     setKeyword(searchKey);
+    setPubliserId(publisher_Id);
   };
+
+  const handlePageChangeData = async(page) => {
+    try {
+      setIsLoading(true);
+      const data = await searchStandard(keyword,publisherId,page);
+      setIsLoading(false);
+      refreshSearchResults(data.data, keyword, publisherId);
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
 
   return (
     <>
       <div className={styles.searchresultpage}>
         <Header/>
-        <SearchSection context="results" keyword={searchText} refreshSearchResults={refreshSearchResults}/>
+        <SearchSection context="results" keyword={searchText} publisherId={publisherId} refreshSearchResults={refreshSearchResults}/>
+        {isLoading && <LoadingModal/>}
         <ul className={styles.mainContent}>
           {results.data.map((result) =>(
             <li key={result.content_id}>

@@ -6,7 +6,7 @@ import {searchStandard, publisherListRequest} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
 import LoadingReminderModal from "../components/ui/LoginReminderModal.js";
 
-const SearchSection = ({ context, keyword, refreshSearchResults }) => {
+const SearchSection = ({ context, keyword, publisherId, refreshSearchResults }) => {
   const onSearchButtonClick = useCallback(() => {
     // Please sync "search result" to the project
   }, []);
@@ -27,7 +27,7 @@ const SearchSection = ({ context, keyword, refreshSearchResults }) => {
         // Extract publisher names and IDs from the response
         const publisherData = data.data.map(publisher => ({
           id: publisher.id,
-          name: publisher.name
+          name: publisher.name,
         }));
         // Set the state with the list of publisher names and IDs
         setPublishers(publisherData);
@@ -51,15 +51,16 @@ const SearchSection = ({ context, keyword, refreshSearchResults }) => {
       setError(null);
       setIsLoading(true);
       const data = await searchStandard(searchText, selectedPublisher);
+      console.log("daaattttaaaa", data);
       setIsLoading(false);
-      const totalPages = 1;
-      const itemsPerPage = 1;
+      const totalPages = data.data.last_page;
+      const itemsPerPage = data.data.per_page;
       if (context === 'results') {
         // If the component is on the search results page, update the search results data
-        refreshSearchResults(data, searchText);
+        refreshSearchResults(data, searchText, selectedPublisher);
       } else {
         // Otherwise, navigate to the search results page with the new data
-        navigate('./searchresultpage', { state: { data, totalPages, itemsPerPage, searchText }});
+        navigate('./searchresultpage', { state: { data, totalPages, itemsPerPage, searchText, selectedPublisher }});
       }
       
     }catch (error) {
@@ -94,7 +95,7 @@ const SearchSection = ({ context, keyword, refreshSearchResults }) => {
           />
         </div>
         <select className={styles.publisherdropdown}
-          value={selectedPublisher}
+          value={publisherId}
           onChange={(e) => setSelectedPublisher(e.target.value)}
         >
           <option value="All publisher">All publisher</option>

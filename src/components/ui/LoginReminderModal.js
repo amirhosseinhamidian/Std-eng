@@ -41,6 +41,9 @@ const LoginReminderModal = () => {
          />
         </div>
         <p className={Styles.messagetext}>You need to log in to your user account to use this feature.</p>
+        {/* <button className={Styles.loginBtn}>
+          <p className={Styles.loginBtnText}>Login/Signup</p>
+        </button> */}
       </div>
     </div>
   );

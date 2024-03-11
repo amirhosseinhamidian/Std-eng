@@ -13,7 +13,7 @@ const ProfilePage = () => {
   };
   return (
     <div className={styles.profilepage}>
-      <Header/>
+      <Header />
       <div className={styles.profilepageChild} />
       <section className={styles.profilepageInner}>
         <div className={styles.frameParent}>

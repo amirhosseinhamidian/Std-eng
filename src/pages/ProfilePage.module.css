@@ -4,6 +4,7 @@
   border-top: 1px solid var(--color-whitesmoke);
   box-sizing: border-box;
   height: 1px;
+  margin-top: 16px;
 }
 .information {
   height: 24px;
