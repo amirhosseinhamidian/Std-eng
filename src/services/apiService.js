@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { storeTokens, getAccessToken } from './authService';
+import { storeTokens, getAccessToken, getRefreshToken } from './authService';
 
-const API_BASE_URL = 'http://172.23.50.114:8060/api/v1';
+
+const API_BASE_URL = 'http://192.168.177.64:8060/api/v1';
 
 const apiService = axios.create({
     baseURL: API_BASE_URL,
@@ -37,7 +38,6 @@ export const authenticatedRequest = async (url, method, data) => {
   const searchStandard = async (keyword, publisherId, page=1) => {
     try {
       const accessToken = getAccessToken();
-      console.log(page)
       const response = await apiService.get("/keyword-search",
       { 
         params: { 
@@ -69,9 +69,31 @@ export const authenticatedRequest = async (url, method, data) => {
     try {
       const response = await apiService.post("/auth/login/phonenumber/verify", {hash, code});
       storeTokens(response.data.access_token, response.data.refresh_token)
+      console.log(response.data.access_token);
       return response.data;
     } catch (error) {
       console.error("Error verify: ", error);
+      throw error;
+    }
+  }
+
+  const refreshAccessToken = async () => {
+    const refresh_token = getRefreshToken();
+    try {
+      const response = await apiService.post(
+        "/auth/refreshAccessToken", 
+        new URLSearchParams({
+          refresh_token: refresh_token
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }
+      );
+      return response.data;
+    } catch (error){
+      console.error("Error refresh token:", error);
       throw error;
     }
   }
@@ -98,11 +120,59 @@ export const authenticatedRequest = async (url, method, data) => {
     }
   }
 
+  const getProfileInformation = async () => {
+    try {
+      const accessToken = getAccessToken();
+      const response = await apiService.get("/auth/me",
+      {
+        headers: {
+        Authorization: `Bearer ${accessToken}`,
+        }
+      });
+      return response.data;
+    } catch (error) {
+      // console.error("Error verify: ", error);
+      throw error;
+    }
+  }
+
+  const updateProfile = async (firstName, lastName, gender, email, education, company, birthDate) => {
+    try {
+      const accessToken = getAccessToken();
+      const authorization = `Bearer ${accessToken}`;
+      console.log("email req", email)
+      
+      // Create a data object with non-null values
+      const requestData = {
+        ...(firstName && { first_name: firstName }),
+        ...(lastName && { last_name: lastName }),
+        ...(gender && { gender }),
+        ...(email && { email }),
+        ...(education && { education }),
+        ...(company && { company }),
+        ...(birthDate && { birth_day: birthDate }),
+      };
+      console.log("req data", requestData)
+      // Make the API call with the filtered data
+      const response = await apiService.put("/auth/update", requestData, {
+        headers: {
+          Authorization: authorization,
+        }
+      });
+      
+      return response.data;
+    } catch (error) {
+      console.error("Error updating profile: ", error);
+      throw error;
+    }
+  };
 
   export { 
     searchStandard,
     loginRequest, 
     verifyRequest, 
     publisherListRequest, 
+    getProfileInformation,
+    updateProfile,
   };
  

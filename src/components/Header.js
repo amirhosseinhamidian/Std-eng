@@ -20,10 +20,14 @@ const Header = () => {
 
   const profileClickHandle = () => {
     if (getAccessToken()) {
-      navigate('./profilepage')
+      navigate('/profilepage')
     } else {
-      navigate('./loginpage')
+      navigate('/loginpage')
     }
+  }
+
+  const searchClickHandle = () => {
+    navigate('/searchpage')
   }
 
   return (
@@ -43,7 +47,7 @@ const Header = () => {
                 <a className={styles.home} muted>
                   Home
                 </a>
-                <b className={styles.search}>Search</b>
+                <b className={styles.home} onClick={searchClickHandle}>Search</b>
                 <b className={styles.search}>Standards</b>
                 <b className={styles.search}>About us</b>
                 <a className={styles.home} onClick={profileClickHandle}>Profile</a>

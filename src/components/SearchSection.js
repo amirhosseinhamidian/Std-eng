@@ -5,13 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import {searchStandard, publisherListRequest} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
 import LoadingReminderModal from "../components/ui/LoginReminderModal.js";
+import {
+  Select,
+  InputLabel,
+  MenuItem,
+} from "@mui/material";
 
 const SearchSection = ({ context, keyword, publisherId, refreshSearchResults }) => {
   const onSearchButtonClick = useCallback(() => {
     // Please sync "search result" to the project
   }, []);
   const [searchText, setSearchText] = useState(keyword || '');
-  const [selectedPublisher, setSelectedPublisher] = useState('');
+  const [selectedPublisher, setSelectedPublisher] = useState('All publisher');
   const navigate = useNavigate();
   const [mockData, setMockData] = useState(null);
   const [error, setError] = useState(null);
@@ -51,7 +56,6 @@ const SearchSection = ({ context, keyword, publisherId, refreshSearchResults }) 
       setError(null);
       setIsLoading(true);
       const data = await searchStandard(searchText, selectedPublisher);
-      console.log("daaattttaaaa", data);
       setIsLoading(false);
       const totalPages = data.data.last_page;
       const itemsPerPage = data.data.per_page;
@@ -63,17 +67,17 @@ const SearchSection = ({ context, keyword, publisherId, refreshSearchResults }) 
         navigate('./searchresultpage', { state: { data, totalPages, itemsPerPage, searchText, selectedPublisher }});
       }
       
-    }catch (error) {
+    } catch (error) {
        // Check if the error is a 401 authorization error
       if (error.response && error.response.status === 401) {
         // Redirect the user to the login page
-        setIsLoading(false)
-        setGoToLoginPage(true)
+        setIsLoading(false);
+        setGoToLoginPage(true);
       } else {
        // Handle other errors
         console.error('Error searching:', error);
       }
-    }finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -94,18 +98,18 @@ const SearchSection = ({ context, keyword, publisherId, refreshSearchResults }) 
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <select className={styles.publisherdropdown}
-          value={publisherId}
+        <Select className={styles.publisherdropdown}
+          value={selectedPublisher}
           onChange={(e) => setSelectedPublisher(e.target.value)}
         >
-          <option value="All publisher">All publisher</option>
+          <MenuItem value="All publisher">All publisher</MenuItem>
           {/* Map over the publishers array to create options dynamically */}
           {publishers.map((publisher, index) => (
-            <option key={index} value={publisher.id}>
+            <MenuItem key={index} value={publisher.id}>
               {publisher.name}
-            </option>
+            </MenuItem>
       ))}
-        </select>
+        </Select>
       </div>
       <button
         className={styles.searchbutton}

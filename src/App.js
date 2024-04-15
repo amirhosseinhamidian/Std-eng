@@ -66,6 +66,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<SearchPage />} />
+      <Route path="/searchpage" element={<SearchPage />} />
       <Route path="/searchresultpage" element={<SearchResultPage />} />
       <Route path="/profilepage" element={<ProfilePage />} />
       <Route path="/loginpage" element={<LoginPage />} />

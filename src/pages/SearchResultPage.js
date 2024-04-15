@@ -11,8 +11,9 @@ import { useNavigate } from 'react-router-dom';
 import { pdf } from "@react-pdf/renderer";
 import {searchStandard} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
+import SidebarFilter from "../components/filter sidebar/SidebarFilter.js";
 
-const API_BASE_URL = "http://172.23.50.114:8060"
+const API_BASE_URL = "http://192.168.177.64:8060"
 
 const SearchResultPage = () => {
   const location = useLocation();
@@ -43,10 +44,6 @@ const SearchResultPage = () => {
     setDrawerOpen(false);
   }, []);
 
-  const onSearchButtonClick = useCallback(() => {
-    // Please sync "search result" to the project
-  }, []);
-
   const pdfClickHandle = (pdfUrl) => {
     const url = API_BASE_URL + pdfUrl
     navigate('./standarddetailpage', { state: {url }});
@@ -72,38 +69,42 @@ const SearchResultPage = () => {
       setIsLoading(false);
     }
   }
-
-
+  
   return (
     <>
       <div className={styles.searchresultpage}>
-        <Header/>
+        <Header />
         <SearchSection context="results" keyword={searchText} publisherId={publisherId} refreshSearchResults={refreshSearchResults}/>
-        {isLoading && <LoadingModal/>}
-        <ul className={styles.mainContent}>
-          {results.data.map((result) =>(
-            <li key={result.content_id}>
-               <div className={styles.searchresultpageInner}>
-                <section className={styles.frameContainer}>
-                  <div className={styles.nave}>
-                    <img
-                      className={styles.publishercoverIcon}
-                      alt={result.title}
-                      src={API_BASE_URL + result.publisher_logo}
-                      onClick={() => pdfClickHandle(result.pdf_path)}
-                    />
-                    <section className={styles.titleParent}>
-                      <b className={styles.title}>{result.title}</b>
-                      <div className={styles.designation}>Designation: {result.designation_id}</div>
-                      <SliderComponent details={result.details} keyword={keyword} />
-                    </section>
-                  </div>
-                  <div className={styles.frameChild} />
-                </section>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {isLoading && <LoadingModal />}
+        <div className={styles.container}>
+          <div className={styles.sidebar}>
+            <SidebarFilter />
+          </div>
+          <ul className={styles.mainContent}>
+            {results.data.map((result) => (
+              <li key={result.content_id}>
+                <div className={styles.searchresultpageInner}>
+                  <section className={styles.frameContainer}>
+                    <div className={styles.nave}>
+                      <img
+                        className={styles.publishercoverIcon}
+                        alt={result.title}
+                        src={API_BASE_URL + result.publisher_logo}
+                        onClick={() => pdfClickHandle(result.pdf_path)}
+                      />
+                      <section className={styles.titleParent}>
+                        <b className={styles.title}>{result.title}</b>
+                        <div className={styles.designation}>Designation: {result.designation_id}</div>
+                        <SliderComponent details={result.details} keyword={keyword} />
+                      </section>
+                    </div>
+                    <div className={styles.frameChild} />
+                  </section>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

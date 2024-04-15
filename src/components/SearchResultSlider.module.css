@@ -1,5 +1,6 @@
 .slider {
-    width: 100%;
+    width:75%;
+    max-width: calc(100% - 56px);
     margin: 20px 28px;
   }
   
@@ -37,8 +38,10 @@
 
   .pageNumber {
     display: block;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 4px;
+    font-size: medium;
+    color: var(--color-dimgray-200);
   }
   
   .sentence {
@@ -50,6 +53,7 @@
     text-overflow: ellipsis;
     white-space: normal;
     padding-right: 42px;
+    font-size: small;
   }
   .highlight {
     color: var(--color-sandybrown);

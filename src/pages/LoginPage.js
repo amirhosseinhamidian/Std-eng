@@ -179,6 +179,7 @@ const LoginPage = () => {
                  type="number"
                  value={confirmationCode}
                  onChange={handleChangeConfirmationCode}
+                 autoFocus
                  />
           {showCodeTimer && (
             <div className={styles.codetimer}>{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>
@@ -199,7 +200,7 @@ const LoginPage = () => {
           <div className={styles.pleaseEnterYour}>
             Please enter your Password :
           </div>
-          <input className={styles.codeinput} type="password" />
+          <input className={styles.codeinput} type="password" autoFocus />
           <button className={styles.loginbutton1}>
             <b className={styles.logIn}>Log in</b>
           </button>
@@ -230,6 +231,7 @@ const LoginPage = () => {
               value={phoneInputValue}
               onChange={handlePhoneInputChange}
               maxLength={getMaxInputLength()}
+              autoFocus
               onKeyDown={(event) => event.key === 'Enter' && handleConfirm()}
               />
             </section>
