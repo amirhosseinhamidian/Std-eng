@@ -31,10 +31,15 @@
     margin-left: 4px;
     color: var(--color-dimgray-200);
     font-size: small;
+    font-weight: 500;
   }
   
   .arrowIconWrapper {
-
+    transition: transform 0.3s ease; /* Smooth transition for rotation */
+  }
+  
+  .rotated {
+    transform: rotate(180deg); /* Rotate the arrow 180 degrees */
   }
   
   .horizontalLine {
@@ -66,5 +71,5 @@
 
   .slider {
     color: var(--color-sandybrown);
-    
+    width: 92%;
   }

@@ -2,6 +2,7 @@
     width: 75%;
     align-items: center;
     margin-left: 64px;
+    margin-top: 36px;
   }
   
   .filterRow {
@@ -31,10 +32,7 @@
     margin-left: 4px;
     color: var(--color-dimgray-200);
     font-size: small;
-  }
-  
-  .arrowIconWrapper {
-
+    font-weight: 500;
   }
   
   .horizontalLine {
@@ -48,7 +46,7 @@
     margin-top: -24px;
     margin-bottom: 8px;
     margin-left: -12px;
-    display: flex;
+    
     flex-direction: column;
     transform: scale(0.8);
    
@@ -56,4 +54,12 @@
   
   .checkboxItem {
     font-size: medium;
+  }
+
+  .arrowIconWrapper {
+    transition: transform 0.3s ease; /* Smooth transition for rotation */
+  }
+  
+  .rotated {
+    transform: rotate(180deg); /* Rotate the arrow 180 degrees */
   }

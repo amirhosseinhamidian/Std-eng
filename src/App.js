@@ -68,6 +68,7 @@ function App() {
       <Route path="/" element={<SearchPage />} />
       <Route path="/searchpage" element={<SearchPage />} />
       <Route path="/searchresultpage" element={<SearchResultPage />} />
+      <Route path="/searchpage/searchresultpage" element={<SearchResultPage />} />
       <Route path="/profilepage" element={<ProfilePage />} />
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />

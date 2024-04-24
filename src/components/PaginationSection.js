@@ -19,7 +19,7 @@ const PaginationSection = ({ totalPages, currentPage, onPageChange }) => {
      const pagesToShow = calculatePageRange(currentPage, totalPages);
     
   return (
-    <div className={styles.backwardarrowsParent}>
+    <div className={styles.parent}>
       <div className={styles.backwardarrows}>
         <button
          className={styles.transparntButton}

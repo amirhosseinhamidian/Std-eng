@@ -32,12 +32,9 @@
     margin-left: 4px;
     color: var(--color-dimgray-200);
     font-size: small;
+    font-weight: 500;
   }
-  
-  .arrowIconWrapper {
 
-  }
-  
   .horizontalLine {
     width: 100%;
     margin: 0 auto;
@@ -57,3 +54,12 @@
   .checkboxItem {
     font-size: medium;
   }
+
+  .arrowIconWrapper {
+    transition: transform 0.3s ease; /* Smooth transition for rotation */
+  }
+  
+  .rotated {
+    transform: rotate(180deg); /* Rotate the arrow 180 degrees */
+  }
+  

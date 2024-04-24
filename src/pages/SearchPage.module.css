@@ -4,7 +4,6 @@
   position: relative;
   border-radius: var(--br-5xs);
   background-color: var(--color-whitesmoke);
-  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   z-index: 1;
 }
@@ -38,10 +37,10 @@
   width: 92.36%;
   margin: 0 !important;
   position: absolute;
-  top: 158px;
+  top: 78px;
   right: 3.82%;
   left: 3.82%;
-  height: 421px;
+  height: 65%;
   flex-shrink: 0;
   padding: 63px 90px;
   box-sizing: border-box;
@@ -64,12 +63,31 @@
   top: 158px;
   right: 3.82%;
   left: 3.82%;
-  height: 421px;
   flex-shrink: 0;
   padding: 63px 90px;
   box-sizing: border-box;
   z-index: 2;
 }
+.horizontalLine {
+  width: 100%;
+  margin: 0 auto;
+  border: none;
+  border-top: 1px solid var(--color-divider); /* Adjust color as needed */
+}
+.moreFilterDiv {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  vertical-align: middle;
+  align-items: center; 
+}
+
+.morefilter {
+  margin: 0 16px; /* Adjust margin as needed */
+  width: 30%;
+}
+
+
 @media screen and (max-width: 960px) {
   .searchInMoreContainer {
     font-size: 22px;

@@ -73,6 +73,7 @@
   width: 100%;
   position: relative;
   background-color: var(--color-white);
+
 }
 .mainContent {
   margin-top: 24px;
@@ -92,65 +93,8 @@
   display: flex;
   margin: 0;
   padding: 0;
+  height: 75vh;
 }
-@media screen and (max-width: 1200px) {
-  .frameContainer {
-    padding-left: var(--padding-161xl);
-    padding-right: var(--padding-161xl);
-    box-sizing: border-box;
-  }
-}
-@media screen and (max-width: 960px) {
-  .publishercoverIcon {
-    width: 100px;
-    height: 130px;
-  }
-  .frameContainer {
-    padding-left: var(--padding-281xl);
-    padding-right: var(--padding-281xl);
-    box-sizing: border-box;
-  }
-}
-@media screen and (max-width: 768px) {
-  .frameChild {
-    margin-top: 4;
-  }
-  .frameContainer {
-    padding-left: 70%;
-    padding-right: 65%;
-    box-sizing: border-box;
-  }
-  .searchresultpage {
-    width: auto;
-    align-self: unset;
-  }
-}
-@media screen and (max-width: 540px) {
-  .frameChild {
-    margin-top: 4;
-  }
-  .frameContainer {
-    padding-left: 155%;
-    padding-right: 140%;
-    box-sizing: border-box;
-  }
-}
-@media screen and (max-width: 420px) {
-  .frameChild {
-    margin-top: 4;
-  }
-  .frameContainer {
-    padding-left: var(--padding-531xl);
-    padding-right: var(--padding-531xl);
-    box-sizing: border-box;
-  }
-}
-@media screen and (max-width: 350px) {
-  .frameGroup {
-    flex-direction: column;
-  }
-  .publishercoverIcon {
-    width: 65px;
-    height: 86px;
-  }
+.searchSection {
+  padding-top: 15px !important;
 }

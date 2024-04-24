@@ -8,12 +8,11 @@ import SliderComponent from "../components/SearchResultSlider";
 import SearchSection from "../components/SearchSection";
 import Pagination from "../components/PaginationSection";
 import { useNavigate } from 'react-router-dom';
-import { pdf } from "@react-pdf/renderer";
 import {searchStandard} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
 import SidebarFilter from "../components/filter sidebar/SidebarFilter.js";
 
-const API_BASE_URL = "http://192.168.177.64:8060"
+const API_BASE_URL = "http://192.168.207.64:8060"
 
 const SearchResultPage = () => {
   const location = useLocation();
@@ -74,7 +73,9 @@ const SearchResultPage = () => {
     <>
       <div className={styles.searchresultpage}>
         <Header />
-        <SearchSection context="results" keyword={searchText} publisherId={publisherId} refreshSearchResults={refreshSearchResults}/>
+        <div className={styles.searchSection}>
+          <SearchSection context="results" keyword={searchText} publisherId={publisherId} refreshSearchResults={refreshSearchResults}/>
+        </div>
         {isLoading && <LoadingModal />}
         <div className={styles.container}>
           <div className={styles.sidebar}>

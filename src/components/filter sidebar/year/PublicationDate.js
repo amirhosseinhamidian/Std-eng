@@ -38,7 +38,7 @@ function PublicationDate() {
             Publication Date (Year)
           </div> 
           <div className={Styles.spacer} /> 
-          <div className={Styles.arrowIconWrapper}>
+          <div className={`${Styles.arrowIconWrapper} ${showSlider ? Styles.rotated : ''}`}>
             <img
               className={Styles.arrowIcon}
               alt=""
@@ -77,7 +77,6 @@ function PublicationDate() {
           />
         </div>
         }
-        <hr className={Styles.horizontalLine} />
       </section>
     </>   
   );

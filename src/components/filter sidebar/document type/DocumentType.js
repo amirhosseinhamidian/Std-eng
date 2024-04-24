@@ -12,9 +12,7 @@ function DocumentType({items}) {
 
   const handleChange = (event) => {
     const newValue = event.target.value;
-    console.log("here")
-    setSelectedValue(newValue);
-    
+    setSelectedValue(newValue === selectedValue ? '' : newValue);
   };
 
   return (
@@ -30,7 +28,7 @@ function DocumentType({items}) {
             Document Type
           </div> 
           <div className={Styles.spacer} /> 
-          <div className={Styles.arrowIconWrapper}>
+          <div className={`${Styles.arrowIconWrapper} ${showItems ? Styles.rotated : ''}`}>
             <img
               className={Styles.arrowIcon}
               alt=""

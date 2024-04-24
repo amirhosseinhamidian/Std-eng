@@ -56,13 +56,13 @@
     overflow: hidden;
     flex-shrink: 0;
   }
-  .backwardarrowsParent {
+  .parent {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
     gap: var(--gap-3xs);
-    margin-block: 36px;
+    padding-bottom: 24px;
   }
   .transparntButton {
     background-color: transparent;

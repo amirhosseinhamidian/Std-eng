@@ -2,7 +2,7 @@ import axios from 'axios';
 import { storeTokens, getAccessToken, getRefreshToken } from './authService';
 
 
-const API_BASE_URL = 'http://192.168.177.64:8060/api/v1';
+const API_BASE_URL = 'http://192.168.207.64:8060/api/v1';
 
 const apiService = axios.create({
     baseURL: API_BASE_URL,
@@ -38,6 +38,7 @@ export const authenticatedRequest = async (url, method, data) => {
   const searchStandard = async (keyword, publisherId, page=1) => {
     try {
       const accessToken = getAccessToken();
+      console.log(accessToken)
       const response = await apiService.get("/keyword-search",
       { 
         params: { 
