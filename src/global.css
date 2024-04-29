@@ -26,6 +26,8 @@ body {
   /* Colors */
   --color-white: #fff;
   --color-sandybrown: #ffad4d;
+  --color-snadytrans: #ffac4d1e;
+  --color-snadytrans-hover: #ffac4d38;
   --color-peru-100: #dd913b;
   --color-peru-200: #d89140;
   --color-peru-300: #d68f3d;

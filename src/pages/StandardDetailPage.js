@@ -2,6 +2,7 @@ import React from "react";
 import PDFReader from "../components/ReaderPdf";
 import styles from "./StandardDetailPage.module.css"
 import { useLocation } from 'react-router-dom';
+import Chat from "../components/Chat component/Chat"
 
 const StandardDetailPage = () => {
     console.log("here")
@@ -15,6 +16,7 @@ const StandardDetailPage = () => {
             </div>
             <div className={styles.rightHalf}>
                 {/* Your chat component will go here */}
+                <Chat/>
             </div>
         </div>
     )

@@ -116,7 +116,7 @@ const Information = () => {
   return (
     <div className={styles.information}>
       <form className={styles.frameParent}>
-        <img className={styles.frameChild} alt="" src="/frame-32@2x.png" onClick={save} />
+        <img className={styles.frameChild} alt="" src="/frame-32@2x.png"/>
         <div className={styles.frameGroup}>
           <div className={styles.emailParent}>
             <TextField
