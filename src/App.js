@@ -10,6 +10,7 @@ import SearchResultPage from "./pages/SearchResultPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import StandardDetailPage from "./pages/StandardDetailPage";
+import ChatBotPage from './pages/ChatBotPage'
 
 function App() {
   const action = useNavigationType();
@@ -47,6 +48,10 @@ function App() {
         title = "";
         metaDescription = "";
         break;
+      case "/chatbotpage":
+        title = "";
+        metaDescription = "";
+        break;
     }
 
     if (title) {
@@ -72,6 +77,8 @@ function App() {
       <Route path="/profilepage" element={<ProfilePage />} />
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />
+      <Route path="/searchpage/chatbotpage" element={<ChatBotPage />} />
+      <Route path="searchpage/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
     </Routes>
   );
 }

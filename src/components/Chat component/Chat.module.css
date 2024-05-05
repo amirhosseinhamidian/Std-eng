@@ -31,12 +31,6 @@
     padding-block: 16px;
   }
 
-  .bot {
-    background-color: #4caf50;
-    color: white;
-    align-self: flex-end;
-  }
-
   .inputContainer {
     align-self: stretch;
     border-radius: var(--br-5xs);
@@ -73,7 +67,6 @@
     position: absolute;
   }
   
-  /* Profile icon container */
 .profileIcon {
   width: 24px;
   height: 24px;
@@ -82,27 +75,23 @@
   margin-right: 8px; /* Adjust spacing between icon and message */
 }
 
-/* Profile image */
 .profileImage {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Ensure the image covers the entire circle */
 }
 
-/* Placeholder icon */
 .placeholderIcon {
   width: 100%;
   height: 100%;
 }
 
-/* Logo container */
 .logo {
   width: 24px;
   height: 24px;
   margin-right: 8px; /* Adjust spacing between logo and message */
 }
 
-/* Logo image */
 .logoImage {
   width: 100%;
   height: 100%;

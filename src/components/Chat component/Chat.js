@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import styles from "./Chat.module.css";
 import ChunkButton from './ChunkButton';
 
-function Chat() {
+function Chat({ botMessage, userQuestion }) {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
+  
   const textbox = useRef(null);
   const clearChat = () => {
     setMessages([]);
@@ -32,6 +33,21 @@ function Chat() {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    console.log("amir hossein",userQuestion.text)
+    if (userQuestion !== null && userQuestion !== undefined) {
+      const newMessages = [...messages, { text: userQuestion.text, role: 'user' }];
+      setMessages(newMessages);
+    }
+  }, [userQuestion]);
+
+  useEffect(() => {
+    if (botMessage !== null && botMessage !== undefined) {
+      const newMessages = [...messages, { text: botMessage.text, role: 'bot' }];
+      setMessages(newMessages);
+    }
+  }, [botMessage]);
+
   const sendMessage = () => {
     const newMessages = [...messages, { text: input, role: 'user' }];
     setMessages(newMessages);
@@ -52,7 +68,7 @@ function Chat() {
       setMessages(newBotMessages);
     }, 500);
   };
-
+  
   return (
     <div className={styles.chatContainer}>
       <div className={styles.messages}>
@@ -103,7 +119,7 @@ function Chat() {
             }}
           />
           <img className={styles.sendIcon} alt="send" src="/send.svg" onClick={sendMessage}/>
-        </div>
+      </div>
     </div>
   );
 }

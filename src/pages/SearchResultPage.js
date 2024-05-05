@@ -12,7 +12,7 @@ import {searchStandard} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
 import SidebarFilter from "../components/filter sidebar/SidebarFilter.js";
 
-const API_BASE_URL = "http://192.168.207.64:80"
+const API_BASE_URL = "http://std-eng.ir:80/"
 
 const SearchResultPage = () => {
   const location = useLocation();

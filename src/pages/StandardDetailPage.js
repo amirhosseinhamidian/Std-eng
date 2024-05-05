@@ -5,10 +5,9 @@ import { useLocation } from 'react-router-dom';
 import Chat from "../components/Chat component/Chat"
 
 const StandardDetailPage = () => {
-    console.log("here")
     const location = useLocation();
     const pdfUrl = location.state || {};
-    console.log("url ", pdfUrl);
+    const { botMessage, userQuestion } = location.state || {};
     return (
         <div className={styles.container}>
             <div className={styles.leftHalf}>
@@ -16,7 +15,7 @@ const StandardDetailPage = () => {
             </div>
             <div className={styles.rightHalf}>
                 {/* Your chat component will go here */}
-                <Chat/>
+                <Chat botMessage={botMessage} userQuestion={userQuestion}/>
             </div>
         </div>
     )

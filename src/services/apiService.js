@@ -2,7 +2,7 @@ import axios from 'axios';
 import { storeTokens, getAccessToken, getRefreshToken } from './authService';
 
 
-const API_BASE_URL = 'http://192.168.207.64:8060/api/v1';
+const API_BASE_URL = 'http://std-eng.ir:80/api/v1';
 
 const apiService = axios.create({
     baseURL: API_BASE_URL,
