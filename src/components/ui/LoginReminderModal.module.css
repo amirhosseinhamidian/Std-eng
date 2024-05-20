@@ -15,8 +15,8 @@
   
   /* modal content */
   .modalcontent {
-    width: 25%;
-    height: 35%;
+    width: 45%;
+    height: 65%;
     background-color: white;
     border-radius: 8px;
     display: flex;
@@ -29,13 +29,18 @@
   
   /* progress bar */
   .progressbar {
-    margin-bottom: 20px;
+    position: relative; 
+    display: inline-block;
+  }
+
+  .circularProgress {
+    padding: 15%;
   }
   
   /* message text */
   .messagetext {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: medium;
+    font-weight: 500;
     color: var(--color-dimgray-200);
   }
 
@@ -49,4 +54,33 @@
 
   .loginBtnText {
     color: var(--color-sandybrown);
+  }
+
+  .loginRequired {
+    font-size: large;
+  }
+
+  .timer {
+    position: absolute; /* Position the timer absolutely within the progress bar */
+    top: 46%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset to center */
+    margin: 0; /* Reset default margin */
+    color: var(--color-dimgray-200); /* Customize as needed */
+    font-size: larger; /* Customize as needed */
+    font-weight: bold; /* Customize as needed */
+  }
+
+  @media (max-width: 560px) {
+    .loginRequired {
+      font-size: medium;
+    }
+
+    .messagetext {
+      font-size: small;
+    }
+
+    .modalcontent {
+      width: 65%;
+    }
   }

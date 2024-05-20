@@ -1,7 +1,7 @@
 .container {
     width: 75%;
     align-items: center;
-    margin-left: 64px;
+    margin-left: 48px;
   }
   
   .filterRow {
@@ -53,6 +53,20 @@
     font-size: smaller;
     color: var(--color-darkgray);
     margin-top: 2px;
+  }
+
+  .rangeHolder {
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .textRange {
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
   }
 
   .range {

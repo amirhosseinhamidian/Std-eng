@@ -77,26 +77,6 @@ const Information = () => {
     birthFocused: false,
     // Add other properties for other input fields if needed
   });
-
-  const save = async() => {
-    console.log("gender",profileData.email)
-    console.log("edu",profileData.education)
-    console.log("firstname",profileData.first_name)
-    try {
-        const response = await updateProfile(
-          profileData.first_name,
-          profileData.last_name,
-          profileData.gender,
-          profileData.email,
-          profileData.education,
-          profileData.company,
-          profileData.birth_date
-        )
-        console.log(response)
-      } catch (error) {
-        console.log(error)
-      }
-  }
   
   const saveHandle = async() => {
       try {
@@ -118,7 +98,7 @@ const Information = () => {
       <form className={styles.frameParent}>
         <img className={styles.frameChild} alt="" src="/frame-32@2x.png"/>
         <div className={styles.frameGroup}>
-          <div className={styles.emailParent}>
+          <div className={styles.inputsParent}>
             <TextField
               className={styles.email}
               color="warning"
@@ -151,7 +131,7 @@ const Information = () => {
               }}
             />
           </div>
-          <div className={styles.emailParent}>
+          <div className={styles.inputsParent}>
             <TextField
               className={styles.email}
               color="warning"
@@ -187,8 +167,9 @@ const Information = () => {
               }}
             />
           </div>
-          <div className={styles.emailParent}>
+          <div className={styles.inputsParent}>
             <FormControl
+              className={styles.email}
               variant="outlined"
               sx={{
                 borderRadius: "0px 0px 0px 0px",
@@ -267,9 +248,9 @@ const Information = () => {
               }}
             />
           </div>
-          <div className={styles.emailParent}>
+          <div className={styles.inputsParent}>
             <FormControl
-              className={styles.genderParent}
+              className={styles.email}
               variant="outlined"
               sx={{
                 borderRadius: "0px 0px 0px 0px",
@@ -351,7 +332,7 @@ const Information = () => {
             />
           </div>
         </div>
-        <button className={styles.saveButton}>
+        <button type="button" className={styles.saveButton}>
           <b className={styles.save} onClick={saveHandle}>SAVE</b>
         </button>
       </form>

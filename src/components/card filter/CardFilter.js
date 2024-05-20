@@ -20,9 +20,7 @@ function CardFilter({ data }) {
 
     return (
         <div className={styles.cardContainer}>
-            <ScrollMenu
-   
-            >
+            <ScrollMenu>
                 {data.map(({ id, title, icon }) => (
                     <Card
                         itemId={id}

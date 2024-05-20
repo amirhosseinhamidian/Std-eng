@@ -14,6 +14,7 @@
     width: 100%;
     max-height: calc(100vh - 80px); /* Adjust as needed, subtracting header height */
     flex-direction: column;
+    overflow: hidden;
 }
 
 .chatContinar {
@@ -22,6 +23,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
+    
 }
 
 .inputContainer {
@@ -85,7 +87,6 @@
     background-color: var(--color-snadytrans);
     align-self: flex-start;
     padding-block: 16px;
-    
   }
   
   .systemMessage {
@@ -99,7 +100,6 @@
     height: 24px;
     border-radius: 50%; /* Make it circular */
     overflow: hidden; /* Ensure image or icon stays within the circle */
-    margin-right: 8px; /* Adjust spacing between icon and message */
   }
   
   .profileImage {
@@ -114,9 +114,8 @@
   }
   
   .logo {
-    width: 24px;
-    height: 24px;
-    margin-right: 8px; /* Adjust spacing between logo and message */
+    width: 20px;
+    height: 20px;
   }
   
   .logoImage {
@@ -127,6 +126,7 @@
   }
   .messageText {
     align-self: flex-end;
+    margin-left: 8px;
   }
   .messageContinar {
     width: 93%;
@@ -146,7 +146,6 @@
     width: 32px;
     height: 36px;
     margin-right: 16px;
-    
   }
 
   .pdfTextsContainr {
@@ -156,7 +155,6 @@
     flex-direction: column;
     width: 75%;
     padding-right: 16px;
-    
   }
 
   .pdfTitle {
@@ -173,6 +171,7 @@
     font-weight: 400;
     margin-top: 4px;
     font-size: small;
+    color: var(--color-dimgray-100);
   }
 
   .buttonChat {
@@ -189,3 +188,150 @@
   .buttonChat:hover {
     background-color: var(--color-peru-100);
   }
+
+
+  @media screen and (max-width: 840px) {
+    .input {
+      font-size: 13px;
+    }
+
+    .sendIcon {
+      height: 28px;
+      width: 28px;
+      margin-top: 2px;
+  }
+
+  .inputContainer {
+    position: fixed;
+    transform: translateX(-50%);
+    width: 75%;
+    left: 46%;
+  }
+
+  .messages {
+    max-height: calc(100vh - 160px);
+    width: 88%;
+    left: 50%;
+    padding-inline: 2%;
+    transform: translateX(-50%);
+    position: fixed;
+  }
+
+  .messageText {
+    font-size: 12px;
+    font-weight: 400;
+    width: 70vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .message {
+    margin: 16px;
+  }
+
+  .pdfImg {
+    width: 20px;
+    height: 26px;
+    margin-right: 10px;
+  }
+
+  .pdfContinar {
+    padding: 12px;
+    margin: 24px 8px 8px 8px;
+  }
+
+  .pdfTitle {
+    font-size: 12px;
+  }
+
+  .pdfPublisher {
+    font-size: 11px;
+  }
+
+  .buttonChat {
+    font-size: 12px;
+    height: 30px;
+    font-weight: 600;
+  }
+}
+
+  
+  @media screen and (max-width: 540px) {
+    .input {
+      font-size: 11px;
+    }
+
+    .sendIcon {
+      height: 24px;
+      width: 24px;
+      margin-top: 4px;
+  }
+
+  .inputContainer {
+    position: fixed;
+    transform: translateX(-50%);
+    width: 90%;
+    left: 45%;
+  }
+
+  .messages {
+    max-height: calc(100vh - 160px);
+    width: 98%;
+    left: 50%;
+    padding-inline: 2%;
+    transform: translateX(-50%);
+    position: fixed;
+  }
+
+  .messageText {
+    font-size: 11px;
+    font-weight: 400;
+    width: 70vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .message {
+    margin: 16px;
+  }
+
+  .pdfImg {
+    width: 20px;
+    height: 26px;
+    margin-right: 10px;
+  }
+
+  .pdfContinar {
+    padding: 10px;
+    margin: 24px 8px 8px 8px;
+  }
+
+  .pdfTitle {
+    font-size: 11px;
+  }
+
+  .pdfPublisher {
+    font-size: 10px;
+  }
+
+  .buttonChat {
+    font-size: 11px;
+    height: 28px;
+    font-weight: 600;
+  }
+}
+
+@media screen and (max-width: 350px) {
+
+.inputContainer {
+  left: 43%;
+}
+
+.pdfContinar {
+  width:100% ;
+}
+
+.pdfTextsContainr {
+  width: 70%;
+}
+}

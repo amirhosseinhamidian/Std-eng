@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Styles from "./LoginReminderModal.module.css"
 
 const LoginReminderModal = () => {
+  const [countdownTimer, setCountdownTimer] = useState(5)
   const navigate = useNavigate();
   const [progress, setProgress] = useState(100);
 
@@ -17,30 +18,32 @@ const LoginReminderModal = () => {
   }, [navigate]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      setProgress((prevProgress) => {
-        // Decrease progress by 20% every second (5 seconds total)
-        return prevProgress - 20;
-      });
-    }, 1000);
+    if (countdownTimer > 0) {
+      const timer = setInterval(() => {
+        setCountdownTimer(prevTime => prevTime - 1);
+        setProgress((prevProgress) => prevProgress - 20); // Decrease by 20 for each second (100/5)
+      }, 1000);
 
-    // Clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, []);
+      return () => clearInterval(timer); // Cleanup the interval on component unmount
+    }
+  }, [countdownTimer]);
 
   return (
     <div className={Styles.modalcontainer}>
       <div className={Styles.modalcontent}>
         <div className={Styles.progressbar}>
           <CircularProgress 
+            className={Styles.circularProgress}
             variant="determinate"
             value={progress} // Set progress value dynamically
             size={80} // Adjust the size of the circular progress
             thickness={5} // Adjust the thickness of the circular progress
             
          />
+        <h3 className={Styles.timer}>{countdownTimer}</h3>
         </div>
-        <p className={Styles.messagetext}>You need to log in to your user account to use this feature.</p>
+        <b className={Styles.loginRequired}>Login required</b>
+        <p className={Styles.messagetext}>You will be automatically redirected to the login page.</p>
         {/* <button className={Styles.loginBtn}>
           <p className={Styles.loginBtnText}>Login/Signup</p>
         </button> */}

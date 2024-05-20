@@ -5,12 +5,14 @@ import PortalDrawer from "../components/PortalDrawer";
 import styles from "./SearchResultPage.module.css";
 import { useLocation } from 'react-router-dom';
 import SliderComponent from "../components/SearchResultSlider";
-import SearchSection from "../components/SearchSection";
+import SearchSectionSimple from "../components/SearchSectionSimple.js";
 import Pagination from "../components/PaginationSection";
 import { useNavigate } from 'react-router-dom';
 import {searchStandard} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
 import SidebarFilter from "../components/filter sidebar/SidebarFilter.js";
+import { BottomSheet } from 'react-spring-bottom-sheet'
+
 
 const API_BASE_URL = "http://std-eng.ir:80/"
 
@@ -68,49 +70,68 @@ const SearchResultPage = () => {
       setIsLoading(false);
     }
   }
+
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+
+  const handleFilterButtonClick = () => {
+    setIsFilterSheetOpen(!isFilterSheetOpen);
+  };
+
+  const handleCloseBottomSheet = () => {
+    setIsFilterSheetOpen(false);
+  };
   
   return (
     <>
       <div className={styles.searchresultpage}>
         <Header />
-        <div className={styles.searchSection}>
-          <SearchSection context="results" keyword={searchText} publisherId={publisherId} refreshSearchResults={refreshSearchResults}/>
-        </div>
         {isLoading && <LoadingModal />}
         <div className={styles.container}>
           <div className={styles.sidebar}>
             <SidebarFilter />
           </div>
-          <ul className={styles.mainContent}>
-            {results.data.map((result) => (
-              <li key={result.content_id}>
-                <div className={styles.searchresultpageInner}>
+          <div className={styles.mainContent}>
+            <div className={styles.searchSection}>
+              <SearchSectionSimple 
+                onFilterButtonClick={handleFilterButtonClick}
+                keyword={searchText} 
+                publisherId={publisherId} 
+                refreshSearchResults={refreshSearchResults}
+              />
+            </div>
+            <ul className={styles.listContent}>
+              {results.data.map((result, index) => (
+                <li key={index}>
                   <section className={styles.frameContainer}>
-                    <div className={styles.nave}>
-                      <img
-                        className={styles.publishercoverIcon}
-                        alt={result.title}
-                        src={API_BASE_URL + result.publisher_logo}
-                        onClick={() => pdfClickHandle(result.pdf_path)}
-                      />
-                      <section className={styles.titleParent}>
-                        <b className={styles.title}>{result.title}</b>
-                        <div className={styles.designation}>Designation: {result.designation_id}</div>
-                        <SliderComponent details={result.details} keyword={keyword} />
-                      </section>
-                    </div>
-                    <div className={styles.frameChild} />
-                  </section>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
+                      <div className={styles.nave}>
+                        <img
+                          className={styles.publishercoverIcon}
+                          alt={result.title}
+                          // src={API_BASE_URL + result.publisher_logo}
+                          src="./PDF_icon.png"
+                          onError={(e) => {
+                            e.target.src = "./PDF_icon.png"; // Set the placeholder image URL
+                          }}
+                          onClick={() => pdfClickHandle(result.pdf_path)}
+                        />
+                        <section className={styles.titleParent}>
+                          <b className={styles.title}>{result.title}</b>
+                          <div className={styles.designation}>Designation: {result.designation_id}</div>
+                          <SliderComponent details={result.details} keyword={keyword} />
+                        </section>
+                      </div>
+                    </section>
+                    <hr className={styles.frameChild} />
+                </li>
+              ))}
+            </ul>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
+            />
+          </div>
+        </div>        
       </div>
       {isDrawerOpen && (
         <PortalDrawer
@@ -121,6 +142,22 @@ const SearchResultPage = () => {
           <Drawer onClose={closeDrawer} />
         </PortalDrawer>
       )}
+        <BottomSheet 
+          open={isFilterSheetOpen} 
+          blocking={true} >
+          <div className={styles.bottomSheetContent}>
+                      
+            <div className={styles.filterContainer}>
+            
+              <SidebarFilter />
+              <div className={styles.sheetBtns}>
+                <button className={styles.applyBtn}>Apply</button>
+                <button className={styles.closeBtn} onClick={handleCloseBottomSheet}>Close</button>
+              </div>
+            </div>
+            
+          </div>
+        </BottomSheet>
     </>
   );
 };

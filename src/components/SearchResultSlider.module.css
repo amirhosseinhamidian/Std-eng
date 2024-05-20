@@ -1,6 +1,6 @@
 .slider {
-    width:75%;
-    max-width: calc(100% - 56px);
+    width:75vw;
+    max-width: calc(75% - 96px);
     margin: 20px 28px;
   }
   
@@ -57,4 +57,49 @@
   }
   .highlight {
     color: var(--color-sandybrown);
+  }
+
+  @media (max-width: 960px) {
+    .slider {
+      max-width: calc(75vw - 20px);
+      margin: 20px 28px;
+    }
+
+    .sentence {
+      font-size: small;
+    }
+
+    .pageNumber {
+      font-size: medium;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .slider {
+      max-width: calc(75vw - 0px);
+      margin: 20px 28px;
+    }
+
+    .sentence {
+      font-size: x-small;
+    }
+
+    .pageNumber {
+      font-size: small;
+    }
+  }
+
+  @media (max-width: 440px) {
+    .slider {
+      max-width: calc(75vw - 0px);
+      margin: 20px 28px;
+    }
+
+    .sentence {
+      font-size: xx-small;
+    }
+
+    .pageNumber {
+      font-size: x-small;
+    }
   }

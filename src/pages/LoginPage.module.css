@@ -33,7 +33,7 @@
   left: 0;
   border-radius: var(--br-5xs);
   box-sizing: border-box;
-  width: 324px;
+  width: 100%;
   height: 42px;
   padding-block: 8px;
   padding-inline: 20px;
@@ -49,7 +49,7 @@
   font-weight: 500;
   color: var(--color-dimgray-100);
   display: inline-block;
-  width: 326px;
+  width: 100%;
 }
 .enterWithPassword,
 .sendCodeAgain {
@@ -81,7 +81,7 @@
 .loginbutton {
   cursor: pointer;
   border: 0;
-  padding: var(--padding-3xs) var(--padding-119xl);
+  padding: var(--padding-3xs) 40%;
   background-color: var(--color-sandybrown);
   position: absolute;
   top: 160px;
@@ -175,7 +175,7 @@
   outline: 0;
   background-color: var(--color-white);
   height: 42px;
-  width: 287px;
+  width: 100%;
   position: relative;
   border-radius: var(--br-5xs);
   box-sizing: border-box;
@@ -228,12 +228,12 @@
 .sendcodebutton {
   cursor: pointer;
   border: 0;
-  padding: var(--padding-3xs) var(--padding-119xl);
+  padding: var(--padding-3xs) 50%;
   background-color: var(--color-sandybrown);
   top: 152px;
   border-radius: var(--br-5xs);
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  width: 324px;
+  width: 100%;
   height: 42px;
   overflow: hidden;
   flex-direction: row;
@@ -293,7 +293,7 @@
 .signInWith {
   position: absolute;
   top: 11px;
-  left: 82px;
+  left: 30%;
   font-size: var(--font-size-base);
   font-family: var(--font-inter);
   color: var(--color-white);
@@ -316,7 +316,7 @@
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border: 1px solid var(--color-dodgerblue);
   box-sizing: border-box;
-  width: 324px;
+  width: 100%;
   height: 42px;
 }
 .rectangleParent:active {
@@ -327,13 +327,14 @@
   border: 0;
   padding: 0;
   background-color: transparent;
-  width: 324px;
+  width: 100%;
   position: relative;
   height: 42px;
 }
 .anotherlogin {
   position: absolute;
   top: 252px;
+  width: 100%;
   left: 0;
   display: flex;
   flex-direction: column;
@@ -386,4 +387,32 @@
 .confirmationCode {
   align-items: center;
   justify-content: center;
+}
+
+
+@media (max-width: 360px) {
+  .standardEngineering {
+    font-weight: 600;
+    font-size: small;
+  }
+
+  .logIn2 {
+    font-size: medium;
+    font-weight: 700;
+  }
+
+  .logIn {
+    font-size: medium;
+  }
+
+  .pleaseEnterThe {
+    font-size: small;
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 290px){
+  .signInWith {
+    font-size: small;
+  }
 }

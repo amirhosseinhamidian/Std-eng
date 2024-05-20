@@ -67,7 +67,7 @@ const SearchPage = () => {
           </div>
         }
         
-        {mode === 'search' && <SearchSection context="main"/>}
+        {mode === 'search' && <SearchSection context="main" keyword=""/>}
         {mode === 'chatbot' && <ChatbotSection />}
         <div className={styles.moreFilterDiv}>
           <hr className={styles.horizontalLine} />

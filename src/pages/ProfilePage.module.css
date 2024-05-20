@@ -76,3 +76,11 @@
   color: var(--color-darkgray); /* Change color on hover */
   cursor: pointer;
 }
+
+.optionsSelector {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    margin-left: 4%;
+    margin-top: 1%;
+}

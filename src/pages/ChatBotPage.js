@@ -9,8 +9,10 @@ const ChatBotPage = () => {
     const textbox = useRef(null);
     const navigate = useNavigate();
 
+    const queryParams = new URLSearchParams(location.search);
+    const inputText = queryParams.get('query');
+
     const handleChatWithPdfClick = (botMessage, userQuestion) => {
-        console.log("botMessage", botMessage)
         navigate("./standarddetailpage", {
             state: { botMessage, userQuestion }
         })
@@ -78,6 +80,12 @@ const ChatBotPage = () => {
         }, 500);
     };
 
+    useEffect(() => {
+        if (inputText) {
+          sendMessage(inputText);
+        }
+      }, [inputText]); 
+
     return (
         <div className={styles.continar}>
             <Header />
@@ -96,20 +104,20 @@ const ChatBotPage = () => {
                             </div>
                             )}
                             <div className={styles.messageContinar}>
-                            <div className={styles.messageText}>{message.text}</div>
-                            {message.role !== 'user' && (
-                                <div className={styles.pdfContinar}>
-                                    <img className={styles.pdfImg} src='/PDF_icon.png' alt="PDF Icon" />
-                                    <div className={styles.pdfTextsContainr}>
-                                        <div className={styles.pdfTitle}>{message.title}</div>
-                                        <div className={styles.pdfPublisher}>publisher: {message.publisher}</div>
+                                <div className={styles.messageText}>{message.text}</div>
+                                {message.role !== 'user' && (
+                                    <div className={styles.pdfContinar}>
+                                        <img className={styles.pdfImg} src='/PDF_icon.png' alt="PDF Icon" />
+                                        <div className={styles.pdfTextsContainr}>
+                                            <div className={styles.pdfTitle}>{message.title}</div>
+                                            <div className={styles.pdfPublisher}>publisher: {message.publisher}</div>
+                                        </div>
+                                        <button className={styles.buttonChat} 
+                                                onClick={() => handleChatWithPdfClick(message, messages[index - 1])}>
+                                                Chat
+                                        </button>
                                     </div>
-                                    <button className={styles.buttonChat} 
-                                            onClick={() => handleChatWithPdfClick(message, messages[index - 1])}>
-                                            Chat with PDF
-                                    </button>
-                                </div>
-                            )}
+                                )}
                             </div>
                         </div>
                         ))}

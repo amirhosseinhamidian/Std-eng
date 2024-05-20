@@ -34,7 +34,6 @@ function Chat({ botMessage, userQuestion }) {
   }, [messages]);
 
   useEffect(() => {
-    console.log("amir hossein",userQuestion.text)
     if (userQuestion !== null && userQuestion !== undefined) {
       const newMessages = [...messages, { text: userQuestion.text, role: 'user' }];
       setMessages(newMessages);

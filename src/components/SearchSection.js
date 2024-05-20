@@ -11,14 +11,10 @@ import {
   MenuItem,
 } from "@mui/material";
 
-const SearchSection = ({ context, keyword, publisherId, refreshSearchResults }) => {
-  const onSearchButtonClick = useCallback(() => {
-    // Please sync "search result" to the project
-  }, []);
-  const [searchText, setSearchText] = useState(keyword || '');
+const SearchSection = ( props ) => {
+  const [searchText, setSearchText] = useState(props.keyword || '');
   const [selectedPublisher, setSelectedPublisher] = useState('All publisher');
   const navigate = useNavigate();
-  const [mockData, setMockData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [goToLoginPage, setGoToLoginPage] = useState(false);
@@ -59,7 +55,7 @@ const SearchSection = ({ context, keyword, publisherId, refreshSearchResults }) 
       setIsLoading(false);
       const totalPages = data.data.last_page;
       const itemsPerPage = data.data.per_page;
-      if (context === 'results') {
+      if (props.context === 'results') {
         // If the component is on the search results page, update the search results data
         refreshSearchResults(data, searchText, selectedPublisher);
       } else {

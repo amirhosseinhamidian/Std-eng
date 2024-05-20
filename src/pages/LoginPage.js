@@ -186,12 +186,12 @@ const LoginPage = () => {
           )}
           {showAnotherCodeMessage && (
             <div className={styles.tryagain}>
-            <a className={styles.enterWithPassword}>Enter with password</a>
+            {/* <a className={styles.enterWithPassword}>Enter with password</a> */}
             <a className={styles.sendCodeAgain} onClick={handleSendCodeAgainClick}>Send Code Again</a>
           </div>
           )}
-          <button className={styles.loginbutton} onClick={handleLoginWithCode}>
-            <b className={styles.logIn}>Log in</b>
+          <button className={styles.sendcodebutton} onClick={handleLoginWithCode}>
+            <b className={styles.logIn}>Login</b>
           </button>
         </div>
         )}

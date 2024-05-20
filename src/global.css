@@ -6,6 +6,15 @@ body {
   line-height: normal;
 }
 :root {
+  /* bottom sheet */
+  --rsbs-backdrop-bg: rgba(0, 0, 0, 0.6);
+  --rsbs-bg: #fff;
+  --rsbs-handle-bg: hsla(0, 0%, 0%, 0.14);
+  --rsbs-max-w: auto;
+  --rsbs-ml: env(safe-area-inset-left);
+  --rsbs-mr: env(safe-area-inset-right);
+  --rsbs-overlay-rounded: 16px;
+
   /* fonts */
   --font-inter: Inter;
 
@@ -73,6 +82,7 @@ body {
   --padding-7xs: 6px;
   --padding-3xs: 10px;
   --padding-77xl: 96px;
+  --padding-78xl: 110px;
   --padding-161xl: 180px;
   --padding-281xl: 300px;
   --padding-531xl: 550px;

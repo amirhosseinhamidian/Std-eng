@@ -13,6 +13,10 @@ function SidebarFilter() {
   return (
   <>
     <section className={Styles.sidebar}>
+        <div className={Styles.filterHolder}>
+          <img className={Styles.filterIcon} src='/filter.svg'/>
+          <div className={Styles.filter}>Filters</div>
+        </div>
         <Discipline items={lis}/>
         <DocumentType items={lis}/>
         <Industry items={lis}/>

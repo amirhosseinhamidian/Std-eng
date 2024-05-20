@@ -34,15 +34,13 @@
   justify-content: space-between;
 }
 .search {
-  width: 92.36%;
+  width: 92vw;
   margin: 0 !important;
   position: absolute;
   top: 78px;
-  right: 3.82%;
-  left: 3.82%;
   height: 65%;
   flex-shrink: 0;
-  padding: 63px 90px;
+  padding: 63px 24px;
   box-sizing: border-box;
   z-index: 2;
 }
@@ -56,29 +54,16 @@
   color: var(--color-dimgray-200);
   font-family: var(--font-inter);
 }
-.searchRelated {
-  width: 92.36%;
-  margin: 0 !important;
-  position: absolute;
-  top: 158px;
-  right: 3.82%;
-  left: 3.82%;
-  flex-shrink: 0;
-  padding: 63px 90px;
-  box-sizing: border-box;
-  z-index: 2;
-}
+
 .horizontalLine {
   width: 100%;
-  margin: 0 auto;
+  margin: 0;
   border: none;
   border-top: 1px solid var(--color-divider); /* Adjust color as needed */
 }
 .moreFilterDiv {
   display: flex;
-  flex-direction: row;
   width: 100%;
-  vertical-align: middle;
   align-items: center; 
 }
 
@@ -93,31 +78,105 @@
     font-size: 22px;
   }
 }
+
+
 @media screen and (max-width: 768px) {
   .searchInMoreContainer {
     font-size: var(--font-size-lg);
     flex: 1;
   }
+
+  .search {
+    padding:63px 60px ;
+    height: 760px;
+  }
+
+  .moreFilterDiv {
+    width: 95vw;
+  }
+  
 }
+
+
 @media screen and (max-width: 540px) {
   .searchInMoreContainer {
     font-size: var(--font-size-base);
   }
+
+  .search {
+    padding:63px 76px ;
+    height: 760px;
+  }
+
+  .promotiontext {
+    margin-bottom: 16px;
+  }
+
+  .moreFilterDiv {
+    margin-top: 16px;
+    width: 90vw;
+  }
+
+  .searchpage {
+    height: 950px;
+  }
 }
+
+
 @media screen and (max-width: 420px) {
   .searchInMoreContainer {
-    font-size: var(--font-size-sm);
+    font-size: 11px;
     text-align: center;
     flex: 1;
-    min-width: 400px;
   }
+
+  .promotiontext {
+    margin-bottom: 16px;
+  }
+
+  .search {
+    padding:63px 60px ;
+  }
+
+  .morefilter {
+    margin: 0 16px; /* Adjust margin as needed */
+    font-size: small;
+  }
+
+  .moreFilterDiv {
+    margin-top: 16px;
+    width: 90vw;
+  }
+
+  .searchpage {
+    height: 840px;
+  }
+
 }
+
+
 @media screen and (max-width: 350px) {
   .searchInMoreContainer {
-    font-size: 12px;
-    width: 60%;
+    font-size: 11px;
+    text-align: center;
+    flex: 1;
   }
+
+  .promotiontext {
+    margin-bottom: 16px;
+  }
+
+
+  .search {
+    padding:63px 60px ;
+    
+  }
+
+  .morefilter {
+    margin: 0 16px; /* Adjust margin as needed */
+  }
+
   .searchpage {
-    width: 1440px;
+    height: 820px;
   }
 }

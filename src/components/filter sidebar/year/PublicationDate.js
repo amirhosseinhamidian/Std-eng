@@ -47,35 +47,37 @@ function PublicationDate() {
           </div>
         </div>
         {showSlider && 
-          <div>
-          <div className={Styles.range}>
-            <div className={Styles.sliderTags}>from:</div>
-            <input 
-              type="number" 
-              value={dateRange[0]} 
-              className={`${Styles.rangeInput}`} 
-              onChange={(e) => handleInputChange(e, "min")}/>
+          <div className={Styles.rangeHolder}>
+            <div className={Styles.textRange}>
+              <div className={Styles.range}>
+                <div className={Styles.sliderTags}>from:</div>
+                <input 
+                  type="number" 
+                  value={dateRange[0]} 
+                  className={`${Styles.rangeInput}`} 
+                  onChange={(e) => handleInputChange(e, "min")}/>
+              </div>
+              <div className={Styles.range}>
+                <div className={Styles.sliderTags}>to:</div>
+                <input 
+                  type="number" 
+                  value={dateRange[1]} 
+                  className={Styles.rangeInput}
+                  onChange={(e) => handleInputChange(e, "max")}
+                  />
+              </div>
+            </div>
+            <Slider
+              value={dateRange}
+              onChange={handleSliderChange}
+              min={1969}
+              max={2024}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              color='warning'
+              className={Styles.slider}
+            />
           </div>
-          <div className={Styles.range}>
-            <div className={Styles.sliderTags}>to:</div>
-            <input 
-              type="number" 
-              value={dateRange[1]} 
-              className={Styles.rangeInput}
-              onChange={(e) => handleInputChange(e, "max")}
-              />
-          </div>
-          <Slider
-            value={dateRange}
-            onChange={handleSliderChange}
-            min={1969}
-            max={2024}
-            valueLabelDisplay="auto"
-            aria-labelledby="range-slider"
-            color='warning'
-            className={Styles.slider}
-          />
-        </div>
         }
       </section>
     </>   

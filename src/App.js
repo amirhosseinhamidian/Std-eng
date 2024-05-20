@@ -78,7 +78,9 @@ function App() {
       <Route path="/loginpage" element={<LoginPage />} />
       <Route path="/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />
       <Route path="/searchpage/chatbotpage" element={<ChatBotPage />} />
-      <Route path="searchpage/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
+      <Route path="/chatbotpage" element={<ChatBotPage />} />
+      <Route path="/searchpage/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
+      <Route path="/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
     </Routes>
   );
 }
