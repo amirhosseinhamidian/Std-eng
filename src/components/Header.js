@@ -3,6 +3,7 @@ import { useNavigate  } from "react-router-dom";
 import Drawer from "./Drawer";
 import PortalDrawer from "./PortalDrawer";
 import styles from "./Header.module.css";
+import {getAccessToken} from "../services/authService"
 
 const Header = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -18,7 +19,15 @@ const Header = () => {
   const navigate = useNavigate();
 
   const profileClickHandle = () => {
-    navigate('./loginpage')
+    if (getAccessToken()) {
+      navigate('/profilepage')
+    } else {
+      navigate('/loginpage')
+    }
+  }
+
+  const searchClickHandle = () => {
+    navigate('/searchpage')
   }
 
   return (
@@ -38,7 +47,7 @@ const Header = () => {
                 <a className={styles.home} muted>
                   Home
                 </a>
-                <b className={styles.search}>Search</b>
+                <b className={styles.home} onClick={searchClickHandle}>Search</b>
                 <b className={styles.search}>Standards</b>
                 <b className={styles.search}>About us</b>
                 <a className={styles.home} onClick={profileClickHandle}>Profile</a>

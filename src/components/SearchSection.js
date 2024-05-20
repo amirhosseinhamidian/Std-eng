@@ -1,50 +1,87 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import styles from "./SearchSection.module.css";
 import React, { useState } from 'react';
-// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import generateMockData from '../utils/mockData.js';
+import {searchStandard, publisherListRequest} from '../services/apiService.js'
+import LoadingModal from "../components/ui/LoadingModal";
+import LoadingReminderModal from "../components/ui/LoginReminderModal.js";
+import {
+  Select,
+  InputLabel,
+  MenuItem,
+} from "@mui/material";
 
-const SearchSection = () => {
-  const onSearchButtonClick = useCallback(() => {
-    // Please sync "search result" to the project
-  }, []);
-  const [searchText, setSearchText] = useState('');
-  const [selectedPublisher, setSelectedPublisher] = useState('');
+const SearchSection = ( props ) => {
+  const [searchText, setSearchText] = useState(props.keyword || '');
+  const [selectedPublisher, setSelectedPublisher] = useState('All publisher');
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [goToLoginPage, setGoToLoginPage] = useState(false);
+  const [publishers, setPublishers] = useState([]);
 
-  const handleSearch = () => {
+  useEffect(() => {
+    const fetchPublisherData = async () => {
+      try {
+        // Fetch data using the API service function
+        const data = await publisherListRequest();
+        // Extract publisher names and IDs from the response
+        const publisherData = data.data.map(publisher => ({
+          id: publisher.id,
+          name: publisher.name,
+        }));
+        // Set the state with the list of publisher names and IDs
+        setPublishers(publisherData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchPublisherData(); // Call the fetchData function
+  }, []); // Empty dependency array to run the effect only once on component mount
+
+  const handleSearch = async() => {
     // Check if searchText is not empty before making the request
-    if (searchText.trim() !== '') {
+    
+    if (!searchText.trim()) {
+      return
+    } 
+    try{
       // Log the request data before making the actual API call
-      console.log('Request Data:', { searchText, selectedPublisher });
       // Make a request to the server using Axios
-      // TODO: Add search endpoint
-      // axios.post('/api/search', {
-      //   searchText,
-      //   selectedPublisher,
-      // })
-      // .then(response => {
-      //   // Handle the response from the server
-      //   console.log('Server response:', response.data);
-      //   // Navigate to the SearchResults page and pass data using state
-      //   navigate('/search-results', { state: { searchData: response.data } });
-      // })
-      // .catch(error => {
-      //   // Handle errors
-      //   console.error('Error making request:', error);
-      // });
-
-      const mockData = generateMockData();
-      navigate('./searchresultpage',  { state: { searchData: mockData } });
-    } else {
-        // Handle case where searchText is empty
-      console.warn('Please enter a search text before searching.');
+      setError(null);
+      setIsLoading(true);
+      const data = await searchStandard(searchText, selectedPublisher);
+      setIsLoading(false);
+      const totalPages = data.data.last_page;
+      const itemsPerPage = data.data.per_page;
+      if (props.context === 'results') {
+        // If the component is on the search results page, update the search results data
+        refreshSearchResults(data, searchText, selectedPublisher);
+      } else {
+        // Otherwise, navigate to the search results page with the new data
+        navigate('./searchresultpage', { state: { data, totalPages, itemsPerPage, searchText, selectedPublisher }});
+      }
+      
+    } catch (error) {
+       // Check if the error is a 401 authorization error
+      if (error.response && error.response.status === 401) {
+        // Redirect the user to the login page
+        setIsLoading(false);
+        setGoToLoginPage(true);
+      } else {
+       // Handle other errors
+        console.error('Error searching:', error);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <section className={styles.searchSection}>
+      {isLoading && <LoadingModal/>}
+      {goToLoginPage && <LoadingReminderModal/>}
       <div className={styles.frameParent}>
         <div className={styles.searchiconParent}>
           <img className={styles.searchicon} alt="" src="/searchicon.svg" />
@@ -57,17 +94,18 @@ const SearchSection = () => {
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <select className={styles.publisherdropdown}
+        <Select className={styles.publisherdropdown}
           value={selectedPublisher}
           onChange={(e) => setSelectedPublisher(e.target.value)}
         >
-          <option value="All publisher">All publisher</option>
-          <option value="ASTM">ASTM</option>
-          <option value="AWS">AWS</option>
-          <option value="DPI">DPI</option>
-          <option value="ISO">ISO</option>
-          <option value="ISP">ISP</option>
-        </select>
+          <MenuItem value="All publisher">All publisher</MenuItem>
+          {/* Map over the publishers array to create options dynamically */}
+          {publishers.map((publisher, index) => (
+            <MenuItem key={index} value={publisher.id}>
+              {publisher.name}
+            </MenuItem>
+      ))}
+        </Select>
       </div>
       <button
         className={styles.searchbutton}

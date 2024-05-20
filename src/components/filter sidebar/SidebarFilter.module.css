@@ -1,0 +1,60 @@
+.sidebar {
+    flex: 1;
+    flex-direction: column;
+    gap: 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-top: 48px;
+    min-width: 280px;
+    height: 100%;
+    overflow-y: auto;
+    padding-bottom: 64px;
+    padding-right: 24px;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+  }
+  
+  .sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--color-darkgray); /* Color of the scrollbar thumb */
+    border-radius: 5px; /* Border radius of the scrollbar thumb */
+  }
+  
+  .sidebar::-webkit-scrollbar-track {
+    background-color: var(--color-lightgray); /* Color of the scrollbar track */
+  }
+  
+  /* For Firefox */
+  .sidebar {
+    scrollbar-width: thin; /* Width of the scrollbar */
+  }
+  
+  .sidebar::-moz-scrollbar-thumb {
+    background-color: var(--color-darkgray); /* Color of the scrollbar thumb */
+    border-radius: 5px; /* Border radius of the scrollbar thumb */
+  }
+  
+  .sidebar::-moz-scrollbar-track {
+    background-color: var(--color-lightgray); /* Color of the scrollbar track */
+  }
+
+  .filter {
+    color: var(--color-dimgray-100);
+    font-size: x-large;
+  }
+
+  .filterIcon {
+    width: 36px;
+    height: 36px;
+    margin-right: 4px;
+  }
+
+  .filterHolder {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }

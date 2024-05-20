@@ -1,0 +1,41 @@
+.container {
+    display: flex; 
+    background-color: #ebe9e9;
+    height: 100vh
+  }
+  
+  .leftHalf {
+    width: 50%;
+    border-right: 1px solid #ccc; /* Add a border between the halves */
+    box-sizing: border-box; /* Ensure border width is included in the width */
+    flex: 1;
+    overflow-y: auto; 
+    padding: 0.5%;
+    height: 100%; 
+  }
+  
+  .rightHalf {
+    width: 50%;
+    box-sizing: border-box; /* Ensure border width is included in the width */
+    flex: 1;
+    overflow-y: auto; 
+  }
+
+  @media (max-width: 760px) {
+    .container {
+      flex-direction: column; /* Change direction to column */
+    }
+  
+    .leftHalf, .rightHalf {
+      width: 100%; /* Full width for both halves */
+      height: 50%; /* Half height for both halves */
+      padding: 0.5%;
+    }
+  
+    .leftHalf {
+      border-right: none; /* Remove border between the halves */
+      border-bottom: 1px solid #ccc; /* Add border between top and bottom */
+    }
+  }
+  
+  

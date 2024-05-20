@@ -6,6 +6,15 @@ body {
   line-height: normal;
 }
 :root {
+  /* bottom sheet */
+  --rsbs-backdrop-bg: rgba(0, 0, 0, 0.6);
+  --rsbs-bg: #fff;
+  --rsbs-handle-bg: hsla(0, 0%, 0%, 0.14);
+  --rsbs-max-w: auto;
+  --rsbs-ml: env(safe-area-inset-left);
+  --rsbs-mr: env(safe-area-inset-right);
+  --rsbs-overlay-rounded: 16px;
+
   /* fonts */
   --font-inter: Inter;
 
@@ -26,11 +35,15 @@ body {
   /* Colors */
   --color-white: #fff;
   --color-sandybrown: #ffad4d;
+  --color-snadytrans: #ffac4d10;
+  --color-snadytrans-hover: #ffac4d38;
   --color-peru-100: #dd913b;
   --color-peru-200: #d89140;
   --color-peru-300: #d68f3d;
   --color-whitesmoke: #f8f8f8;
   --color-whitesmoke-100: #ebe9e9;
+  --color-icon: #919191;
+  --color-divider: #d4d4d4;
   --color-dimgray-100: #707070;
   --color-dimgray-200: #505050;
   --color-darkgray: #b0b0b0;
@@ -69,6 +82,7 @@ body {
   --padding-7xs: 6px;
   --padding-3xs: 10px;
   --padding-77xl: 96px;
+  --padding-78xl: 110px;
   --padding-161xl: 180px;
   --padding-281xl: 300px;
   --padding-531xl: 550px;
@@ -79,4 +93,5 @@ body {
 
   /* Border radiuses */
   --br-5xs: 8px;
+  --br-9xs: 4px;
 }

@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from "react";
 import Drawer from "./Drawer";
+import { useNavigate  } from "react-router-dom";
 import PortalDrawer from "./PortalDrawer";
 import styles from "./MainHeader.module.css";
 
@@ -20,6 +21,18 @@ const MainHeader = ({ naveFlex, naveAlignSelf }) => {
   const closeDrawer = useCallback(() => {
     setDrawerOpen(false);
   }, []);
+  const navigate = useNavigate();
+  const profileClickHandle = () => {
+    if (getAccessToken()) {
+      navigate('/profilepage')
+    } else {
+      navigate('/loginpage')
+    }
+  }
+
+  const searchClickHandle = () => {
+    navigate('/searchpage')
+  }
 
   return (
     <>
@@ -38,10 +51,10 @@ const MainHeader = ({ naveFlex, naveAlignSelf }) => {
                 <a className={styles.home} muted>
                   Home
                 </a>
-                <b className={styles.search}>Search</b>
+                <b className={styles.home} onClick={searchClickHandle}>Search</b>
                 <b className={styles.search}>Standards</b>
                 <b className={styles.search}>About us</b>
-                <b className={styles.search}>Profile</b>
+                <a className={styles.home} onClick={profileClickHandle}>Profile</a>
               </nav>
               <button className={styles.image7} onClick={openDrawer} />
             </div>

@@ -1,0 +1,337 @@
+.continar {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.background {
+    background-color: var(--color-whitesmoke);
+}
+
+.mainContinar {
+    width: 100%;
+    max-height: calc(100vh - 80px); /* Adjust as needed, subtracting header height */
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chatContinar {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    
+}
+
+.inputContainer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    border-radius: var(--br-5xs);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--color-dimgray-200);
+    padding: 8px 48px 8px 12px;
+    margin-inline: 24px;
+    margin-top: 12px;
+    margin-bottom: 24px;
+}
+
+.input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    align-self: stretch;
+    flex: 1;
+    border-radius: var(--br-5xs);
+    font-size: large;
+    overflow: auto; /* Enable vertical scrolling if needed */
+    resize: none;
+    line-height: 1.5;
+    min-height: 26px; /* Reset the minimum height */
+}
+
+.sendIcon {
+    height: 32px;
+    width: 32px;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-left: 8px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.messages {
+    overflow-y: auto;
+    max-height: calc(100vh - 160px);
+    width: 98%;
+    left: 51%;
+    padding-inline: 16%;
+    transform: translateX(-50%);
+    position: fixed;
+  }
+  
+  .message {
+    display: flex;
+    padding: 8px 12px;
+    margin-block: 16px;
+    border-radius: 5px;
+  }
+  
+  .user {
+    background-color: var(--color-snadytrans);
+    align-self: flex-start;
+    padding-block: 16px;
+  }
+  
+  .systemMessage {
+    background-color: transparent;
+    align-self: flex-end;
+    padding-block: 16px;
+  }
+
+  .profileIcon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%; /* Make it circular */
+    overflow: hidden; /* Ensure image or icon stays within the circle */
+  }
+  
+  .profileImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire circle */
+  }
+  
+  .placeholderIcon {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .logo {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .logoImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire container */
+    border-radius: 100%;
+  }
+  .messageText {
+    align-self: flex-end;
+    margin-left: 8px;
+  }
+  .messageContinar {
+    width: 93%;
+  }
+
+  .pdfContinar {
+    border: 1px solid var(--color-divider);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 32px 16px 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pdfImg {
+    width: 32px;
+    height: 36px;
+    margin-right: 16px;
+  }
+
+  .pdfTextsContainr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 75%;
+    padding-right: 16px;
+  }
+
+  .pdfTitle {
+    align-self: flex-start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    max-height: 40px;
+  }
+
+  .pdfPublisher {
+    align-self: flex-start;
+    font-weight: 400;
+    margin-top: 4px;
+    font-size: small;
+    color: var(--color-dimgray-100);
+  }
+
+  .buttonChat {
+    background-color: var(--color-sandybrown);
+    border-radius: var(--br-5xs);
+    cursor: pointer;
+    color: white;
+    border: 0;
+    height: 42px;
+    width: 148px;
+    font-weight: 600;
+  }
+
+  .buttonChat:hover {
+    background-color: var(--color-peru-100);
+  }
+
+
+  @media screen and (max-width: 840px) {
+    .input {
+      font-size: 13px;
+    }
+
+    .sendIcon {
+      height: 28px;
+      width: 28px;
+      margin-top: 2px;
+  }
+
+  .inputContainer {
+    position: fixed;
+    transform: translateX(-50%);
+    width: 75%;
+    left: 46%;
+  }
+
+  .messages {
+    max-height: calc(100vh - 160px);
+    width: 88%;
+    left: 50%;
+    padding-inline: 2%;
+    transform: translateX(-50%);
+    position: fixed;
+  }
+
+  .messageText {
+    font-size: 12px;
+    font-weight: 400;
+    width: 70vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .message {
+    margin: 16px;
+  }
+
+  .pdfImg {
+    width: 20px;
+    height: 26px;
+    margin-right: 10px;
+  }
+
+  .pdfContinar {
+    padding: 12px;
+    margin: 24px 8px 8px 8px;
+  }
+
+  .pdfTitle {
+    font-size: 12px;
+  }
+
+  .pdfPublisher {
+    font-size: 11px;
+  }
+
+  .buttonChat {
+    font-size: 12px;
+    height: 30px;
+    font-weight: 600;
+  }
+}
+
+  
+  @media screen and (max-width: 540px) {
+    .input {
+      font-size: 11px;
+    }
+
+    .sendIcon {
+      height: 24px;
+      width: 24px;
+      margin-top: 4px;
+  }
+
+  .inputContainer {
+    position: fixed;
+    transform: translateX(-50%);
+    width: 90%;
+    left: 45%;
+  }
+
+  .messages {
+    max-height: calc(100vh - 160px);
+    width: 98%;
+    left: 50%;
+    padding-inline: 2%;
+    transform: translateX(-50%);
+    position: fixed;
+  }
+
+  .messageText {
+    font-size: 11px;
+    font-weight: 400;
+    width: 70vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .message {
+    margin: 16px;
+  }
+
+  .pdfImg {
+    width: 20px;
+    height: 26px;
+    margin-right: 10px;
+  }
+
+  .pdfContinar {
+    padding: 10px;
+    margin: 24px 8px 8px 8px;
+  }
+
+  .pdfTitle {
+    font-size: 11px;
+  }
+
+  .pdfPublisher {
+    font-size: 10px;
+  }
+
+  .buttonChat {
+    font-size: 11px;
+    height: 28px;
+    font-weight: 600;
+  }
+}
+
+@media screen and (max-width: 350px) {
+
+.inputContainer {
+  left: 43%;
+}
+
+.pdfContinar {
+  width:100% ;
+}
+
+.pdfTextsContainr {
+  width: 70%;
+}
+}

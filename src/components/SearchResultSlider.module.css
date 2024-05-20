@@ -1,6 +1,7 @@
 .slider {
-    width: 100%;
-    margin: 20px 0;
+    width:75vw;
+    max-width: calc(75% - 96px);
+    margin: 20px 28px;
   }
   
   .slide {
@@ -12,22 +13,35 @@
     padding-right: 16px; /* Adjust the padding value as needed */
   }
 
-  .slick-arrow.slick-prev,
-  .slick-arrow.slick-next {
-     font-size: 24px; /* Adjust the font size */
+  .arrowPrev,
+  .arrowNext {
      color: #333; /* Adjust the color */
-     background-color: #fff; /* Adjust the background color */
-     border: 2px solid #333; /* Adjust the border */
-     border-radius: 50%; /* Adjust the border-radius for a circular shape */
-     width: 40px; /* Adjust the width */
-     height: 40px; /* Adjust the height */
+     width: 24px; /* Adjust the width */
+     height: 24px; /* Adjust the height */
+     cursor: pointer;
    }
 
+   .arrowPrev {
+    position: absolute;
+    top: 50%;
+    left: -24px; /* Adjust the distance from the left edge */
+    transform: translateY(-50%);
+   }
+
+   .arrowNext {
+    /* Adjust the styles for the right arrow */
+    position: absolute;
+    top: 50%;
+    right: 16px; /* Adjust the distance from the right edge */
+    transform: translateY(-50%);
+  }
 
   .pageNumber {
     display: block;
-    font-weight: bold;
+    font-weight: 500;
     margin-bottom: 4px;
+    font-size: medium;
+    color: var(--color-dimgray-200);
   }
   
   .sentence {
@@ -38,5 +52,54 @@
     max-height: 4.5em; /* Adjust based on your font size */
     text-overflow: ellipsis;
     white-space: normal;
-    padding-right: 16px;
+    padding-right: 42px;
+    font-size: small;
+  }
+  .highlight {
+    color: var(--color-sandybrown);
+  }
+
+  @media (max-width: 960px) {
+    .slider {
+      max-width: calc(75vw - 20px);
+      margin: 20px 28px;
+    }
+
+    .sentence {
+      font-size: small;
+    }
+
+    .pageNumber {
+      font-size: medium;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .slider {
+      max-width: calc(75vw - 0px);
+      margin: 20px 28px;
+    }
+
+    .sentence {
+      font-size: x-small;
+    }
+
+    .pageNumber {
+      font-size: small;
+    }
+  }
+
+  @media (max-width: 440px) {
+    .slider {
+      max-width: calc(75vw - 0px);
+      margin: 20px 28px;
+    }
+
+    .sentence {
+      font-size: xx-small;
+    }
+
+    .pageNumber {
+      font-size: x-small;
+    }
   }
