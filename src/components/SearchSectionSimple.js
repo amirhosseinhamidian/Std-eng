@@ -1,11 +1,13 @@
 import styles from "./SearchSectionSimple.module.css";
 import { useState } from "react";
 import LoadingModal from "../components/ui/LoadingModal"
+import { searchStandard } from "../services/apiService";
 
 const SearchSectionSimple = ( { onFilterButtonClick, ...props } ) => {
     const [searchText, setSearchText] = useState(props.keyword || '');
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedPublisher, setSelectedPublisher] = useState('All publisher');
 
     const handleSearch = async() => {
         // Check if searchText is not empty before making the request
@@ -19,7 +21,7 @@ const SearchSectionSimple = ( { onFilterButtonClick, ...props } ) => {
           setIsLoading(false);
           const totalPages = data.data.last_page;
           const itemsPerPage = data.data.per_page;
-          props.refreshSearchResults(data, searchText, selectedPublisher);
+          props.refreshSearchResults(data.data, searchText, selectedPublisher);
           
         } catch (error) {
            // Check if the error is a 401 authorization error

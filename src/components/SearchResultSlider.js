@@ -16,28 +16,37 @@ const CustomNextArrow = ({ onClick }) => (
     <b>&gt;</b>
   </div>
 );
+
 const SearchResultSlider = ({ details, keyword }) => {
   const sliderSettings = {
-    // Configure your slider settings here
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
+    appendDots: dots => (
+      <div style={dotContainerStyle}>
+        <ul style={dotListStyle}>{dots}</ul>
+      </div>
+    ),
   };
+
   const sliderRef = React.useRef(null);
+
   const handlePrevClick = () => {
     if (sliderRef.current) {
       sliderRef.current.slickPrev();
     }
   };
+
   const handleNextClick = () => {
     if (sliderRef.current) {
       sliderRef.current.slickNext();
     }
   };
+
   const highlightKeyword = (sentence, keyword) => {
     const lowerKeyword = String(keyword).toLowerCase();
     const regex = new RegExp(`(${lowerKeyword})`, 'gi');
@@ -53,15 +62,31 @@ const SearchResultSlider = ({ details, keyword }) => {
     });
   };
 
-  return (
-      <Slider {...sliderSettings} className={styles.slider} ref={sliderRef}>
-        {details.map((detail, index) => (
-          <div key={index} className={styles.slide}>
-            <b className={styles.pageNumber}>PAGE: {detail.page}</b>
-            <span className={styles.sentence}>{highlightKeyword(detail.sentence, keyword)}</span>
-          </div>
-        ))}
-      </Slider>
-    );
+  const dotContainerStyle = {
+    maxWidth: '100%',
+    overflowX: 'auto',
+    whiteSpace: 'nowrap',
+    textAlign: 'center',
+    padding: '10px 0',
   };
-  export default SearchResultSlider;
+
+  const dotListStyle = {
+    display: 'inline-block',
+    padding: 0,
+    margin: 0,
+    listStyle: 'none',
+  };
+
+  return (
+    <Slider {...sliderSettings} className={styles.slider} ref={sliderRef}>
+      {details.map((detail, index) => (
+        <div key={index} className={styles.slide}>
+          <b className={styles.pageNumber}>PAGE: {detail.page}</b>
+          <span className={styles.sentence}>{highlightKeyword(detail.sentence, keyword)}</span>
+        </div>
+      ))}
+    </Slider>
+  );
+};
+
+export default SearchResultSlider;

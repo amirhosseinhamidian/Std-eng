@@ -45,7 +45,7 @@ function DocumentType({items}) {
             <FormControlLabel
               value="" // Set value to an empty string to represent deselection
               control={<Radio color="warning" size='small' />}
-              label="None" // Display text for the option that deselects the radio button
+              label="All" // Display text for the option that deselects the radio button
             />
             {items.map((item) => (
               <FormControlLabel

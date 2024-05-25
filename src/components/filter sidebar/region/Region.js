@@ -1,38 +1,34 @@
 import React, { useState } from 'react'
-import { Checkbox, FormControlLabel } from '@mui/material';
+import { Radio,RadioGroup, FormControlLabel } from '@mui/material';
 import Styles from './Region.module.css'
 
 function Region({items}) {
-  const [showCheckboxes, setShowCheckboxes] = useState(false);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [showItems, setShowItems] = useState(false);
 
-  const toggleCheckboxes = () => {
-    setShowCheckboxes(!showCheckboxes);
+  const toggleItems = () => {
+    setShowItems(!showItems);
   };
+  const [selectedValue, setSelectedValue] = useState('');
 
-  const handleCheckboxChange = (event) => {
-    const selectedItem = event.target.name;
-    if (selectedItems.includes(selectedItem)) {
-      setSelectedItems(selectedItems.filter(item => item !== selectedItem));
-    } else {
-      setSelectedItems([...selectedItems, selectedItem]);
-    }
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setSelectedValue(newValue === selectedValue ? '' : newValue);
   };
 
   return (
     <>
-    <section className={Styles.container}>
-        <div className={Styles.filterRow} onClick={toggleCheckboxes}>
+      <section className={Styles.container}>
+        <div className={Styles.filterRow} onClick={toggleItems}>
           <img
             className={Styles.icon}
             alt=""
-            src='/location.svg'
+            src='/document.svg'
           />
           <div className={Styles.title}>
             Region
           </div> 
           <div className={Styles.spacer} /> 
-          <div className={`${Styles.arrowIconWrapper} ${showCheckboxes ? Styles.rotated : ''}`}>
+          <div className={`${Styles.arrowIconWrapper} ${showItems ? Styles.rotated : ''}`}>
             <img
               className={Styles.arrowIcon}
               alt=""
@@ -40,23 +36,27 @@ function Region({items}) {
             /> 
           </div>
         </div>
-        {showCheckboxes && (
-          <div className={Styles.checkboxContainer}>
-            {items.map((item) =>(
-              <FormControlLabel
-              control={
-                <Checkbox 
-                  color='warning' 
-                  size='small'
-                  onChange={handleCheckboxChange}
-                  name={item}
-                  checked={selectedItems.includes(item)}
-                />}
-              label={item}
-              className={Styles.checkboxItem}
+        {showItems && (
+          <RadioGroup 
+          value={selectedValue}  
+          onChange={handleChange}
+          className={Styles.redioContainer}
+          >
+            <FormControlLabel
+              value="" // Set value to an empty string to represent deselection
+              control={<Radio color="warning" size='small' />}
+              label="All" // Display text for the option that deselects the radio button
             />
+            {items.map((item) => (
+              <FormControlLabel
+                key={item}
+                value={item}
+                control={<Radio color="warning" size='small' />}
+                label={item}
+                classes={{ label: Styles.radioItem }} 
+              />
             ))}
-          </div>
+          </RadioGroup>
         )}
         <hr className={Styles.horizontalLine} />
       </section>

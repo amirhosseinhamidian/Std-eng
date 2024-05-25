@@ -168,6 +168,15 @@ export const authenticatedRequest = async (url, method, data) => {
     }
   };
 
+  const getPageFilterData = async (page) => {
+    try {
+      const response = await apiService.post("page-data", {page})
+      return response.data
+    } catch (error) {
+      throw error
+    }
+  }
+
   export { 
     searchStandard,
     loginRequest, 
@@ -175,5 +184,6 @@ export const authenticatedRequest = async (url, method, data) => {
     publisherListRequest, 
     getProfileInformation,
     updateProfile,
+    getPageFilterData,
   };
  
