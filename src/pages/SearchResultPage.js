@@ -13,7 +13,6 @@ import LoadingModal from "../components/ui/LoadingModal";
 import SidebarFilter from "../components/filter sidebar/SidebarFilter.js";
 import { BottomSheet } from 'react-spring-bottom-sheet'
 
-
 const API_BASE_URL = "http://std-eng.ir:80/"
 
 const SearchResultPage = () => {
@@ -89,6 +88,7 @@ const SearchResultPage = () => {
         <div className={styles.container}>
           <div className={styles.sidebar}>
             <SidebarFilter />
+            <button className={styles.applyBtn}>Apply</button>
           </div>
           <div className={styles.mainContent}>
             <div className={styles.searchSection}>
@@ -151,11 +151,10 @@ const SearchResultPage = () => {
             
               <SidebarFilter />
               <div className={styles.sheetBtns}>
-                <button className={styles.applyBtn}>Apply</button>
+                <button className={styles.applyBottomSheetBtn}>Apply</button>
                 <button className={styles.closeBtn} onClick={handleCloseBottomSheet}>Close</button>
               </div>
             </div>
-            
           </div>
         </BottomSheet>
     </>

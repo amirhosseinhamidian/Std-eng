@@ -1,15 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Styles from './SidebarFilter.module.css'
 import Discipline from './discipline/Discipline';
 import DocumentType from './document type/DocumentType';
-import Industry from './industry/Industry';
 import Region from './region/Region';
 import PublicationDate from './year/PublicationDate';
-
+import { getPageFilterData } from '../../services/apiService';
 
 function SidebarFilter() {
-  const lis = ["Computer Science", "Process Engineering", "Electrical Engineering", "Mechanical Engineering", "Civil Engineering",
-"Chemical Engineering" ]
+  const [filters , setFilters] = useState(null)
+  useEffect(() => {
+    const fetchFilterData = async () => {
+      try {
+        // Fetch data using the API service function
+        const data = await getPageFilterData("searchResult");
+        setFilters(data.data);
+        console.log(data.data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchFilterData();
+  }, []); 
   return (
   <>
     <section className={Styles.sidebar}>
@@ -17,10 +28,10 @@ function SidebarFilter() {
           <img className={Styles.filterIcon} src='/filter.svg'/>
           <div className={Styles.filter}>Filters</div>
         </div>
-        <Discipline items={lis}/>
-        <DocumentType items={lis}/>
-        <Industry items={lis}/>
-        <Region items={lis}/>
+        { filters.disciplines !== null && <Discipline items={filters.disciplines}/> }
+        { filters.document_type !== null && <DocumentType items={filters.document_type}/> }
+        {/* <Industry items={filters.industry}/> */}
+        { filters.document_type !== null && <Region items={filters.region}/> }
         <PublicationDate/>
     </section>
   </>
