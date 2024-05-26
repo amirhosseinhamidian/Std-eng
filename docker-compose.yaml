@@ -14,6 +14,6 @@ services:
     tty: true
     environment:
       - PORT=3000
-      - HOST=std-eng.ir
+      - HOST=0.0.0.0
     command: npm start
     
