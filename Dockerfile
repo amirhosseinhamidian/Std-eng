@@ -8,6 +8,8 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
+ENV HOST=std-eng.ir
+
 EXPOSE 80
 
 CMD ["npm", "start"]
