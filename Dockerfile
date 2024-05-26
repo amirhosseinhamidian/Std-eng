@@ -10,6 +10,8 @@ COPY . .
 
 ENV HOST=std-eng.ir
 
+ENV NODE_ENV=production
+
 EXPOSE 80
 
 CMD ["npm", "start"]
