@@ -13,7 +13,7 @@ import LoadingModal from "../components/ui/LoadingModal";
 import SidebarFilter from "../components/filter sidebar/SidebarFilter.js";
 import { BottomSheet } from 'react-spring-bottom-sheet'
 
-const API_BASE_URL = "http://std-eng.ir:80/"
+const API_BASE_URL = "http://std-eng.ir:8000/"
 
 const SearchResultPage = () => {
   const location = useLocation();
