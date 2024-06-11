@@ -1,7 +1,7 @@
 import styles from "./SearchSectionSimple.module.css";
 import { useState } from "react";
 import LoadingModal from "../components/ui/LoadingModal"
-import { searchStandard } from "../services/apiService";
+import { useSearchStandard } from "../services/apiService";
 
 const SearchSectionSimple = ( { onFilterButtonClick, ...props } ) => {
     const [searchText, setSearchText] = useState(props.keyword || '');
@@ -17,7 +17,7 @@ const SearchSectionSimple = ( { onFilterButtonClick, ...props } ) => {
         try{
           setError(null);
           setIsLoading(true);
-          const data = await searchStandard(searchText);
+          const data = useSearchStandard(searchText);
           setIsLoading(false);
           const totalPages = data.data.last_page;
           const itemsPerPage = data.data.per_page;

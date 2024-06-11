@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import styles from "./SearchSection.module.css";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {searchStandard, publisherListRequest} from '../services/apiService.js'
+import {useSearchStandard, usePublisherListRequest} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
 import LoadingReminderModal from "../components/ui/LoginReminderModal.js";
 import {
@@ -24,7 +24,7 @@ const SearchSection = ( props ) => {
     const fetchPublisherData = async () => {
       try {
         // Fetch data using the API service function
-        const data = await publisherListRequest();
+        const data = usePublisherListRequest();
         // Extract publisher names and IDs from the response
         const publisherData = data.data.map(publisher => ({
           id: publisher.id,
@@ -51,7 +51,7 @@ const SearchSection = ( props ) => {
       // Make a request to the server using Axios
       setError(null);
       setIsLoading(true);
-      const data = await searchStandard(searchText, selectedPublisher);
+      const data = useSearchStandard(searchText, selectedPublisher);
       setIsLoading(false);
       const totalPages = data.data.last_page;
       const itemsPerPage = data.data.per_page;
