@@ -5,6 +5,7 @@ import ChatbotSection from "../components/ChatbotSection";
 import styles from "./SearchPage.module.css";
 import React, { useState } from 'react';
 import CardFilter from "../components/card filter/CardFilter";
+import CardFilter2 from "../components/card filter/CardFilter2";
 
 const SearchPage = () => {
   const [mode, setMode] = useState('search');
@@ -75,7 +76,7 @@ const SearchPage = () => {
           <hr className={styles.horizontalLine} />
         </div>
 
-        <CardFilter data={cardData}/>
+        <CardFilter2 data={cardData}/>
         
       </div>
     </div>

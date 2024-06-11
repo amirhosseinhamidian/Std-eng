@@ -1,7 +1,7 @@
 import styles from "./LoginPage.module.css";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
-import {loginRequest, verifyRequest} from "../services/apiService"
+import {useLoginRequest, useVerifyRequest} from "../services/apiService"
 import LoadingModal from "../components/ui/LoadingModal";
 
 const LoginPage = () => {
@@ -57,7 +57,7 @@ const LoginPage = () => {
         
         try {
             console.log(formattedPhone);
-            const data = await loginRequest(formattedPhone);
+            const data = useLoginRequest(formattedPhone);
             setLogginResponse(data);
             console.log(data);
         } catch (error) {
@@ -150,7 +150,7 @@ const LoginPage = () => {
     }
     try {
       setIsLoading(true);
-      const data = await verifyRequest(loginResponse.verification.hash, confirmationCode);
+      const data = useVerifyRequest(loginResponse.verification.hash, confirmationCode);
       setIsLoading(false);
       console.log(data);
       handleLogin()

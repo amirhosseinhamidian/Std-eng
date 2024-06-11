@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import {
+  BrowserRouter as Router,
   Routes,
   Route,
   useNavigationType,
@@ -11,11 +12,18 @@ import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import StandardDetailPage from "./pages/StandardDetailPage";
 import ChatBotPage from './pages/ChatBotPage'
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ChatProvider } from "./contexts/ChatContext";
 
 function App() {
   const action = useNavigationType();
   const location = useLocation();
   const pathname = location.pathname;
+
+  const client = new QueryClient({defaultOptions : {
+    queries : {refetchOnWindowFocus : false},
+    mutations : {}
+  }})
 
   useEffect(() => {
     if (action !== "POP") {
@@ -69,19 +77,23 @@ function App() {
   }, [pathname]);
 
   return (
-    <Routes>
-      <Route path="/" element={<SearchPage />} />
-      <Route path="/searchpage" element={<SearchPage />} />
-      <Route path="/searchresultpage" element={<SearchResultPage />} />
-      <Route path="/searchpage/searchresultpage" element={<SearchResultPage />} />
-      <Route path="/profilepage" element={<ProfilePage />} />
-      <Route path="/loginpage" element={<LoginPage />} />
-      <Route path="/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />
-      <Route path="/searchpage/chatbotpage" element={<ChatBotPage />} />
-      <Route path="/chatbotpage" element={<ChatBotPage />} />
-      <Route path="/searchpage/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
-      <Route path="/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
-    </Routes>
+    <ChatProvider>
+      <QueryClientProvider client={client}>
+        <Routes>
+          <Route path="/" element={<SearchPage />} />
+          <Route path="/searchpage" element={<SearchPage />} />
+          <Route path="/searchresultpage" element={<SearchResultPage />} />
+          <Route path="/searchpage/searchresultpage" element={<SearchResultPage />} />
+          <Route path="/profilepage" element={<ProfilePage />} />
+          <Route path="/loginpage" element={<LoginPage />} />
+          <Route path="/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />
+          <Route path="/searchpage/chatbotpage" element={<ChatBotPage />} />
+          <Route path="/chatbotpage" element={<ChatBotPage />} />
+          <Route path="/searchpage/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
+          <Route path="/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
+        </Routes>
+      </QueryClientProvider>
+    </ChatProvider>
   );
 }
 export default App;

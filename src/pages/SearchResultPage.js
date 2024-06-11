@@ -8,7 +8,7 @@ import SliderComponent from "../components/SearchResultSlider";
 import SearchSectionSimple from "../components/SearchSectionSimple.js";
 import Pagination from "../components/PaginationSection";
 import { useNavigate } from 'react-router-dom';
-import {searchStandard} from '../services/apiService.js'
+import {useSearchStandard} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
 import SidebarFilter from "../components/filter sidebar/SidebarFilter.js";
 import { BottomSheet } from 'react-spring-bottom-sheet'
@@ -59,7 +59,7 @@ const SearchResultPage = () => {
   const handlePageChangeData = async(page) => {
     try {
       setIsLoading(true);
-      const data = await searchStandard(keyword,publisherId,page);
+      const data = useSearchStandard(keyword,publisherId,page);
       setIsLoading(false);
       refreshSearchResults(data.data, keyword, publisherId);
     } catch (error) {

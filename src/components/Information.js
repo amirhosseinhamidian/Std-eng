@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import styles from "./Information.module.css";
 import React, { useState, useEffect  } from 'react';
-import {getProfileInformation, updateProfile} from '../services/apiService'
+import {useGetProfileInformation, useUpdateProfile} from '../services/apiService'
 
 const Information = () => {
 
@@ -26,7 +26,7 @@ const Information = () => {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await getProfileInformation();
+        const response = useGetProfileInformation();
         const { user } = response;
         setProfileData(user);
         console.log("profile data", user);
@@ -80,7 +80,7 @@ const Information = () => {
   
   const saveHandle = async() => {
       try {
-        await updateProfile(
+         useUpdateProfile(
           profileData.first_name,
           profileData.last_name,
           profileData.gender,

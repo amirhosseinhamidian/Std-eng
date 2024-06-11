@@ -4,7 +4,7 @@ import Discipline from './discipline/Discipline';
 import DocumentType from './document type/DocumentType';
 import Region from './region/Region';
 import PublicationDate from './year/PublicationDate';
-import { getPageFilterData } from '../../services/apiService';
+import { useGetPageFilterData } from '../../services/apiService';
 
 function SidebarFilter() {
   const [filters , setFilters] = useState(null)
@@ -12,7 +12,7 @@ function SidebarFilter() {
     const fetchFilterData = async () => {
       try {
         // Fetch data using the API service function
-        const data = await getPageFilterData("searchResult");
+        const data = useGetPageFilterData("searchResult");
         setFilters(data.data);
         console.log(data.data)
       } catch (error) {

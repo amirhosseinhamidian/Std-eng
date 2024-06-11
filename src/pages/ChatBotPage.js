@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import styles from "./ChatBotPage.module.css"
 import Header from "../components/Header";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useChat } from '../contexts/ChatContext';
 
 const ChatBotPage = () => {
-    const [input, setInput] = useState('');
-    const [messages, setMessages] = useState([]);
+    const { prompt, setPrompt, messages, setMessages, hasSentFirstMessage, setHasSentFirstMessage } = useChat();
     const textbox = useRef(null);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const queryParams = new URLSearchParams(location.search);
     const inputText = queryParams.get('query');
@@ -64,10 +65,10 @@ const ChatBotPage = () => {
     };
     
 
-    const sendMessage = () => {
-        const newMessages = [...messages, { text: input, role: 'user' }];
+    const sendMessage = (text) => {
+        const newMessages = [...messages, { text , role: 'user' }];
         setMessages(newMessages);
-        setInput('');
+        setPrompt('');
     
         // Simulate bot reply after 1 second
         setTimeout(() => {
@@ -75,16 +76,18 @@ const ChatBotPage = () => {
           const publisher = generatePublisherAbbreviation();
           const botReply = 'This is a mock response from the bot.';
           const newBotMessages = [...newMessages, { text: botReply, role: 'bot' , title: title, publisher:publisher}];
-          console.log(publisher)
           setMessages(newBotMessages);
         }, 500);
     };
 
     useEffect(() => {
-        if (inputText) {
+        
+        if (inputText && !hasSentFirstMessage) {
+          setPrompt(inputText) 
           sendMessage(inputText);
+          setHasSentFirstMessage(true);
         }
-      }, [inputText]); 
+      }, [inputText, hasSentFirstMessage, setPrompt]); 
 
     return (
         <div className={styles.continar}>
@@ -129,24 +132,24 @@ const ChatBotPage = () => {
                             className={styles.input}
                             placeholder="Ask your question (max 1,000 characters)"
                             type="text"
-                            value={input}
+                            value={prompt}
                             rows={1}
                             style={{ maxHeight: '160px' }}
                             onChange={(e) => {
-                                setInput(e.target.value);
+                                setPrompt(e.target.value);
                                 handleKeyDown(e);
                             }}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && e.shiftKey) {
-                                    setInput(input + '\n');
+                                    setPrompt(prompt + '\n');
                                     e.preventDefault(); // Prevent the default behavior of the Enter key
-                                } else if (e.key === 'Enter' && !e.shiftKey && input.trim() !== '') {
+                                } else if (e.key === 'Enter' && !e.shiftKey && prompt.trim() !== '') {
                                     e.preventDefault(); // Prevent the default behavior of the Enter key
-                                    sendMessage();
+                                    sendMessage(prompt);
                                 }
                             }}
                         />
-                        <img className={styles.sendIcon} alt="send" src="/send.svg" onClick={sendMessage} />
+                        <img className={styles.sendIcon} alt="send" src="/send.svg" onClick={() => sendMessage(prompt)} />
                     </div>
                 </div>
             </div>
