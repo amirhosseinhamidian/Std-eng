@@ -2,6 +2,8 @@ FROM node:20.11.0 as build
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y npm
+
 COPY package*.json ./
 
 RUN npm install --legacy-peer-deps
