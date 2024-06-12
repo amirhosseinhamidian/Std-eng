@@ -1,3 +1,4 @@
+# Stage 1: Build the application
 FROM node:20.11.0 as build
 
 WORKDIR /app
@@ -10,10 +11,19 @@ COPY . .
 
 RUN npm run build
 
-FROM nginx:alpine-slim
+# Stage 2: Run the application
+FROM node:20.11.0
 
-COPY --from=build /app/build /usr/share/nginx/html
+WORKDIR /app
 
+# Copy the build output to the final image
+COPY --from=build /app .
+
+# Install production dependencies
+RUN npm install --only=production
+
+# Expose the port your application runs on
 EXPOSE 3000
 
-CMD ["nginx", "-g", "daemon off;"]
+# Start the application
+CMD ["npm", "start"]
