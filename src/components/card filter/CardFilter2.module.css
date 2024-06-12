@@ -3,12 +3,32 @@
     display: grid;
     grid-template-columns: 45px 1fr 45px;
     align-items: center;
+    gap: 8px;
 }
 .arrow {
-    background-color: aqua;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    background-color: var(--color-whitesmoke);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.arrow:hover {
+    background-color: #e4e4e4;
+}
+.arrow:active {
+    background-color: #ccc;
 }
 .arrow img {
-
+    width: 44px;
+    height: 44px;
+    margin-left: 6px;
 }
 .filters{
     display: flex;
@@ -52,6 +72,47 @@
 }
 
 .cardTitle {
-    font-size: 14px;
+    max-width: 85px;
+    font-size: 13px;
+    font-weight: 500;
     margin: 0;
+    text-align: center;
+}
+@media screen and (max-width: 540px) {
+
+    .cardImage {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 10px;
+    }
+
+    .cardTitle {
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .arrow {
+        width: 36px;
+        height: 36px;
+    }
+
+    .arrow img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+
+@media screen and (max-width: 420px) {
+    .cardImage {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 10px;
+    }
+
+    .cardTitle {
+        font-size: 11px;
+        margin: 0;
+    }
+    
 }

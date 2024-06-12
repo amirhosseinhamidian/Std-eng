@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from "./CardFilter2.module.css";
 
 const CardFilter2 = ({ data }) => {
     
     const [selected, setSelected] = useState([]);
+    const containerRef = useRef(null);
 
     const isItemSelected = (id) => !!selected.find((el) => el === id);
 
@@ -17,12 +18,31 @@ const CardFilter2 = ({ data }) => {
         );
     };
 
+    const scrollLeft = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollBy({
+                left: -200, // Adjust this value as needed
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    const scrollRight = () => {
+        if (containerRef.current) {
+            containerRef.current.scrollBy({
+                left: 200, // Adjust this value as needed
+                behavior: 'smooth'
+            });
+        }
+    };
+
+
   return (
     <div className={styles.cardFilter}>
-        <div className={styles.arrow}>
-            <img src='' alt='' />
+        <div onClick={scrollLeft} className={styles.arrow}>
+            <img src='/chevronbackward.svg' alt='' />
         </div>
-        <div className={styles.filters}>
+        <div className={styles.filters} ref={containerRef}>
             {data.map(({ id, title, icon }) => (
                 <div
                 onClick={()=>handleClick(id)}
@@ -34,8 +54,8 @@ const CardFilter2 = ({ data }) => {
                 </div>
             ))}
         </div>
-        <div className={styles.arrow}>
-            <img src='' alt='' />
+        <div onClick={scrollRight} className={styles.arrow}>
+            <img src='/chevronforward.svg' alt='' />
         </div>
     </div>
   )

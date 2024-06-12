@@ -15,7 +15,7 @@ const SearchPage = () => {
   };
 
   const cardData = [
-    {id: 1, title: 'Discipline 1', icon: '/theodolite.png' },
+    {id: 1, title: 'Discipline 1 Discipline 1 cardTitle v cardTitle', icon: '/theodolite.png' },
     {id: 2, title: 'Discipline 2', icon: '/theodolite.png' },
     {id: 3, title: 'Discipline 3', icon: '/theodolite.png' },
     {id: 4, title: 'Discipline 1', icon: '/theodolite.png' },
