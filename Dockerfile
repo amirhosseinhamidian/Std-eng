@@ -20,7 +20,7 @@ WORKDIR /app
 COPY --from=build /app .
 
 # Install production dependencies
-RUN npm install --only=production
+RUN npm install --legacy-peer-deps
 
 # Expose the port your application runs on
 EXPOSE 3000
