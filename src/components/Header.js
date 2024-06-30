@@ -36,7 +36,7 @@ const Header = () => {
         <div className={styles.nave}>
           <div className={styles.logoName}>
             <img className={styles.logoNameChild} alt="" src="/ellipse-1.svg" />
-            <b className={styles.standardEngineering}>standard engineering</b>
+            <b className={styles.standardEngineering}>Standard Engineering</b>
           </div>
           <div className={styles.frameParent}>
             <button className={styles.priceWrapper} id="pirceBtn">

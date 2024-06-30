@@ -16,7 +16,7 @@
 }
 .logoName {
   height: 48px;
-  width: 251px;
+  width: 200px;
   position: relative;
 }
 .price {
@@ -131,11 +131,11 @@
 }
 @media screen and (max-width: 768px) {
   .logoNameChild {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
   }
   .standardEngineering {
-    font-size: var(--font-size-base);
+    font-size: 14px;
     width: 189px;
     margin-top: 4;
   }
@@ -156,7 +156,7 @@
     margin-left: 8;
   }
   .standardEngineering {
-    font-size: var(--font-size-sm);
+    font-size: 12px
   }
   .priceWrapper {
     display: none;
