@@ -93,6 +93,9 @@ const ChatBotPage = () => {
         <div className={styles.continar}>
             <Header />
             <div className={styles.background}>
+                {/* <div className={styles.sidebar}>
+
+                </div> */}
                 <div className={styles.mainContinar}>
                     <div className={styles.messages}>
                         {messages.map((message, index) => (
@@ -153,6 +156,7 @@ const ChatBotPage = () => {
                     </div>
                 </div>
             </div>
+            {/* <img src='/sidebar.svg' alt='sidebar' width="28px"/> */}
         </div>
     );
 }

@@ -12,6 +12,31 @@ const apiService = axios.create({
   },
 });
 
+// Interceptor to handle token expiration and refresh logic
+apiService.interceptors.response.use(
+  response => response,
+  async error => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      const refreshToken = getRefreshToken();
+      if (refreshToken) {
+        try {
+          const { data } = await apiService.post('/auth/refreshAccessToken', new URLSearchParams({ refresh_token: refreshToken }), {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          });
+          storeTokens(data.access_token, data.refresh_token);
+          originalRequest.headers['Authorization'] = `Bearer ${data.access_token}`;
+          return apiService(originalRequest);
+        } catch (refreshError) {
+          // Handle token refresh failure (e.g., logout user)
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 const fetchWithAuth = async (url, method = 'GET', data = null) => {
   const accessToken = getAccessToken();
   if (!accessToken) {
@@ -25,25 +50,36 @@ const fetchWithAuth = async (url, method = 'GET', data = null) => {
   if (data) {
     config.data = data;
   }
-  const response = await apiService(config);
-  return response.data;
+  const { data: responseData } = await apiService(config);
+  return responseData;
 };
 
 const useSearchStandard = (keyword, publisherId, page = 1) => {
-  return useQuery(['searchStandard', keyword, publisherId, page], () => 
-    fetchWithAuth(`/keyword-search?keyword=${keyword}&page=${page}`)
+  return useQuery(['searchStandard', keyword, publisherId, page], async() => 
+    await fetchWithAuth(`/keyword-search?keyword=${keyword}&page=${page}`)
   );
 };
 
+const searchStandard = async (keyword, publisherId, page = 1) => {
+  try {
+    const response = await fetchWithAuth(`/keyword-search?keyword=${keyword}&page=${page}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const useLoginRequest = () => {
-  return useMutation(phone => apiService.post('/auth/login/phonenumber/request', { phone }).then(res => res.data));
+  return useMutation(phone => 
+    apiService.post('/auth/login/phonenumber/request', { phone }).then(({ data }) => data)
+  );
 };
 
 const useVerifyRequest = () => {
   return useMutation(({ hash, code }) => 
-    apiService.post('/auth/login/phonenumber/verify', { hash, code }).then(res => {
-      storeTokens(res.data.access_token, res.data.refresh_token);
-      return res.data;
+    apiService.post('/auth/login/phonenumber/verify', { hash, code }).then(({ data }) => {
+      storeTokens(data.access_token, data.refresh_token);
+      return data;
     })
   );
 };
@@ -53,7 +89,7 @@ const useRefreshAccessToken = () => {
     const refreshToken = getRefreshToken();
     return apiService.post('/auth/refreshAccessToken', new URLSearchParams({ refresh_token: refreshToken }), {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    }).then(res => res.data);
+    }).then(({ data }) => data);
   });
 };
 
@@ -63,9 +99,9 @@ const usePublisherListRequest = () => {
     if (storedData) {
       return JSON.parse(storedData).data;
     }
-    const response = await apiService.get('/publishers');
-    sessionStorage.setItem('publishersData', JSON.stringify({ data: response.data }));
-    return response.data;
+    const { data } = await apiService.get('/publishers');
+    sessionStorage.setItem('publishersData', JSON.stringify({ data }));
+    return data;
   });
 };
 
@@ -74,19 +110,28 @@ const useGetProfileInformation = () => {
 };
 
 const useUpdateProfile = () => {
-  return useMutation((data) => {
-    return fetchWithAuth('/auth/update', 'PUT', data);
-  });
+  const mutation = useMutation(data =>
+    fetchWithAuth('/auth/update', 'PUT', data)
+      .then(response => response.data) // Assuming you want to extract data from the response
+  );
+
+  return {
+    mutate: mutation.mutate,
+    isLoading: mutation.isLoading,
+    errorUpdate: mutation.error,
+    response: mutation.data,
+  };
 };
 
 const useGetPageFilterData = (page) => {
   return useQuery(['pageFilterData', page], () => 
-    apiService.post('/page-data', { page }).then(res => res.data)
+    apiService.post('/page-data', { page }).then(({ data }) => data)
   );
 };
 
 export {
   useSearchStandard,
+  searchStandard,
   useLoginRequest,
   useVerifyRequest,
   useRefreshAccessToken,

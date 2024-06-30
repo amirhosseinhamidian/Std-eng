@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   useNavigationType,
@@ -15,15 +14,17 @@ import ChatBotPage from './pages/ChatBotPage'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ChatProvider } from "./contexts/ChatContext";
 
-function App() {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { refetchOnWindowFocus: false },
+    mutations: {},
+  },
+});
+
+const AppContent = () => {
   const action = useNavigationType();
   const location = useLocation();
   const pathname = location.pathname;
-
-  const client = new QueryClient({defaultOptions : {
-    queries : {refetchOnWindowFocus : false},
-    mutations : {}
-  }})
 
   useEffect(() => {
     if (action !== "POP") {
@@ -37,29 +38,32 @@ function App() {
 
     switch (pathname) {
       case "/":
-        title = "";
-        metaDescription = "";
+        title = "Search Page";
+        metaDescription = "Search for standards and information.";
         break;
       case "/searchresultpage":
-        title = "";
-        metaDescription = "";
+        title = "Search Results";
+        metaDescription = "View search results for standards.";
         break;
       case "/profilepage":
-        title = "";
-        metaDescription = "";
+        title = "Profile Page";
+        metaDescription = "View and edit your profile information.";
         break;
       case "/loginpage":
-        title = "";
-        metaDescription = "";
+        title = "Login Page";
+        metaDescription = "Login to access your account.";
         break;
       case "/standarddetailpage":
-        title = "";
-        metaDescription = "";
+        title = "Standard Details";
+        metaDescription = "View details about a specific standard.";
         break;
       case "/chatbotpage":
-        title = "";
-        metaDescription = "";
+        title = "Chat Bot";
+        metaDescription = "Interact with our chat bot for assistance.";
         break;
+      default:
+        title = "My App";
+        metaDescription = "Welcome to my application.";
     }
 
     if (title) {
@@ -77,23 +81,30 @@ function App() {
   }, [pathname]);
 
   return (
+    <Routes>
+      <Route path="/" element={<SearchPage />} />
+      <Route path="/searchpage" element={<SearchPage />} />
+      <Route path="/searchresultpage" element={<SearchResultPage />} />
+      <Route path="/searchpage/searchresultpage" element={<SearchResultPage />} />
+      <Route path="/profilepage" element={<ProfilePage />} />
+      <Route path="/loginpage" element={<LoginPage />} />
+      <Route path="/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />
+      <Route path="/searchpage/chatbotpage" element={<ChatBotPage />} />
+      <Route path="/chatbotpage" element={<ChatBotPage />} />
+      <Route path="/searchpage/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
+      <Route path="/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
+    </Routes>
+  );
+};
+
+function App() {
+  return (
     <ChatProvider>
-      <QueryClientProvider client={client}>
-        <Routes>
-          <Route path="/" element={<SearchPage />} />
-          <Route path="/searchpage" element={<SearchPage />} />
-          <Route path="/searchresultpage" element={<SearchResultPage />} />
-          <Route path="/searchpage/searchresultpage" element={<SearchResultPage />} />
-          <Route path="/profilepage" element={<ProfilePage />} />
-          <Route path="/loginpage" element={<LoginPage />} />
-          <Route path="/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />
-          <Route path="/searchpage/chatbotpage" element={<ChatBotPage />} />
-          <Route path="/chatbotpage" element={<ChatBotPage />} />
-          <Route path="/searchpage/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
-          <Route path="/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />
-        </Routes>
+      <QueryClientProvider client={queryClient}>
+        <AppContent />
       </QueryClientProvider>
     </ChatProvider>
   );
 }
+
 export default App;

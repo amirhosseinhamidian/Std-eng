@@ -8,6 +8,13 @@
 
 .background {
     background-color: var(--color-whitesmoke);
+    display: grid;
+    grid-template-columns: 15% 1fr;
+}
+
+.sidebar{
+  height: calc(100vh - 80px);
+  background-color: aquamarine;
 }
 
 .mainContinar {
@@ -205,13 +212,13 @@
     position: fixed;
     transform: translateX(-50%);
     width: 75%;
-    left: 46%;
+    left: 55%;
   }
 
   .messages {
     max-height: calc(100vh - 160px);
     width: 88%;
-    left: 50%;
+    left: 55%;
     padding-inline: 2%;
     transform: translateX(-50%);
     position: fixed;

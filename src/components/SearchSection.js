@@ -1,87 +1,66 @@
-import { useCallback, useEffect } from "react";
-import styles from "./SearchSection.module.css";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {useSearchStandard, usePublisherListRequest} from '../services/apiService.js'
-import LoadingModal from "../components/ui/LoadingModal";
-import LoadingReminderModal from "../components/ui/LoginReminderModal.js";
-import {
-  Select,
-  InputLabel,
-  MenuItem,
-} from "@mui/material";
+import { searchStandard } from '../services/apiService';
+import LoadingModal from '../components/ui/LoadingModal';
+import LoadingReminderModal from '../components/ui/LoginReminderModal.js';
+import { Select, MenuItem } from '@mui/material';
+import styles from './SearchSection.module.css';
 
-const SearchSection = ( props ) => {
+const SearchSection = (props) => {
   const [searchText, setSearchText] = useState(props.keyword || '');
   const [selectedPublisher, setSelectedPublisher] = useState('All publisher');
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [goToLoginPage, setGoToLoginPage] = useState(false);
-  const [publishers, setPublishers] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState(null);
+  const [searchData, setSearchData] = useState(null);
 
-  useEffect(() => {
-    const fetchPublisherData = async () => {
-      try {
-        // Fetch data using the API service function
-        const data = usePublisherListRequest();
-        // Extract publisher names and IDs from the response
-        const publisherData = data.data.map(publisher => ({
-          id: publisher.id,
-          name: publisher.name,
-        }));
-        // Set the state with the list of publisher names and IDs
-        setPublishers(publisherData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchPublisherData(); // Call the fetchData function
-  }, []); // Empty dependency array to run the effect only once on component mount
-
-  const handleSearch = async() => {
-    // Check if searchText is not empty before making the request
-    
+  const handleSearch = async () => {
     if (!searchText.trim()) {
-      return
-    } 
-    try{
-      // Log the request data before making the actual API call
-      // Make a request to the server using Axios
-      setError(null);
-      setIsLoading(true);
-      const data = useSearchStandard(searchText, selectedPublisher);
-      setIsLoading(false);
-      const totalPages = data.data.last_page;
-      const itemsPerPage = data.data.per_page;
-      if (props.context === 'results') {
-        // If the component is on the search results page, update the search results data
-        refreshSearchResults(data, searchText, selectedPublisher);
-      } else {
-        // Otherwise, navigate to the search results page with the new data
-        navigate('./searchresultpage', { state: { data, totalPages, itemsPerPage, searchText, selectedPublisher }});
-      }
-      
+      return;
+    }
+
+    setIsSearching(true); // Set searching state to true
+    setSearchError(null); // Clear previous errors
+
+    try {
+      const data = await searchStandard(searchText, selectedPublisher);
+      setSearchData(data);
+      setIsSearching(false);
+
+      // Navigate to search result page with data
+      const totalPages = data.last_page;
+      const itemsPerPage = data.per_page;
+      navigate('./searchresultpage', {
+        state: {
+          data,
+          totalPages,
+          itemsPerPage,
+          searchText,
+          selectedPublisher,
+        },
+      });
     } catch (error) {
-       // Check if the error is a 401 authorization error
+      console.error('Error during search:', error);
+      setIsSearching(false);
+      setSearchError(error);
+
       if (error.response && error.response.status === 401) {
-        // Redirect the user to the login page
-        setIsLoading(false);
         setGoToLoginPage(true);
-      } else {
-       // Handle other errors
-        console.error('Error searching:', error);
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
+  useEffect(() => {
+    if (props.filterError) {
+      console.error('Error fetching publishers:', props.filterError);
+    }
+  }, [props.filterError]);
+
   return (
     <section className={styles.searchSection}>
-      {isLoading && <LoadingModal/>}
-      {goToLoginPage && <LoadingReminderModal/>}
+      {props.isFilterLoading && <LoadingModal />}
+      {goToLoginPage && <LoadingReminderModal />}
       <div className={styles.frameParent}>
         <div className={styles.searchiconParent}>
           <img className={styles.searchicon} alt="" src="/searchicon.svg" />
@@ -94,23 +73,26 @@ const SearchSection = ( props ) => {
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <Select className={styles.publisherdropdown}
-          value={selectedPublisher}
-          onChange={(e) => setSelectedPublisher(e.target.value)}
-        >
-          <MenuItem value="All publisher">All publisher</MenuItem>
-          {/* Map over the publishers array to create options dynamically */}
-          {publishers.map((publisher, index) => (
-            <MenuItem key={index} value={publisher.id}>
-              {publisher.name}
-            </MenuItem>
-      ))}
-        </Select>
+        {props.publishers && (
+          <Select
+            className={styles.publisherdropdown}
+            value={selectedPublisher}
+            onChange={(e) => setSelectedPublisher(e.target.value)}
+          >
+            <MenuItem value="All publisher">All publisher</MenuItem>
+            {props.publishers.map((publisher) => (
+              <MenuItem key={publisher.id} value={publisher.id}>
+                {publisher.name}
+              </MenuItem>
+            ))}
+          </Select>
+        )}
       </div>
       <button
         className={styles.searchbutton}
         id="searchBtn"
         onClick={handleSearch}
+        disabled={isSearching} // Disable the button while searching
       >
         <b className={styles.search}>Search</b>
       </button>

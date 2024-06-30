@@ -3,9 +3,9 @@ import ToggleMode from "../components/ToggleMode";
 import SearchSection from "../components/SearchSection";
 import ChatbotSection from "../components/ChatbotSection";
 import styles from "./SearchPage.module.css";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardFilter from "../components/card filter/CardFilter";
-import CardFilter2 from "../components/card filter/CardFilter2";
+import { useGetPageFilterData } from "../services/apiService";
 
 const SearchPage = () => {
   const [mode, setMode] = useState('search');
@@ -14,33 +14,23 @@ const SearchPage = () => {
     setMode(selectedMode);
   };
 
-  const cardData = [
-    {id: 1, title: 'Discipline 1 Discipline 1 cardTitle v cardTitle', icon: '/theodolite.png' },
-    {id: 2, title: 'Discipline 2', icon: '/theodolite.png' },
-    {id: 3, title: 'Discipline 3', icon: '/theodolite.png' },
-    {id: 4, title: 'Discipline 1', icon: '/theodolite.png' },
-    {id: 5, title: 'Discipline 2', icon: '/theodolite.png' },
-    {id: 6, title: 'Discipline 3', icon: '/theodolite.png' },
-    {id: 7, title: 'Discipline 1', icon: '/theodolite.png' },
-    {id: 8, title: 'Discipline 2', icon: '/theodolite.png' },
-    {id: 9, title: 'Discipline 3', icon: '/theodolite.png' },
-    {id: 10, title: 'Discipline 1', icon: '/theodolite.png' },
-    {id: 11, title: 'Discipline 2', icon: '/theodolite.png' },
-    {id: 12, title: 'Discipline 3', icon: '/theodolite.png' },
-    {id: 13, title: 'Discipline 1', icon: '/theodolite.png' },
-    {id: 14, title: 'Discipline 2', icon: '/theodolite.png' },
-    {id: 15, title: 'Discipline 3', icon: '/theodolite.png' },
-    {id: 16, title: 'Discipline 1', icon: '/theodolite.png' },
-    {id: 17, title: 'Discipline 2', icon: '/theodolite.png' },
-    {id: 18, title: 'Discipline 3', icon: '/theodolite.png' },
-    {id: 19, title: 'Discipline 1', icon: '/theodolite.png' },
-    {id: 20, title: 'Discipline 2', icon: '/theodolite.png' },
-    {id: 21, title: 'Discipline 3', icon: '/theodolite.png' },
-    {id: 22, title: 'Discipline 1', icon: '/theodolite.png' },
-    {id: 23, title: 'Discipline 2', icon: '/theodolite.png' },
-    {id: 24, title: 'Discipline 3', icon: '/theodolite.png' },
-    // Add more card data as needed
-  ];
+  const [filters , setFilters] = useState([])
+  const [filterError , setFiltersError] = useState(null)
+  const [isFilterLoading, setIsFilterLoading] = useState(false)
+
+  const { data, error, isLoading } = useGetPageFilterData('searchHome');
+  
+  useEffect(() => {
+    if (data) {
+      setFilters(data.data);
+      console.log(data.data);
+    }
+    if (error) {
+      setFiltersError(error);
+    }
+    setIsFilterLoading(isLoading);
+  }, [data, error, isLoading]);
+  
 
   return (
     <div className={styles.searchpage}>
@@ -68,7 +58,7 @@ const SearchPage = () => {
           </div>
         }
         
-        {mode === 'search' && <SearchSection context="main" keyword=""/>}
+        {mode === 'search' && <SearchSection context="main" keyword="" publishers= {filters.publishers} filterError= {filterError} isFilterLoading={isFilterLoading}/>}
         {mode === 'chatbot' && <ChatbotSection />}
         <div className={styles.moreFilterDiv}>
           <hr className={styles.horizontalLine} />
@@ -76,7 +66,7 @@ const SearchPage = () => {
           <hr className={styles.horizontalLine} />
         </div>
 
-        <CardFilter2 data={cardData}/>
+        <CardFilter data={filters.disciplines}/>
         
       </div>
     </div>

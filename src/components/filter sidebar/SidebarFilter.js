@@ -14,7 +14,6 @@ function SidebarFilter() {
         // Fetch data using the API service function
         const data = useGetPageFilterData("searchResult");
         setFilters(data.data);
-        console.log(data.data)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
