@@ -26,7 +26,6 @@
   text-align: left;
   font-size: var(--font-size-base);
   color: var(--color-black);
-  font-family: var(--font-inter);
   align-self: stretch;
   flex: 1;
   display: flex;

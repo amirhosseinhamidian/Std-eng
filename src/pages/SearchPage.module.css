@@ -16,7 +16,6 @@
   position: relative;
   font-size: inherit;
   font-weight: 700;
-  font-family: inherit;
 }
 .promotiontext {
   align-self: stretch;
@@ -52,7 +51,6 @@
   text-align: center;
   font-size: var(--font-size-5xl);
   color: var(--color-dimgray-200);
-  font-family: var(--font-inter);
 }
 
 .horizontalLine {

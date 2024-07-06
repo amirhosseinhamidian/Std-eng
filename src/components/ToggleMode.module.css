@@ -22,14 +22,12 @@
 .buttonText {
   position: relative;
   font-size: var(--font-size-mini);
-  font-family: var(--font-inter);
   color: var(--color-dimgray-200);
   text-align: left;
 }
 .buttonTextActive {
   position: relative;
   font-size: var(--font-size-mini);
-  font-family: var(--font-inter);
   color: var(--color-white);
   text-align: left;
 }
@@ -58,7 +56,6 @@
 .chatbotMode {
   position: relative;
   font-size: var(--font-size-mini);
-  font-family: var(--font-inter);
   color: var(--color-dimgray-200);
   text-align: left;
 }

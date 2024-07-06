@@ -39,7 +39,7 @@ const MainHeader = ({ naveFlex, naveAlignSelf }) => {
       <nav className={styles.naving} style={navingStyle}>
         <div className={styles.nave}>
           <div className={styles.logoName}>
-            <img className={styles.logoNameChild} alt="" src="/ellipse-1.svg" />
+            <img className={styles.logoNameChild} alt="" src="/logo.png" />
             <b className={styles.standardEngineering}>standard engineering</b>
           </div>
           <div className={styles.frameParent}>

@@ -17,7 +17,6 @@
     left: 8px;
     font-size: var(--font-size-sm);
     font-weight: 500;
-    font-family: var(--font-inter);
     color: var(--color-dimgray-100);
     text-align: left;
   }
@@ -40,7 +39,6 @@
     left: 8px;
     font-size: var(--font-size-sm);
     font-weight: 500;
-    font-family: var(--font-inter);
     color: var(--color-white);
     text-align: left;
   }

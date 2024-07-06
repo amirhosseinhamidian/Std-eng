@@ -23,7 +23,6 @@
 .price {
   position: relative;
   font-size: var(--font-size-mini);
-  font-family: var(--font-inter);
   color: var(--color-white);
   text-align: left;
 }
@@ -71,7 +70,6 @@
   text-align: left;
   font-size: var(--font-size-sm);
   color: var(--color-dimgray-100);
-  font-family: var(--font-inter);
 }
 .image7 {
   cursor: pointer;
@@ -122,7 +120,6 @@
   text-align: left;
   font-size: var(--font-size-lg);
   color: var(--color-dimgray-200);
-  font-family: var(--font-inter);
 }
 @media screen and (max-width: 960px) {
   .standardEngineering {

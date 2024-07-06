@@ -238,7 +238,7 @@ const ChatBotPage = () => {
                   ) : (
                     <div className={styles.logo}>
                       <img
-                        src="/iranflag@2x.png"
+                        src="/logo.png"
                         alt="System Logo"
                         className={styles.logoImage}
                       />

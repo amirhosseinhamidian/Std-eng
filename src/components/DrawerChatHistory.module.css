@@ -56,7 +56,6 @@
   text-align: left;
   font-size: var(--font-size-sm);
   color: var(--color-dimgray-100);
-  font-family: var(--font-inter);
 }
 .drawer.animate {
   animation: 0.25s ease 0s 1 normal forwards slide-in-left;

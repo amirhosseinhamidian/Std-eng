@@ -52,8 +52,9 @@
   background-color: transparent;
   align-self: stretch;
   flex: 1;
+  font-family: var(--font-roboto);
   border-radius: var(--br-5xs);
-  font-size: large;
+  font-size: medium;
   overflow: auto;
   /* Enable vertical scrolling if needed */
   resize: none;

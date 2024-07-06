@@ -6,9 +6,10 @@
     flex: 1;
     border-radius: var(--br-5xs);
     filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
-    font-size: large;
+    font-size: medium;
     padding-left: 12px;
     padding-right: 12px;
+    font-family: var(--font-roboto);
   }
   .send1Icon {
     height: 40px;

@@ -53,7 +53,6 @@
 .search {
   position: relative;
   font-size: var(--font-size-5xl);
-  font-family: var(--font-inter);
   color: var(--color-white);
   text-align: left;
 }

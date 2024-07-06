@@ -35,7 +35,7 @@ const Header = () => {
       <div className={styles.naving}>
         <div className={styles.nave}>
           <div className={styles.logoName}>
-            <img className={styles.logoNameChild} alt="" src="/ellipse-1.svg" />
+            <img className={styles.logoNameChild} alt="" src="/logo.png" />
             <b className={styles.standardEngineering}>Standard Engineering</b>
           </div>
           <div className={styles.frameParent}>
