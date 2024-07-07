@@ -13,6 +13,7 @@ import StandardDetailPage from "./pages/StandardDetailPage";
 import ChatBotPage from './pages/ChatBotPage'
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ChatProvider } from "./contexts/ChatContext";
+import HomePage from "./pages/HomePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +39,10 @@ const AppContent = () => {
 
     switch (pathname) {
       case "/":
+        title = "Home Page";
+        metaDescription = "";
+        break;
+      case "/searchpage":
         title = "Search Page";
         metaDescription = "Search for standards and information.";
         break;
@@ -82,7 +87,7 @@ const AppContent = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<SearchPage />} />
+      <Route path="/" element={<HomePage />} />
       <Route path="/searchpage" element={<SearchPage />} />
       <Route path="/searchresultpage" element={<SearchResultPage />} />
       <Route path="/searchpage/searchresultpage" element={<SearchResultPage />} />

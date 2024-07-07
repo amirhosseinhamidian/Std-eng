@@ -23,7 +23,6 @@ const SearchPage = () => {
   useEffect(() => {
     if (data) {
       setFilters(data.data);
-      console.log(data.data);
     }
     if (error) {
       setFiltersError(error);

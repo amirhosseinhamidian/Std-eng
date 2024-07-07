@@ -30,6 +30,10 @@ const Header = () => {
     navigate('/searchpage')
   }
 
+  const homeClickHandle = () => {
+    navigate('/')
+  }
+
   return (
     <>
       <div className={styles.naving}>
@@ -44,7 +48,7 @@ const Header = () => {
             </button>
             <div className={styles.headerMenu}>
               <nav className={styles.links}>
-                <a className={styles.home} muted>
+                <a className={styles.home} onClick={homeClickHandle}>
                   Home
                 </a>
                 <b className={styles.home} onClick={searchClickHandle}>Search</b>

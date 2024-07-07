@@ -1,0 +1,122 @@
+.hero{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+}
+.hero .content {
+    max-width: 40vw;
+}
+
+.hero .content h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.hero .content p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    color: #666;
+    text-align: start;
+}
+
+.hero .content .buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.hero .content .buttons button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1em;
+    color: white;
+    background-color: #ffa500;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.hero .content .buttons button.searchBtn {
+    background-color: rgba(255, 255, 255, 0.701);
+    border: 2px solid #ffa500;
+    color: #ffa500;
+}
+
+.hero .content .buttons button.startChatBtn:active {
+    background-color: var(--color-peru-300);
+}
+
+.hero .content .buttons button.searchBtn:active {
+    background-color:#dedede6d
+}
+
+.hero .bgHolder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero .bgHolder img {
+    max-width: 100%;
+    width: 70vw;
+    height: auto;
+}
+
+@media (max-width: 968px) {
+    .hero .content h1 {
+        font-size: 1.5em;
+        margin-bottom: 16px;
+    }
+    .hero .content p {
+        font-size: 0.8em;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 760px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        position: relative;
+        padding: 20px;
+        height: 40vh;
+    }
+    .hero .bgHolder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.4; /* Adjust opacity as needed */
+    }
+
+    .hero .bgHolder img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero .content {
+        max-width: 100%;
+        z-index: 1;
+    }
+
+
+    .hero .content .buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .hero .content .buttons button {
+        padding: 12px 20px;
+        font-size: 0.9em;
+    }
+}
