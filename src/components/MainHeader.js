@@ -3,6 +3,7 @@ import Drawer from "./Drawer";
 import { useNavigate  } from "react-router-dom";
 import PortalDrawer from "./PortalDrawer";
 import styles from "./MainHeader.module.css";
+import {getAccessToken} from "../services/authService"
 
 const MainHeader = ({ naveFlex, naveAlignSelf }) => {
   const navingStyle = useMemo(() => {
@@ -34,11 +35,15 @@ const MainHeader = ({ naveFlex, naveAlignSelf }) => {
     navigate('/searchpage')
   }
 
+  const homeClickHandle = () => {
+    navigate('/')
+  }
+
   return (
     <>
       <nav className={styles.naving} style={navingStyle}>
         <div className={styles.nave}>
-          <div className={styles.logoName}>
+          <div className={styles.logoName} onClick={homeClickHandle}>
             <img className={styles.logoNameChild} alt="" src="/logo.png" />
             <b className={styles.standardEngineering}>standard engineering</b>
           </div>
@@ -48,7 +53,7 @@ const MainHeader = ({ naveFlex, naveAlignSelf }) => {
             </button>
             <div className={styles.headerMenu}>
               <nav className={styles.links}>
-                <a className={styles.home} muted>
+                <a className={styles.home} onClick={homeClickHandle}>
                   Home
                 </a>
                 <b className={styles.home} onClick={searchClickHandle}>Search</b>

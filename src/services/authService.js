@@ -20,5 +20,5 @@ export const storeTokens = (accessToken, refreshToken) => {
   };
 
   export const isUserLogin = () => {
-    return localStorage.getItem('accessToken') === null
+    return localStorage.getItem('accessToken') !== null
   }

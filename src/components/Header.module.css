@@ -19,6 +19,7 @@
   height: 48px;
   width: 200px;
   position: relative;
+  cursor: pointer;
 }
 .price {
   position: absolute;

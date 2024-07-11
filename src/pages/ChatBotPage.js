@@ -7,27 +7,38 @@ import React, {
 } from "react";
 import styles from "./ChatBotPage.module.css";
 import Header from "../components/Header";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useChat } from "../contexts/ChatContext";
 import PortalDrawer from "../components/PortalDrawer";
 import DrawerChatHistory from "../components/DrawerChatHistory";
+import { useChatAll } from "../services/apiService";
+import loadingAnimation from "../assets/line-loading.json";
+import Lottie from "lottie-react";
 
 const ChatBotPage = () => {
-  const {
-    prompt,
-    setPrompt,
-    messages,
-    setMessages,
-    hasSentFirstMessage,
-    setHasSentFirstMessage,
-  } = useChat();
+  const { prompt, setPrompt, messages, setMessages, firstText, setFirstText } = useChat();
   const textbox = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const [isHistoryDrawerOpen, setIsHistoryDrawerOpen] = useState(false);
   const [editingMessage, setEditingMessage] = useState(null);
   const [editingText, setEditingText] = useState("");
-  const editTextareaRef = useRef(null); 
+  const editTextareaRef = useRef(null);
+  const [words, setWords] = useState([]);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [currentWord, setCurrentWord] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { mutate: sendChatAll } = useChatAll();
+
+  useEffect(() => {
+    const preExistingMessage = firstText !== ''
+    console.log("textttt : ", firstText)
+    if (preExistingMessage) {
+      setFirstText('')
+      sendMessage(firstText, true);
+    }
+  }, []); 
 
   const handleEditClick = (index, text) => {
     setEditingMessage(index);
@@ -40,24 +51,26 @@ const ChatBotPage = () => {
   };
 
   const handleDocumentEdit = () => {
-    const updatedMessages = messages.map((message, index) =>
+    const updatedMessages = messages.slice(0, editingMessage + 1).map((message, index) =>
       index === editingMessage ? { ...message, text: editingText } : message
     );
-    setMessages(updatedMessages);
+    setMessages(updatedMessages)
+    sendMessage(editingText, false);
     handleCancelEdit();
   };
 
   const adjustHeightEditTextArea = (textarea) => {
-    textarea.style.height = 'auto'; // Reset height
+    textarea.style.height = "auto"; // Reset height
     textarea.style.height = `${textarea.scrollHeight}px`; // Set new height
   };
-
 
   useEffect(() => {
     if (editingMessage !== null && editTextareaRef.current) {
       editTextareaRef.current.focus(); // Set focus on the textarea
-      editTextareaRef.current.selectionStart = editTextareaRef.current.value.length;
-      editTextareaRef.current.selectionEnd = editTextareaRef.current.value.length;
+      editTextareaRef.current.selectionStart =
+        editTextareaRef.current.value.length;
+      editTextareaRef.current.selectionEnd =
+        editTextareaRef.current.value.length;
       adjustHeightEditTextArea(editTextareaRef.current);
     }
   }, [editingMessage]);
@@ -65,8 +78,9 @@ const ChatBotPage = () => {
   useEffect(() => {
     if (editTextareaRef.current) {
       const handleInput = () => adjustHeight(editTextareaRef.current);
-      editTextareaRef.current.addEventListener('input', handleInput);
-      return () => editTextareaRef.current.removeEventListener('input', handleInput);
+      editTextareaRef.current.addEventListener("input", handleInput);
+      return () =>
+        editTextareaRef.current.removeEventListener("input", handleInput);
     }
   }, []);
 
@@ -74,7 +88,6 @@ const ChatBotPage = () => {
     setEditingText(e.target.value);
     adjustHeightEditTextArea(e.target);
   };
-
 
   const openHistoryDrawer = useCallback(() => {
     setIsHistoryDrawerOpen(true);
@@ -84,14 +97,16 @@ const ChatBotPage = () => {
     setIsHistoryDrawerOpen(false);
   }, []);
 
-  const queryParams = new URLSearchParams(location.search);
-  const inputText = queryParams.get("query");
-
   const handleChatWithPdfClick = (botMessage, userQuestion) => {
     navigate("./standarddetailpage", {
       state: { botMessage, userQuestion },
     });
   };
+
+  const handleInputChange = useCallback((event) => {
+    setPrompt(event.target.value);
+    handleKeyDown(event);
+  }, []);
 
   const messagesEndRef = useRef(null);
 
@@ -116,70 +131,71 @@ const ChatBotPage = () => {
     adjustHeight();
   }
 
-  const generateRandomTitle = () => {
-    const words = [
-      "The",
-      "Quick",
-      "Brown",
-      "Fox",
-      "Jumps",
-      "Over",
-      "The",
-      "Lazy",
-      "Dog",
-      "Lorem",
-      "Ipsum",
-      "Dolor",
-      "Sit",
-      "Amet",
-      "Consectetur",
-      "Adipiscing",
-      "Elit",
-    ];
-
-    let title = "";
-    for (let i = 0; i < 65; i++) {
-      title += words[Math.floor(Math.random() * words.length)] + " ";
+  const sendMessage = (text, isAddMessage) => {
+    console.log("send message :: ", text)
+    if (isAddMessage) {
+      const newMessages = [...messages, { text, role: "user" }];
+      setMessages(newMessages);
     }
-    return title.trim(); // Trim to remove extra space at the end
-  };
-
-  const generatePublisherAbbreviation = () => {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let abbreviation = "";
-    for (let i = 0; i < 4; i++) {
-      abbreviation += alphabet.charAt(
-        Math.floor(Math.random() * alphabet.length)
-      );
-    }
-    return abbreviation;
-  };
-
-  const sendMessage = (text) => {
-    const newMessages = [...messages, { text, role: "user" }];
-    setMessages(newMessages);
     setPrompt("");
-
-    // Simulate bot reply after 1 second
-    setTimeout(() => {
-      const title = generateRandomTitle();
-      const publisher = generatePublisherAbbreviation();
-      const botReply = "This is a mock response from the bot.";
-      const newBotMessages = [
-        ...newMessages,
-        { text: botReply, role: "bot", title: title, publisher: publisher },
-      ];
-      setMessages(newBotMessages);
-    }, 500);
+    setLoading(true);
+    sendChatAll(text, {
+      onSuccess: (response) => {
+        setCurrentWord("");
+        setCurrentWordIndex(0);
+        setLoading(false);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: response.data.join(""), role: "system" },
+        ]);
+        setWords(response.data);
+      },
+      onError: (error) => {
+        console.error("Error sending message:", error);
+        setLoading(false);
+      },
+    });
   };
 
+  // Effect to handle word animation
   useEffect(() => {
-    if (inputText && !hasSentFirstMessage) {
-      setPrompt(inputText);
-      sendMessage(inputText);
-      setHasSentFirstMessage(true);
-    }
-  }, [inputText, hasSentFirstMessage, setPrompt]);
+    const interval = setInterval(() => {
+      if (currentWordIndex < words.length) {
+        setCurrentWord((prevWord) => prevWord + words[currentWordIndex]);
+        setCurrentWordIndex((prevIndex) => prevIndex + 1);
+        scrollToBottom();
+      } else {
+        clearInterval(interval);
+        setLoading(false);
+      }
+    }, 50); // Milliseconds between each word (adjust as needed)
+
+    return () => {
+      clearInterval(interval); // Cleanup on component unmount
+    };
+  }, [words, currentWordIndex]);
+
+  function formatText(text) {
+    // Replace **text** with <b>text</b>
+    text = text.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+
+    // Replace \n with <br />
+    text = text.replace(/\n/g, "<br />");
+
+    // Split text by <br /> to create an array of lines
+    const lines = text.split("<br />");
+
+    // Map each line to a <p> element
+    const formattedText = lines.map((line, index) => (
+      <p
+        style={{ textAlign: "left", marginTop: -2 }}
+        key={index}
+        dangerouslySetInnerHTML={{ __html: line }}
+      />
+    ));
+
+    return formattedText;
+  }
 
   const chatHistory = {
     Today: ["Chat with Alice", "Chat with Bob"],
@@ -269,9 +285,15 @@ const ChatBotPage = () => {
                         </div>
                       </>
                     ) : (
-                      <div className={styles.messageText}>{message.text}</div>
+                      <p className={styles.messageText}>
+                        {message.role !== "user" &&
+                        index === messages.length - 1 && 
+                        currentWord !== ""
+                          ? formatText(currentWord)
+                          : formatText(message.text)}
+                      </p>
                     )}
-                    {message.role !== "user" && (
+                    {/* {message.role !== "user" && (
                       <div className={styles.pdfContinar}>
                         <img
                           className={styles.pdfImg}
@@ -293,7 +315,7 @@ const ChatBotPage = () => {
                           Chat
                         </button>
                       </div>
-                    )}
+                    )} */}
                   </div>
                   {message.role === "user" && editingMessage !== index && (
                     <img
@@ -305,6 +327,24 @@ const ChatBotPage = () => {
                   )}
                 </div>
               ))}
+
+              {loading && (
+                <div
+                  className={styles.systemMessage}
+                  style={{ marginLeft: 16 }}
+                >
+                  <div className={styles.logo}>
+                    <img
+                      src="/logo.png"
+                      alt="System Logo"
+                      className={styles.logoImage}
+                    />
+                  </div>
+                  <div className={styles.loading}>
+                    <Lottie animationData={loadingAnimation} />
+                  </div>
+                </div>
+              )}
               <div ref={messagesEndRef} />
             </div>
             <div className={styles.inputContainer}>
@@ -316,10 +356,7 @@ const ChatBotPage = () => {
                 value={prompt}
                 rows={1}
                 style={{ maxHeight: "160px" }}
-                onChange={(e) => {
-                  setPrompt(e.target.value);
-                  handleKeyDown(e);
-                }}
+                onChange={handleInputChange}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && e.shiftKey) {
                     setPrompt(prompt + "\n");
@@ -330,7 +367,7 @@ const ChatBotPage = () => {
                     prompt.trim() !== ""
                   ) {
                     e.preventDefault(); // Prevent the default behavior of the Enter key
-                    sendMessage(prompt);
+                    sendMessage(prompt, true);
                   }
                 }}
               />
@@ -338,7 +375,7 @@ const ChatBotPage = () => {
                 className={styles.sendIcon}
                 alt="send"
                 src="/send.svg"
-                onClick={() => sendMessage(prompt)}
+                onClick={() => sendMessage(prompt, true)}
               />
             </div>
           </div>

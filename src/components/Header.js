@@ -38,7 +38,7 @@ const Header = () => {
     <>
       <div className={styles.naving}>
         <div className={styles.nave}>
-          <div className={styles.logoName}>
+          <div className={styles.logoName} onClick={homeClickHandle}>
             <img className={styles.logoNameChild} alt="" src="/logo.png" />
             <b className={styles.standardEngineering}>Standard Engineering</b>
           </div>

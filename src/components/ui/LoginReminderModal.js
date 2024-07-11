@@ -3,7 +3,7 @@ import {CircularProgress} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Styles from "./LoginReminderModal.module.css"
 
-const LoginReminderModal = () => {
+const LoginReminderModal = (afterLoginPath) => {
   const [countdownTimer, setCountdownTimer] = useState(5)
   const navigate = useNavigate();
   const [progress, setProgress] = useState(100);
@@ -11,7 +11,7 @@ const LoginReminderModal = () => {
   // Close the modal and redirect to login page after 5 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/loginpage');
+      navigate('/loginpage', { state: { afterLoginPath: afterLoginPath } });
     }, 5000);
 
     return () => clearTimeout(timer);

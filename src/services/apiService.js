@@ -39,6 +39,7 @@ apiService.interceptors.response.use(
 
 const fetchWithAuth = async (url, method = 'GET', data = null) => {
   const accessToken = getAccessToken();
+  console.log(accessToken)
   if (!accessToken) {
     throw new Error('Access token not found');
   }
@@ -129,6 +130,49 @@ const useGetPageFilterData = (page) => {
   );
 };
 
+// const useChatAll = (message) => {
+//   console.log(message)
+//   return useMutation(
+//     (message) => fetchWithAuth('/chat-all', 'POST', { message }),
+//     {
+//       onError: (error) => {
+//         console.error('Error sending chat message:', error);
+//       },
+//     }
+//   );
+// };
+
+const useChatAll = (message) => {
+  console.log(message);
+  return useMutation(
+    async () => {
+      return {
+        status: 200,
+        data: [
+          "Hello", "! ", "How ", "can ", "I ", "assist ", "you ", "today", "?", "\n",
+          "If ", "you ", "have ", "any ", "specific ", "questions ", "or ", 
+          "need ", "information", ", ", "just ", "let ", "me ", "know", "!", 
+          "topic ", "or ", "context ", "you", "'re", "interested ", "in", 
+          ".", "Here ", "are ", "a ", "few ", "example ", "titles ", "based ", 
+          "on ", "general ", "subjects", ":","\n", "1", ".", "**", "\"", " In ", 
+          "nov", "ations ", "in ", "Petro ", "chemical ", "Processing ", 
+          "Techniques", "\"", "**","\n", "2", ".", "**", "\"", " Impact ", "of ", 
+          "Regulatory ", "Changes ", "on ", "the ", "Oil ", "and ", "Gas ", 
+          "Industry",  "\"", "**"
+        ]
+      };
+    },
+    {
+      onError: (error) => {
+        console.error('Error sending chat message:', error);
+      },
+      onSuccess: (response) => {
+        console.log('Chat message sent successfully:', response);
+      }
+    }
+  );
+};
+
 export {
   useSearchStandard,
   searchStandard,
@@ -139,4 +183,5 @@ export {
   useGetProfileInformation,
   useUpdateProfile,
   useGetPageFilterData,
+  useChatAll,
 };

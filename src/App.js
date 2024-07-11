@@ -5,6 +5,7 @@ import {
   useNavigationType,
   useLocation,
 } from "react-router-dom";
+import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import SearchResultPage from "./pages/SearchResultPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -12,8 +13,10 @@ import LoginPage from "./pages/LoginPage";
 import StandardDetailPage from "./pages/StandardDetailPage";
 import ChatBotPage from './pages/ChatBotPage'
 import { QueryClient, QueryClientProvider } from 'react-query';
+
 import { ChatProvider } from "./contexts/ChatContext";
-import HomePage from "./pages/HomePage";
+import { SearchProvider } from "./contexts/SearchContext";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -104,11 +107,13 @@ const AppContent = () => {
 
 function App() {
   return (
-    <ChatProvider>
-      <QueryClientProvider client={queryClient}>
-        <AppContent />
-      </QueryClientProvider>
-    </ChatProvider>
+    <SearchProvider>
+      <ChatProvider>
+        <QueryClientProvider client={queryClient}>
+          <AppContent />
+        </QueryClientProvider>
+      </ChatProvider>
+    </SearchProvider>
   );
 }
 

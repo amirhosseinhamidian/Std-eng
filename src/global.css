@@ -16,6 +16,9 @@ body {
   --rsbs-mr: env(safe-area-inset-right);
   --rsbs-overlay-rounded: 16px;
 
+  /* fonts */
+  --font-roboto: Roboto;
+
   /* font sizes */
   --font-size-5xl: 24px;
   --font-size-5xl: 24px;

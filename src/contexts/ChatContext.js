@@ -9,10 +9,17 @@ export const useChat = () => {
 export const ChatProvider = ({ children }) => {
   const [prompt, setPrompt] = useState('');
   const [messages, setMessages] = useState([]);
-  const [hasSentFirstMessage, setHasSentFirstMessage] = useState(false);
+  const [firstText, setFirstText] = useState('');
+
+  const clearChats = () => {
+    setPrompt('')
+    setMessages([])
+    setFirstText('')
+  }
+  
 
   return (
-    <ChatContext.Provider value={{ prompt, setPrompt, messages, setMessages, hasSentFirstMessage, setHasSentFirstMessage }}>
+    <ChatContext.Provider value={{ prompt, setPrompt, messages, setMessages, firstText, setFirstText, clearChats }}>
       {children}
     </ChatContext.Provider>
   );

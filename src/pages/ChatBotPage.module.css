@@ -141,6 +141,8 @@
   align-self: flex-end;
   margin-left: 8px;
   margin-right: 8px;
+  text-align: left;
+  margin-top: 0;
 }
 
 .messageContinar {
@@ -313,6 +315,7 @@
   resize: none;
   overflow: hidden;
   outline: none;
+  font-family: var(--font-roboto);
 }
 
 .editButtons {
@@ -339,6 +342,13 @@
 .cancelButton {
   background-color: #f44336;
   color: white;
+}
+
+.loading {
+  width: 64px;
+  scale: 3;
+  margin-left: 32px;
+  margin-top: -24px;
 }
 
 @media screen and (max-width: 840px) {

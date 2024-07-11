@@ -1,17 +1,22 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef } from 'react'
+import SearchContext from '../../contexts/SearchContext';
 import styles from "./CardFilter.module.css";
 
-const CardFilter = ({ data }) => {
+const CardFilter = () => {
     
-    const [selected, setSelected] = useState([]);
+    const { 
+        selectedDisciplines,
+        setSelectedDisciplines, 
+        disciplines
+    } = useContext(SearchContext);
     const containerRef = useRef(null);
 
-    const isItemSelected = (id) => !!selected.find((el) => el === id);
+    const isItemSelected = (id) => !!selectedDisciplines.find((el) => el === id);
 
     const handleClick = (id) => {
         const itemSelected = isItemSelected(id);
 
-        setSelected((currentSelected) =>
+        setSelectedDisciplines((currentSelected) =>
             itemSelected
                 ? currentSelected.filter((el) => el !== id)
                 : [...currentSelected, id],
@@ -21,7 +26,7 @@ const CardFilter = ({ data }) => {
     const scrollLeft = () => {
         if (containerRef.current) {
             containerRef.current.scrollBy({
-                left: -200, // Adjust this value as needed
+                left: -200,
                 behavior: 'smooth'
             });
         }
@@ -36,21 +41,21 @@ const CardFilter = ({ data }) => {
         }
     };
 
-  if(data != null && data.length != 0) {
+  if(disciplines != null && disciplines.length != 0) {
     return (
         <div className={styles.cardFilter}>
             <div onClick={scrollLeft} className={styles.arrow}>
                 <img src='/chevronbackward.svg' alt='' />
             </div>
             <div className={styles.filters} ref={containerRef}>
-                {data.map(({ id, title, icon, index }) => (
+                {disciplines.map((discipline, index) => (
                     <div key={index}
-                    onClick={()=>handleClick(id)}
-                    className={isItemSelected(id) ? styles.cardSelected : styles.card}
+                    onClick={()=>handleClick(discipline.id)}
+                    className={isItemSelected(discipline.id) ? styles.cardSelected : styles.card}
                     tabIndex={0}
                     >
-                        <img className={styles.cardImage} src={icon} alt={title} />
-                        <h3 className={styles.cardTitle}>{title}</h3>
+                        <img className={styles.cardImage} src={discipline.icon} alt={discipline.title} />
+                        <h3 className={styles.cardTitle}>{discipline.title}</h3>
                     </div>
                 ))}
             </div>
