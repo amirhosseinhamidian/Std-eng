@@ -13,6 +13,9 @@
   border-radius: var(--br-5xs);
   object-fit: scale-down;
   cursor: pointer;
+  font-size: 11px;
+  color: lightgrey;
+
 }
 .title {
   position: relative;

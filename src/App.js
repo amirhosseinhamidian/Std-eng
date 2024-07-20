@@ -96,7 +96,7 @@ const AppContent = () => {
       <Route path="/searchpage/searchresultpage" element={<SearchResultPage />} />
       <Route path="/profilepage" element={<ProfilePage />} />
       <Route path="/loginpage" element={<LoginPage />} />
-      <Route path="/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />
+      <Route path="/searchpage/searchresultpage/standarddetailpage" element={<StandardDetailPage />} />
       <Route path="/searchpage/chatbotpage" element={<ChatBotPage />} />
       <Route path="/chatbotpage" element={<ChatBotPage />} />
       <Route path="/searchpage/chatbotpage/standarddetailpage" element={<StandardDetailPage />} />

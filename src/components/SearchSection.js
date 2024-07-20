@@ -14,8 +14,6 @@ const SearchSection = () => {
     setSearchText,
     selectedPublisher,
     setSelectedPublisher,
-    selectedDisciplines,
-    setSelectedDisciplines,
     isFilterLoading,
     filterError,
     publishers
@@ -31,33 +29,7 @@ const SearchSection = () => {
     }
 
     if (isUserLogin()) {
-
-
-    try {
-      const data = await searchStandard(searchText, selectedPublisher);
-      setIsSearching(false);
-
-      // Navigate to search result page with data
-      const totalPages = data.last_page;
-      const itemsPerPage = data.per_page;
-      // navigate('./searchresultpage', {
-      //   state: {
-      //     data,
-      //     totalPages,
-      //     itemsPerPage,
-      //     searchText,
-      //     selectedPublisher,
-      //   },
-      // });
-    } catch (error) {
-      console.error('Error during search:', error);
-      setIsSearching(false);
-
-      if (error.response && error.response.status === 401) {
-        setGoToLoginPage(true);
-      }
-    }
-
+      navigate('./searchresultpage')
     } else {
       setGoToLoginPage(true)
     }

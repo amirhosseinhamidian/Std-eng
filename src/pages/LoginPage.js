@@ -31,6 +31,7 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     setIsLoggedIn(true);
+    console.log("after:    ",afterLoginPath)
     navigate(afterLoginPath.afterLoginPath, { replace: true });
   };
 

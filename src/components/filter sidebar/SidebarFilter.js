@@ -7,19 +7,17 @@ import PublicationDate from './year/PublicationDate';
 import { useGetPageFilterData } from '../../services/apiService';
 
 function SidebarFilter() {
-  const [filters , setFilters] = useState(null)
+  const [filters , setFilters] = useState({})
+  const loadFilters = Object.keys(filters).length !== 0
+  const {data} = useGetPageFilterData("searchResult");
+
   useEffect(() => {
-    const fetchFilterData = async () => {
-      try {
-        // Fetch data using the API service function
-        const data = useGetPageFilterData("searchResult");
-        setFilters(data.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchFilterData();
-  }, []); 
+    if (data) {
+      setFilters(data.data);
+      
+    }
+  }, [data]);
+  
   return (
   <>
     <section className={Styles.sidebar}>
@@ -27,10 +25,11 @@ function SidebarFilter() {
           <img className={Styles.filterIcon} src='/filter.svg'/>
           <div className={Styles.filter}>Filters</div>
         </div>
-        { filters.disciplines !== null && <Discipline items={filters.disciplines}/> }
-        { filters.document_type !== null && <DocumentType items={filters.document_type}/> }
+      
+        { loadFilters && filters.disciplines.length !== 0 && <Discipline items={filters.disciplines}/> }
+        { loadFilters && filters.document_type.length !== 0 && <DocumentType items={filters.document_type}/> }
         {/* <Industry items={filters.industry}/> */}
-        { filters.document_type !== null && <Region items={filters.region}/> }
+        { loadFilters && filters.region.length !== 0 && <Region items={filters.region}/> }
         <PublicationDate/>
     </section>
   </>

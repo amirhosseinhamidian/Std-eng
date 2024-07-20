@@ -20,6 +20,7 @@ apiService.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = getRefreshToken();
+      console.log("refresh token:   ", refreshToken)
       if (refreshToken) {
         try {
           const { data } = await apiService.post('/auth/refreshAccessToken', new URLSearchParams({ refresh_token: refreshToken }), {
@@ -39,7 +40,7 @@ apiService.interceptors.response.use(
 
 const fetchWithAuth = async (url, method = 'GET', data = null) => {
   const accessToken = getAccessToken();
-  console.log(accessToken)
+  console.log("access token:  ", accessToken)
   if (!accessToken) {
     throw new Error('Access token not found');
   }
@@ -55,15 +56,49 @@ const fetchWithAuth = async (url, method = 'GET', data = null) => {
   return responseData;
 };
 
-const useSearchStandard = (keyword, publisherId, page = 1) => {
-  return useQuery(['searchStandard', keyword, publisherId, page], async() => 
-    await fetchWithAuth(`/keyword-search?keyword=${keyword}&page=${page}`)
+const useSearchStandard = (keyword, selectedPublisher, page = 1, categories, documentType, region, year) => {
+  const queryParams = new URLSearchParams({
+    keyword,
+    page,
+    ...(selectedPublisher !== "All publisher" && { publisher: encodeURIComponent(selectedPublisher) }),
+    ...(categories && { categories: encodeURIComponent(categories) }),
+    ...(documentType && { document_type: encodeURIComponent(documentType) }),
+    ...(region && { region: encodeURIComponent(region) }),
+    ...(year && { year: encodeURIComponent(year) }),
+  }).toString();
+  
+  return useQuery(
+    ['searchStandard', keyword, selectedPublisher, page, categories, documentType, region, year],
+    async () => {
+      console.log("query param:   ", queryParams);
+      const response = await fetchWithAuth(`/keyword-search?${queryParams}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    },
+    {
+      enabled: !!keyword, // Ensure it only runs when keyword is truthy
+      refetchOnWindowFocus: false, // Prevent automatic refetching on window focus
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      keepPreviousData: true, // Keep previous data while fetching new data
+    }
   );
 };
 
-const searchStandard = async (keyword, publisherId, page = 1) => {
+const searchStandard = async (keyword, selectedPublisher, page = 1, categories, documentType, region, year) => {
   try {
-    const response = await fetchWithAuth(`/keyword-search?keyword=${keyword}&page=${page}`);
+    const queryParams = new URLSearchParams({
+      keyword,
+      page,
+      ...(selectedPublisher !== "All publisher" && { publisher: encodeURIComponent(selectedPublisher) }),
+      ...(categories && { categories: encodeURIComponent(categories) }),
+      ...(documentType && { document_type: encodeURIComponent(documentType) }),
+      ...(region && { region: encodeURIComponent(region) }),
+      ...(year && { year: encodeURIComponent(year) }),
+    }).toString();
+
+    const response = await fetchWithAuth(`/keyword-search?${queryParams}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -125,53 +160,54 @@ const useUpdateProfile = () => {
 };
 
 const useGetPageFilterData = (page) => {
+  console.log("heereeeee")
   return useQuery(['pageFilterData', page], () => 
     apiService.post('/page-data', { page }).then(({ data }) => data)
   );
 };
 
-// const useChatAll = (message) => {
-//   console.log(message)
-//   return useMutation(
-//     (message) => fetchWithAuth('/chat-all', 'POST', { message }),
-//     {
-//       onError: (error) => {
-//         console.error('Error sending chat message:', error);
-//       },
-//     }
-//   );
-// };
-
 const useChatAll = (message) => {
-  console.log(message);
+  console.log(message)
   return useMutation(
-    async () => {
-      return {
-        status: 200,
-        data: [
-          "Hello", "! ", "How ", "can ", "I ", "assist ", "you ", "today", "?", "\n",
-          "If ", "you ", "have ", "any ", "specific ", "questions ", "or ", 
-          "need ", "information", ", ", "just ", "let ", "me ", "know", "!", 
-          "topic ", "or ", "context ", "you", "'re", "interested ", "in", 
-          ".", "Here ", "are ", "a ", "few ", "example ", "titles ", "based ", 
-          "on ", "general ", "subjects", ":","\n", "1", ".", "**", "\"", " In ", 
-          "nov", "ations ", "in ", "Petro ", "chemical ", "Processing ", 
-          "Techniques", "\"", "**","\n", "2", ".", "**", "\"", " Impact ", "of ", 
-          "Regulatory ", "Changes ", "on ", "the ", "Oil ", "and ", "Gas ", 
-          "Industry",  "\"", "**"
-        ]
-      };
-    },
+    (message) => fetchWithAuth('/chat-all', 'POST', { message }),
     {
       onError: (error) => {
         console.error('Error sending chat message:', error);
       },
-      onSuccess: (response) => {
-        console.log('Chat message sent successfully:', response);
-      }
     }
   );
 };
+
+// const useChatAll = (message) => {
+//   console.log(message);
+//   return useMutation(
+//     async () => {
+//       return {
+//         status: 200,
+//         data: [
+//           "Hello", "! ", "How ", "can ", "I ", "assist ", "you ", "today", "?", "\n",
+//           "If ", "you ", "have ", "any ", "specific ", "questions ", "or ", 
+//           "need ", "information", ", ", "just ", "let ", "me ", "know", "!", 
+//           "topic ", "or ", "context ", "you", "'re", "interested ", "in", 
+//           ".", "Here ", "are ", "a ", "few ", "example ", "titles ", "based ", 
+//           "on ", "general ", "subjects", ":","\n", "1", ".", "**", "\"", " In ", 
+//           "nov", "ations ", "in ", "Petro ", "chemical ", "Processing ", 
+//           "Techniques", "\"", "**","\n", "2", ".", "**", "\"", " Impact ", "of ", 
+//           "Regulatory ", "Changes ", "on ", "the ", "Oil ", "and ", "Gas ", 
+//           "Industry",  "\"", "**"
+//         ]
+//       };
+//     },
+//     {
+//       onError: (error) => {
+//         console.error('Error sending chat message:', error);
+//       },
+//       onSuccess: (response) => {
+//         console.log('Chat message sent successfully:', response);
+//       }
+//     }
+//   );
+// };
 
 export {
   useSearchStandard,

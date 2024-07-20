@@ -6,16 +6,22 @@
   flex-shrink: 0;
 }
 .textinput {
-  border: 0;
-  outline: 0;
-  background-color: transparent;
+  border: none;
+  outline: none;
   align-self: stretch;
+  background: transparent;
   flex: 1;
   border-radius: var(--br-5xs);
-  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 4px 4px transparent);
   font-size: large;
   padding-left: 12;
   padding-right: 12;
+}
+.textinput:-webkit-autofill,
+.no-autocomplete-highlight:-webkit-autofill:hover,
+.no-autocomplete-highlight:-webkit-autofill:focus,
+.no-autocomplete-highlight:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--color-whitesmoke) inset !important;
 }
 .publisherdropdown,
 .searchiconParent {

@@ -22,7 +22,7 @@ const Header = () => {
     if (getAccessToken()) {
       navigate('/profilepage')
     } else {
-      navigate('/loginpage')
+      navigate('/loginpage', { state: { afterLoginPath: '/profilepage' } })
     }
   }
 

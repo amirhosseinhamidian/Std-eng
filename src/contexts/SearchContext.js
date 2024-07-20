@@ -10,6 +10,9 @@ export const SearchProvider = ({ children }) => {
   const [disciplines, setDisciplines] = useState([]);
   const [filterError, setFiltersError] = useState(null);
   const [isFilterLoading, setIsFilterLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [keyword, setKeyword] = useState("")
+
 
   return (
     <SearchContext.Provider
@@ -28,6 +31,9 @@ export const SearchProvider = ({ children }) => {
         setFiltersError,
         isFilterLoading,
         setIsFilterLoading,
+        currentPage, setCurrentPage,
+        keyword, setKeyword
+
       }}
     >
       {children}
