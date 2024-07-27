@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import styles from "./Drawer1.module.css";
+import styles from "./DrawerChatHistory.module.css";
 
-const Drawer1 = ({ onClose }) => {
+const DrawerChatHistory = ({ onClose }) => {
   useEffect(() => {
     const scrollAnimElements = document.querySelectorAll(
       "[data-animate-on-scroll]"
@@ -42,11 +42,8 @@ const Drawer1 = ({ onClose }) => {
         <b className={styles.search}>About us</b>
         <b className={styles.search}>Profile</b>
       </ol>
-      <button className={styles.priceWrapper} id="priceDrawerBtn">
-        <b className={styles.price}>Price</b>
-      </button>
     </div>
   );
 };
 
-export default Drawer1;
+export default DrawerChatHistory;

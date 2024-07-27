@@ -18,3 +18,7 @@ export const storeTokens = (accessToken, refreshToken) => {
   export const clearTokens = () => {
     localStorage.removeItem('accessToken');
   };
+
+  export const isUserLogin = () => {
+    return localStorage.getItem('accessToken') !== null
+  }

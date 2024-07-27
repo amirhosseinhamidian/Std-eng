@@ -7,96 +7,126 @@ import {
   FormControl,
 } from "@mui/material";
 import styles from "./Information.module.css";
-import React, { useState, useEffect  } from 'react';
-import {useGetProfileInformation, useUpdateProfile} from '../services/apiService'
+import React, { useState, useEffect } from 'react';
+import { useGetProfileInformation, useUpdateProfile } from '../services/apiService';
 
 const Information = () => {
-
-  const [profileData, setProfileData] = useState({
+  const { data: profileData, isLoading, isError } = useGetProfileInformation();
+  const initialFormData = {
     email: '',
     phone: '',
     first_name: '',
     last_name: '',
-    education: '',
+    education: '', 
     company: '',
     gender: '',
     birth_date: '',
-  });
+  };
+  const [formData, setFormData] = useState(initialFormData);
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = useGetProfileInformation();
-        const { user } = response;
-        setProfileData(user);
-        console.log("profile data", user);
-      } catch (error) {
-        console.error('Error fetching profile data:', error);
-      }
-    };
-
-    fetchProfileData();
-  }, []);
+    console.log("profile data: ", profileData)
+    if (profileData) {
+      setFormData({
+        email: profileData.user.email || '',
+        phone: profileData.user.phone || '',
+        first_name: profileData.user.first_name || '',
+        last_name: profileData.user.last_name || '',
+        education: profileData.user.education || '',
+        company: profileData.user.company || '',
+        gender: profileData.user.gender || '',
+        birth_date: profileData.user.birth_date || '',
+      });
+    }
+    console.log("form data: ", formData)
+  }, [profileData]);
 
   const [education, setEducation] = useState('');
-  const handleChangeEducation = (event) => {
-    setEducation(event.target.value);
-  };
-
-  const pickBirthDate = () => {
-    const [startDate, setStartDate] = useState(new Date());
-      return (
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-        />
-      );
-  }
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log("name", name)
-    console.log("value", value);
-    setProfileData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
+  const [startDate, setStartDate] = useState(new Date());
   const [focusState, setFocusState] = useState({
     lastNameFocused: false,
     emailFocused: false,
     firstNameFocused: false,
-    genderFoused: false,
+    genderFocused: false,
     educationFocused: false,
     companyFocused: false,
     birthFocused: false,
-    // Add other properties for other input fields if needed
   });
+
   
-  const saveHandle = async() => {
-      try {
-         useUpdateProfile(
-          profileData.first_name,
-          profileData.last_name,
-          profileData.gender,
-          profileData.email,
-          profileData.education,
-          profileData.company,
-          profileData.birth_date,
-        )
-      } catch (error) {
-        console.log(error)
+  const handleChangeEducation = (event) => {
+    setEducation(event.target.value);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value || '',
+    }));
+  };
+
+  const [errors, setErrors] = useState({
+    first_name: '',
+    last_name: '',
+    gender: '',
+    email: '',
+    education: '',
+    company: '',
+    birth_date: '',
+  });
+
+  const { mutate: updateProfile, isLoading: isLoadingUpdate, errorUpdate } = useUpdateProfile();
+
+  const saveHandle = () => {
+    try {
+      updateProfile({
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        gender: formData.gender,
+        email: formData.email,
+        education: formData.education,
+        company: formData.company,
+        birth_date: formData.birth_date,
+      });
+    } catch (error) {
+      console.log("errorUpdate", errorUpdate)
+    if(errorUpdate) {
+      console.error('Error updating profile:', errorUpdate);
+      if (errorUpdate.response) {
+        console.error('Error response:', errorUpdate.response.data);
+        if (errorUpdate.response.data.errors) {
+          const errorData = errorUpdate.response.data.errors;
+          const newErrors = {};
+          Object.keys(errorData).forEach((key) => {
+            newErrors[key] = errorData[key][0]; // Assuming you want to display only the first error message
+          });
+          setErrors(newErrors);
+          console.log("errrorrrs: ", newErrors)
+        }
+      } else if (errorUpdate.request) {
+        console.error('No response from server:', errorUpdate.request);
+        // Handle this case, retry request, or notify user
+      } else {
+        console.error('Error setting up request:', errorUpdate.message);
+        // Handle other errors, retry, or notify user
       }
+    }
+    }
+  };
+  
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
+
+  if (isError) {
+    return <div>Error fetching profile data</div>;
+  }
+  
   return (
     <div className={styles.information}>
       <form className={styles.frameParent}>
-        <img className={styles.frameChild} alt="" src="/frame-32@2x.png"/>
+        <img className={styles.frameChild} alt="" src="/frame-32@2x.png" />
         <div className={styles.frameGroup}>
           <div className={styles.inputsParent}>
             <TextField
@@ -104,9 +134,10 @@ const Information = () => {
               color="warning"
               label="Email"
               name="email"
-              // required={true}
               variant="outlined"
-              value={profileData.email}
+              error={!!errors.email}
+              helperText={errors.email}
+              value={formData.email}
               onChange={handleChange}
               inputlabelprops={{
                 shrink: !!profileData.email || focusState.emailFocused,
@@ -124,7 +155,7 @@ const Information = () => {
               name="phone"
               disabled
               variant="outlined"
-              value={profileData.phone}
+              value={formData.phone}
               sx={{
                 "& .MuiInputBase-root": { height: "50px" },
                 width: "451px",
@@ -138,7 +169,9 @@ const Information = () => {
               label="First name"
               name="first_name"
               variant="outlined"
-              value={profileData.first_name}
+              error={!!errors.first_name}
+              helperText={errors.first_name}
+              value={formData.first_name}
               onChange={handleChange}
               inputlabelprops={{
                 shrink: !!profileData.first_name || focusState.firstNameFocused,
@@ -155,7 +188,9 @@ const Information = () => {
               label="Last name"
               name="last_name"
               variant="outlined"
-              value={profileData.last_name}
+              error={!!errors.last_name}
+              helperText={errors.last_name}
+              value={formData.last_name}
               onChange={handleChange}
               inputlabelprops={{
                 shrink: !!profileData.last_name || focusState.lastNameFocused,
@@ -171,6 +206,8 @@ const Information = () => {
             <FormControl
               className={styles.email}
               variant="outlined"
+              error={!!errors.education}
+              helperText={errors.education} 
               sx={{
                 borderRadius: "0px 0px 0px 0px",
                 width: "451px",
@@ -207,7 +244,7 @@ const Information = () => {
                 "& .MuiInputBase-input": {
                   textAlign: "left",
                   p: "0 !important",
-                  padding: "8px 16px"
+                  padding: "8px 16px",
                 },
               }}
             >
@@ -216,9 +253,9 @@ const Information = () => {
                 color="warning"
                 label="Education"
                 name="education"
-                value={profileData.education}
-                onChange={handleChange}// Handle change event
-                inputProps={{ name: 'education' }} 
+                value={formData.education || ''}
+                onChange={handleChange} // Handle change event
+                inputProps={{ name: 'education' }}
                 inputlabelprops={{
                   shrink: !!profileData.education || focusState.educationFocused,
                 }}
@@ -236,7 +273,9 @@ const Information = () => {
               label="Company"
               name="company"
               variant="outlined"
-              value={profileData.company}
+              error={!!errors.company}
+              helperText={errors.company} 
+              value={formData.company}
               onChange={handleChange}
               inputlabelprops={{
                 shrink: !!profileData.company || focusState.companyFocused,
@@ -252,6 +291,8 @@ const Information = () => {
             <FormControl
               className={styles.email}
               variant="outlined"
+              error={!!errors.gender}
+              helperText={errors.gender} 
               sx={{
                 borderRadius: "0px 0px 0px 0px",
                 width: "451px",
@@ -288,22 +329,21 @@ const Information = () => {
                 "& .MuiInputBase-input": {
                   textAlign: "left",
                   p: "0 !important",
-                  padding: "8px 16px"
+                  padding: "8px 16px",
                 },
               }}
             >
-              <InputLabel color="warning" >Gender</InputLabel>
+              <InputLabel color="warning">Gender</InputLabel>
               <Select
                 color="warning"
                 label="Gender"
                 name="gender"
+                value={formData.gender || ''}
                 onChange={handleChange}
-                inputProps={{ name: 'gender' }} 
-                value={profileData.gender || ''}
                 inputlabelprops={{
-                  shrink: !!profileData.gender || focusState.genderFoused,
+                  shrink: !!profileData.gender || focusState.genderFocused,
                 }}
-                onFocus={() => setFocusState({ ...focusState, genderFoused: true })}
+                onFocus={() => setFocusState({ ...focusState, genderFocused: true })}
                 onBlur={() => setFocusState({ ...focusState, genderFocused: !!profileData.gender })}
               >
                 <MenuItem value="male">Male</MenuItem>
@@ -317,10 +357,10 @@ const Information = () => {
               label="Birth date"
               variant="outlined"
               name="birth_date"
-              value={profileData.birth_date || ''}
-              onClick={
-                () => pickBirthDate
-              }
+              error={!!errors.birth_date}
+              helperText={errors.birth_date} 
+              value={formData.birth_date || ''}
+              onClick={() => setStartDate(new Date())}
               inputlabelprops={{
                 shrink: !!profileData.birth_date || focusState.birthFocused,
               }}

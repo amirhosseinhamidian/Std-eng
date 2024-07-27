@@ -1,12 +1,16 @@
+import { clearChats, useChat } from "../contexts/ChatContext";
 import styles from "./ChatbotSection.module.css";
 import { useNavigate } from 'react-router-dom';
 
 const ChatbotSection = () => {
   const navigate = useNavigate();
+  const {setFirstText, clearChats} = useChat();
   const handleChatSendClick = () => {
+    clearChats();
     const inputText = document.getElementById('searchKeyword').value;
     if (inputText) {
-      navigate(`/chatbotpage?query=${encodeURIComponent(inputText)}`);
+      setFirstText(inputText)
+      navigate(`/chatbotpage`);
     }
   }
   return (
@@ -19,8 +23,7 @@ const ChatbotSection = () => {
             placeholder="Ask your question"
             type="text"
           />
-          <img className={styles.send1Icon} alt="" src="/send.svg"  onClick={handleChatSendClick}
-              />
+          <img className={styles.send1Icon} alt="" src="/send.svg"  onClick={handleChatSendClick}/>
         </div>
       </div>
     </section>

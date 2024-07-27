@@ -22,7 +22,7 @@ function Region({items}) {
           <img
             className={Styles.icon}
             alt=""
-            src='/document.svg'
+            src='/location.svg'
           />
           <div className={Styles.title}>
             Region

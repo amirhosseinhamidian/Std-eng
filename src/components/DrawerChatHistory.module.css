@@ -1,6 +1,6 @@
-@keyframes slide-in-right {
+@keyframes slide-in-left {
   0% {
-    transform: translateX(200px);
+    transform: translateX(-200px);
     opacity: 0;
   }
   to {
@@ -8,6 +8,7 @@
     opacity: 1;
   }
 }
+
 .home {
   text-decoration: none;
   height: 17px;
@@ -29,39 +30,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding: var(--padding-base) 0;
   box-sizing: border-box;
   gap: var(--gap-lgi);
   margin: 54 32 0 0;
 }
-.price {
-  position: relative;
-  font-size: var(--font-size-sm);
-  font-family: var(--font-inter);
-  color: var(--color-white);
-  text-align: left;
-}
-.drawer,
-.priceWrapper {
+.drawer {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-}
-.priceWrapper {
-  cursor: pointer;
-  border: 0;
-  padding: var(--padding-7xs) var(--padding-21xl);
-  background-color: var(--color-sandybrown);
-  width: 221px;
-  border-radius: var(--br-5xs);
-  flex-direction: row;
-  justify-content: center;
-}
-.priceWrapper:active {
-  background-color: var(--color-peru-200);
-}
-.drawer {
+  position: fixed; /* Ensure the drawer is fixed on the left side */
+  top: 0;
+  left: 0; /* Position the drawer on the left side */
   width: 285px;
   height: 100%;
   background-color: var(--color-white);
@@ -75,18 +56,7 @@
   text-align: left;
   font-size: var(--font-size-sm);
   color: var(--color-dimgray-100);
-  font-family: var(--font-inter);
 }
 .drawer.animate {
-  animation: 0.25s ease 0s 1 normal forwards slide-in-right;
-}
-@media screen and (max-width: 960px) {
-  .priceWrapper {
-    display: none;
-  }
-}
-@media screen and (max-width: 768px) {
-  .priceWrapper {
-    display: flex;
-  }
+  animation: 0.25s ease 0s 1 normal forwards slide-in-left;
 }

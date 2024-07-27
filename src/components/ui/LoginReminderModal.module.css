@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 555;
+    z-index: 2000;
   }
   
   /* modal content */
@@ -24,7 +24,7 @@
     justify-content: center;
     align-items: center;
     padding: 16px;
-    z-index: 555;
+    z-index: 2000;
   }
   
   /* progress bar */

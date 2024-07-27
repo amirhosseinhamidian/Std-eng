@@ -22,7 +22,7 @@ const Header = () => {
     if (getAccessToken()) {
       navigate('/profilepage')
     } else {
-      navigate('/loginpage')
+      navigate('/loginpage', { state: { afterLoginPath: '/profilepage' } })
     }
   }
 
@@ -30,13 +30,17 @@ const Header = () => {
     navigate('/searchpage')
   }
 
+  const homeClickHandle = () => {
+    navigate('/')
+  }
+
   return (
     <>
       <div className={styles.naving}>
         <div className={styles.nave}>
-          <div className={styles.logoName}>
-            <img className={styles.logoNameChild} alt="" src="/ellipse-1.svg" />
-            <b className={styles.standardEngineering}>standard engineering</b>
+          <div className={styles.logoName} onClick={homeClickHandle}>
+            <img className={styles.logoNameChild} alt="" src="/logo.png" />
+            <b className={styles.standardEngineering}>Standard Engineering</b>
           </div>
           <div className={styles.frameParent}>
             <button className={styles.priceWrapper} id="pirceBtn">
@@ -44,7 +48,7 @@ const Header = () => {
             </button>
             <div className={styles.headerMenu}>
               <nav className={styles.links}>
-                <a className={styles.home} muted>
+                <a className={styles.home} onClick={homeClickHandle}>
                   Home
                 </a>
                 <b className={styles.home} onClick={searchClickHandle}>Search</b>

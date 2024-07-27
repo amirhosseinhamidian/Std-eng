@@ -1,41 +1,68 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 import Drawer from "../components/Drawer";
 import PortalDrawer from "../components/PortalDrawer";
-import styles from "./SearchResultPage.module.css";
-import { useLocation } from 'react-router-dom';
 import SliderComponent from "../components/SearchResultSlider";
-import SearchSectionSimple from "../components/SearchSectionSimple.js";
+import SearchSectionSimple from "../components/SearchSectionSimple";
 import Pagination from "../components/PaginationSection";
-import { useNavigate } from 'react-router-dom';
-import {useSearchStandard} from '../services/apiService.js'
 import LoadingModal from "../components/ui/LoadingModal";
-import SidebarFilter from "../components/filter sidebar/SidebarFilter.js";
-import { BottomSheet } from 'react-spring-bottom-sheet'
+import SidebarFilter from "../components/filter sidebar/SidebarFilter";
+import { BottomSheet } from "react-spring-bottom-sheet";
+import SearchContext from "../contexts/SearchContext";
+import { useSearchStandard, searchStandard } from "../services/apiService";
+import styles from "./SearchResultPage.module.css";
 
-const API_BASE_URL = "http://std-eng.ir:8000/"
+const API_BASE_URL = "http://std-eng.ir:8000/";
 
 const SearchResultPage = () => {
+  const {
+    searchText,
+    selectedPublisher,
+    categories,
+    documentType,
+    region,
+    year,
+    currentPage, setCurrentPage,
+    keyword, setKeyword
+  } = useContext(SearchContext);
+
   const location = useLocation();
   const navigate = useNavigate();
-  const { data, totalPages, itemsPerPage, searchText, selectedPublisher } = location.state || {};
-  const [currentPage, setCurrentPage] = useState(1);
-  const [results, setResults] = useState(data.data);
-  const [keyword, setKeyword] = useState(searchText || '');
-  const [publisherId,setPubliserId] = useState(selectedPublisher || null);
+  const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // Pagination click handler
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    handlePageChangeData(page);
-  };
+  const [searchError, setSearchError] = useState(null);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isNewSearch, setIsNewSearch] = useState(false);
 
   useEffect(() => {
-    // Scroll to top when page changes
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        setKeyword(searchText)
+        const data = await searchStandard(keyword,selectedPublisher, currentPage,categories,documentType,region,year);
+        if (data) {
+          console.log("data: ", data);
+          setResults(data.data);
+          setTotalPages(data.last_page);
+        }
+      } catch (error) {
+        setSearchError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, isNewSearch]);
+
+  useEffect(() => {
+    console.log("use effect current page")
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
   const openDrawer = useCallback(() => {
     setDrawerOpen(true);
   }, []);
@@ -45,32 +72,13 @@ const SearchResultPage = () => {
   }, []);
 
   const pdfClickHandle = (pdfUrl) => {
-    const url = API_BASE_URL + pdfUrl
-    navigate('./standarddetailpage', { state: {url }});
-  }
-  
-  const refreshSearchResults = (data, searchKey, publisher_Id) => {
-    // Update the search results data with the new data
-    setResults(data);
-    setKeyword(searchKey);
-    setPubliserId(publisher_Id);
+    const url = API_BASE_URL + pdfUrl;
+    navigate("./standarddetailpage", { state: { url } });
   };
 
-  const handlePageChangeData = async(page) => {
-    try {
-      setIsLoading(true);
-      const data = useSearchStandard(keyword,publisherId,page);
-      setIsLoading(false);
-      refreshSearchResults(data.data, keyword, publisherId);
-    } catch (error) {
-      console.log(error)
-      setIsLoading(false);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState(false);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   const handleFilterButtonClick = () => {
     setIsFilterSheetOpen(!isFilterSheetOpen);
@@ -79,59 +87,61 @@ const SearchResultPage = () => {
   const handleCloseBottomSheet = () => {
     setIsFilterSheetOpen(false);
   };
-  
+
   return (
     <>
       <div className={styles.searchresultpage}>
         <Header />
         {isLoading && <LoadingModal />}
-        <div className={styles.container}>
-          <div className={styles.sidebar}>
-            <SidebarFilter />
-            <button className={styles.applyBtn}>Apply</button>
-          </div>
-          <div className={styles.mainContent}>
-            <div className={styles.searchSection}>
-              <SearchSectionSimple 
-                onFilterButtonClick={handleFilterButtonClick}
-                keyword={searchText} 
-                publisherId={publisherId} 
-                refreshSearchResults={refreshSearchResults}
-              />
+        {!isLoading && (
+          <div className={styles.container}>
+            <div className={styles.sidebar}>
+              <SidebarFilter />
+              <button className={styles.applyBtn}>Apply</button>
             </div>
-            <ul className={styles.listContent}>
-              {results.data.map((result, index) => (
-                <li key={index}>
-                  <section className={styles.frameContainer}>
+            <div className={styles.mainContent}>
+              <div className={styles.searchSection}>
+                <SearchSectionSimple
+                  onFilterButtonClick={handleFilterButtonClick}
+                  submitNewSearch={setIsNewSearch}
+                />
+              </div>
+              <ul className={styles.listContent}>
+                {results && results.map((result, index) => (
+                  <li key={index}>
+                    <section className={styles.frameContainer}>
                       <div className={styles.nave}>
                         <img
                           className={styles.publishercoverIcon}
                           alt={result.title}
-                          // src={API_BASE_URL + result.publisher_logo}
-                          src="./PDF_icon.png"
-                          onError={(e) => {
-                            e.target.src = "./PDF_icon.png"; // Set the placeholder image URL
-                          }}
+                          src={result.publisher_logo}
+                          
                           onClick={() => pdfClickHandle(result.pdf_path)}
                         />
                         <section className={styles.titleParent}>
                           <b className={styles.title}>{result.title}</b>
-                          <div className={styles.designation}>Designation: {result.designation_id}</div>
-                          <SliderComponent details={result.details} keyword={keyword} />
+                          <div className={styles.designation}>
+                            Designation: {result.designation_id}
+                          </div>
+                          <SliderComponent
+                            details={result.details}
+                            keyword={keyword}
+                          />
                         </section>
                       </div>
                     </section>
                     <hr className={styles.frameChild} />
-                </li>
-              ))}
-            </ul>
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
+                  </li>
+                ))}
+              </ul>
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
-        </div>        
+        )}
       </div>
       {isDrawerOpen && (
         <PortalDrawer
@@ -142,21 +152,22 @@ const SearchResultPage = () => {
           <Drawer onClose={closeDrawer} />
         </PortalDrawer>
       )}
-        <BottomSheet 
-          open={isFilterSheetOpen} 
-          blocking={true} >
-          <div className={styles.bottomSheetContent}>
-                      
-            <div className={styles.filterContainer}>
-            
-              <SidebarFilter />
-              <div className={styles.sheetBtns}>
-                <button className={styles.applyBottomSheetBtn}>Apply</button>
-                <button className={styles.closeBtn} onClick={handleCloseBottomSheet}>Close</button>
-              </div>
+      <BottomSheet open={isFilterSheetOpen} blocking={true}>
+        <div className={styles.bottomSheetContent}>
+          <div className={styles.filterContainer}>
+            <SidebarFilter />
+            <div className={styles.sheetBtns}>
+              <button className={styles.applyBottomSheetBtn}>Apply</button>
+              <button
+                className={styles.closeBtn}
+                onClick={handleCloseBottomSheet}
+              >
+                Close
+              </button>
             </div>
           </div>
-        </BottomSheet>
+        </div>
+      </BottomSheet>
     </>
   );
 };

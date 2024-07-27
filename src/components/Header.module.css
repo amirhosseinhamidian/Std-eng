@@ -5,6 +5,7 @@
   border-radius: 50%;
   width: 48px;
   height: 48px;
+  object-fit: contain;
 }
 .standardEngineering {
   position: absolute;
@@ -16,15 +17,15 @@
 }
 .logoName {
   height: 48px;
-  width: 251px;
+  width: 200px;
   position: relative;
+  cursor: pointer;
 }
 .price {
   position: absolute;
   top: calc(50% - 10px);
   left: calc(50% - 19px);
   font-size: var(--font-size-mini);
-  font-family: var(--font-inter);
   color: var(--color-white);
   text-align: left;
 }
@@ -68,7 +69,6 @@
   text-align: left;
   font-size: var(--font-size-sm);
   color: var(--color-dimgray-100);
-  font-family: var(--font-inter);
 }
 .image7 {
   cursor: pointer;
@@ -116,7 +116,6 @@
   text-align: left;
   font-size: medium;
   color: var(--color-dimgray-200);
-  font-family: var(--font-inter);
 }
 @media screen and (max-width: 960px) {
   .standardEngineering {
@@ -131,11 +130,11 @@
 }
 @media screen and (max-width: 768px) {
   .logoNameChild {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
   }
   .standardEngineering {
-    font-size: var(--font-size-base);
+    font-size: 14px;
     width: 189px;
     margin-top: 4;
   }
@@ -156,7 +155,7 @@
     margin-left: 8;
   }
   .standardEngineering {
-    font-size: var(--font-size-sm);
+    font-size: 12px
   }
   .priceWrapper {
     display: none;

@@ -50,11 +50,12 @@
     align-self: stretch;
     flex: 1;
     border-radius: var(--br-5xs);
-    font-size: large;
+    font-size: medium;
     overflow: auto; /* Enable vertical scrolling if needed */
     resize: none;
     line-height: 1.5;
     min-height: 26px; /* Reset the minimum height */
+    font-family: var(--font-roboto);
   }
   
   .sendIcon {
