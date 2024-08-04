@@ -115,7 +115,6 @@ const SearchResultPage = () => {
                           className={styles.publishercoverIcon}
                           alt={result.title}
                           src={result.publisher_logo}
-                          
                           onClick={() => pdfClickHandle(result.pdf_path)}
                         />
                         <section className={styles.titleParent}>

@@ -167,7 +167,6 @@ const useGetPageFilterData = (page) => {
 };
 
 const useChatAll = (message) => {
-  console.log(message)
   return useMutation(
     (message) => fetchWithAuth('/chat-all', 'POST', { message }),
     {

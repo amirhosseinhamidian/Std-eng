@@ -219,7 +219,7 @@ const ChatBotPage = () => {
       <div className={styles.continar}>
         <Header />
         <div className={styles.background}>
-          <div className={styles.sidebar}>
+          {/* <div className={styles.sidebar}>
             <div className={styles.chatHistoryContainer}>
               {Object.keys(chatHistory).map((date) => (
                 <div key={date} className={styles.dateSection}>
@@ -234,7 +234,7 @@ const ChatBotPage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
           <div className={styles.mainContinar}>
             <div className={styles.messages}>
               {messages.map((message, index) => (
@@ -317,14 +317,14 @@ const ChatBotPage = () => {
                       </div>
                     )} */}
                   </div>
-                  {message.role === "user" && editingMessage !== index && (
+                  {/* {message.role === "user" && editingMessage !== index && (
                     <img
                       className={styles.editIcon}
                       src="/pencil.svg"
                       alt="edit"
                       onClick={() => handleEditClick(index, message.text)}
                     />
-                  )}
+                  )} */}
                 </div>
               ))}
 
@@ -380,14 +380,15 @@ const ChatBotPage = () => {
             </div>
           </div>
         </div>
-        <div className={styles.sidebarButton} onClick={openHistoryDrawer}>
+        
+        {/* <div className={styles.sidebarButton} onClick={openHistoryDrawer}>
           <img
             className={styles.sidebarImg}
             src="/sidebar.svg"
             alt="sidebar"
             width="24px"
           />
-        </div>
+        </div> */}
       </div>
       {isHistoryDrawerOpen && (
         <PortalDrawer

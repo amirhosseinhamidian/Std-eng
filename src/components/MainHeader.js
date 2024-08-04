@@ -56,7 +56,7 @@ const MainHeader = ({ naveFlex, naveAlignSelf }) => {
                 <a className={styles.home} onClick={homeClickHandle}>
                   Home
                 </a>
-                <b className={styles.home} onClick={searchClickHandle}>Search</b>
+                <b className={styles.home} onClick={searchClickHandle}>Search / Chat AI</b>
                 <b className={styles.search}>Standards</b>
                 <b className={styles.search}>About us</b>
                 <a className={styles.home} onClick={profileClickHandle}>Profile</a>
