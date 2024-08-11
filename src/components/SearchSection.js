@@ -29,6 +29,7 @@ const SearchSection = () => {
     }
 
     if (isUserLogin()) {
+      console.log(searchText)
       navigate('./searchresultpage')
     } else {
       setGoToLoginPage(true)

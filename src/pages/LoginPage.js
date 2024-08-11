@@ -154,6 +154,13 @@ const LoginPage = () => {
     }
   }
 
+  const handleConfirmCodeInputKeydown = (event) => {
+    // confirm code with press enter
+    if(event.which === 13) {
+      handleLoginWithCode()
+    }
+  }
+
   // Remove the conditional return to avoid changing hooks order
   return (
     <div className={styles.loginpage}>
@@ -180,6 +187,7 @@ const LoginPage = () => {
                        value={confirmationCode}
                        onChange={handleChangeConfirmationCode}
                        autoFocus
+                       onKeyDown={handleConfirmCodeInputKeydown}
                 />
                 {showCodeTimer && (
                   <div className={styles.codetimer}>{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>

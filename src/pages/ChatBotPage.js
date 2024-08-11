@@ -16,7 +16,7 @@ import loadingAnimation from "../assets/line-loading.json";
 import Lottie from "lottie-react";
 
 const ChatBotPage = () => {
-  const { prompt, setPrompt, messages, setMessages, firstText, setFirstText } = useChat();
+  const { prompt, setPrompt, messages, setMessages, firstText, setFirstText, loading, setLoading} = useChat();
   const textbox = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,16 +27,15 @@ const ChatBotPage = () => {
   const [words, setWords] = useState([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentWord, setCurrentWord] = useState("");
-  const [loading, setLoading] = useState(false);
+  
 
   const { mutate: sendChatAll } = useChatAll();
 
   useEffect(() => {
     const preExistingMessage = firstText !== ''
-    console.log("textttt : ", firstText)
     if (preExistingMessage) {
-      setFirstText('')
       sendMessage(firstText, true);
+      setFirstText('')
     }
   }, []); 
 
@@ -132,7 +131,6 @@ const ChatBotPage = () => {
   }
 
   const sendMessage = (text, isAddMessage) => {
-    console.log("send message :: ", text)
     if (isAddMessage) {
       const newMessages = [...messages, { text, role: "user" }];
       setMessages(newMessages);
@@ -166,7 +164,6 @@ const ChatBotPage = () => {
         scrollToBottom();
       } else {
         clearInterval(interval);
-        setLoading(false);
       }
     }, 50); // Milliseconds between each word (adjust as needed)
 
@@ -219,7 +216,7 @@ const ChatBotPage = () => {
       <div className={styles.continar}>
         <Header />
         <div className={styles.background}>
-          <div className={styles.sidebar}>
+          {/* <div className={styles.sidebar}>
             <div className={styles.chatHistoryContainer}>
               {Object.keys(chatHistory).map((date) => (
                 <div key={date} className={styles.dateSection}>
@@ -234,7 +231,7 @@ const ChatBotPage = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
           <div className={styles.mainContinar}>
             <div className={styles.messages}>
               {messages.map((message, index) => (
@@ -317,14 +314,14 @@ const ChatBotPage = () => {
                       </div>
                     )} */}
                   </div>
-                  {message.role === "user" && editingMessage !== index && (
+                  {/* {message.role === "user" && editingMessage !== index && (
                     <img
                       className={styles.editIcon}
                       src="/pencil.svg"
                       alt="edit"
                       onClick={() => handleEditClick(index, message.text)}
                     />
-                  )}
+                  )} */}
                 </div>
               ))}
 
@@ -380,14 +377,15 @@ const ChatBotPage = () => {
             </div>
           </div>
         </div>
-        <div className={styles.sidebarButton} onClick={openHistoryDrawer}>
+        
+        {/* <div className={styles.sidebarButton} onClick={openHistoryDrawer}>
           <img
             className={styles.sidebarImg}
             src="/sidebar.svg"
             alt="sidebar"
             width="24px"
           />
-        </div>
+        </div> */}
       </div>
       {isHistoryDrawerOpen && (
         <PortalDrawer

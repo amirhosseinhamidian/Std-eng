@@ -1,57 +1,31 @@
-.searchpageChild {
-  align-self: stretch;
-  flex: 1;
-  position: relative;
-  border-radius: var(--br-5xs);
-  background-color: var(--color-whitesmoke);
-  overflow: hidden;
-  z-index: 1;
+.searchpage {
+  text-align: center;
+  height: 100vh;
+
 }
+.search {
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 8rem;
+  gap: 4rem;
+  height: 100%;
+  background-color: var(--color-whitesmoke);
+}
+
+
 .standard {
   color: var(--color-sandybrown);
 }
 .searchInMoreContainer {
   margin: 0;
   flex: 1;
-  position: relative;
-  font-size: inherit;
+  font-size: 1.5rem;
   font-weight: 700;
 }
-.promotiontext {
-  align-self: stretch;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-.search,
-.searchpage {
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-.search {
-  width: 92vw;
-  margin: 0 !important;
-  position: absolute;
-  top: 78px;
-  height: 65%;
-  flex-shrink: 0;
-  padding: 63px 24px;
-  box-sizing: border-box;
-  z-index: 2;
-}
-.searchpage {
-  width: 100%;
-  position: relative;
-  background-color: var(--color-white);
-  height: 1024px;
-  text-align: center;
-  font-size: var(--font-size-5xl);
-  color: var(--color-dimgray-200);
-}
+
 
 .horizontalLine {
   width: 100%;
@@ -85,8 +59,7 @@
   }
 
   .search {
-    padding:63px 60px ;
-    height: 760px;
+    padding-inline: 10% ;
   }
 
   .moreFilterDiv {
@@ -97,13 +70,12 @@
 
 
 @media screen and (max-width: 540px) {
-  .searchInMoreContainer {
-    font-size: var(--font-size-base);
+  .search{
+    padding-top: 6rem;
+    gap: 2rem;
   }
-
-  .search {
-    padding:63px 10px ;
-    height: 760px;
+  .searchInMoreContainer {
+    font-size: 1rem;
   }
 
   .promotiontext {
@@ -114,28 +86,15 @@
     margin-top: 16px;
     width: 90vw;
   }
-
-  .searchpage {
-    height: 950px;
-  }
 }
 
 
 @media screen and (max-width: 420px) {
-  .searchInMoreContainer {
-    font-size: 11px;
-    text-align: center;
-    flex: 1;
-  }
 
   .promotiontext {
     margin-bottom: 16px;
   }
-
-  .search {
-    padding:63px 10x ;
-  }
-
+  
   .morefilter {
     margin: 0 16px; /* Adjust margin as needed */
     font-size: small;
@@ -146,35 +105,16 @@
     width: 90vw;
   }
 
-  .searchpage {
-    height: 840px;
-  }
-
 }
 
 
 @media screen and (max-width: 350px) {
-  .searchInMoreContainer {
-    font-size: 11px;
-    text-align: center;
-    flex: 1;
-  }
-
   .promotiontext {
     margin-bottom: 16px;
-  }
-
-
-  .search {
-    padding:63px 60px ;
-    
   }
 
   .morefilter {
     margin: 0 16px; /* Adjust margin as needed */
   }
 
-  .searchpage {
-    height: 820px;
-  }
 }

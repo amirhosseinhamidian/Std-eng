@@ -49,6 +49,7 @@ const fetchWithAuth = async (url, method = 'GET', data = null) => {
     method,
     headers: { Authorization: `Bearer ${accessToken}` },
   };
+  console.log("config:  ", config)
   if (data) {
     config.data = data;
   }
@@ -160,14 +161,13 @@ const useUpdateProfile = () => {
 };
 
 const useGetPageFilterData = (page) => {
-  console.log("heereeeee")
+  
   return useQuery(['pageFilterData', page], () => 
     apiService.post('/page-data', { page }).then(({ data }) => data)
   );
 };
 
 const useChatAll = (message) => {
-  console.log(message)
   return useMutation(
     (message) => fetchWithAuth('/chat-all', 'POST', { message }),
     {

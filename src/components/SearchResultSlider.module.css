@@ -63,7 +63,7 @@
     max-height: 4.5em; /* Adjust based on your font size */
     text-overflow: ellipsis;
     white-space: normal;
-    padding-right: 42px;
+    padding-right: 40px;
     font-size: small;
   }
   .highlight {
@@ -72,7 +72,7 @@
 
   @media (max-width: 960px) {
     .slider {
-      max-width: calc(75vw - 20px);
+      max-width: calc(75vw - 30px);
       margin: 20px 28px;
     }
 
@@ -87,7 +87,7 @@
 
   @media (max-width: 560px) {
     .slider {
-      max-width: calc(75vw - 0px);
+      max-width: calc(75vw - 25px);
       margin: 20px 28px;
     }
 
@@ -101,10 +101,6 @@
   }
 
   @media (max-width: 440px) {
-    .slider {
-      max-width: calc(75vw - 0px);
-      margin: 20px 28px;
-    }
 
     .sentence {
       font-size: xx-small;

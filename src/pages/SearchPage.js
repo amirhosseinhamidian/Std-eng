@@ -95,7 +95,6 @@ const SearchPage = () => {
   return (
     <div className={styles.searchpage}>
       <Header />
-      <div className={styles.searchpageChild} />
       <div className={styles.search}>
         <ToggleMode mode={mode} onModeChange={handleModeChange} />
         {mode === "search" && (
@@ -111,7 +110,7 @@ const SearchPage = () => {
         {mode === "chatbot" && (
           <div className={styles.promotiontext}>
             <h2 className={styles.searchInMoreContainer}>
-              <span>{`Ask your Standard question, `}</span>
+              <span>Ask your Standard question, </span>
               <span className={styles.standard}>AI</span>
               <span> answer</span>
             </h2>
@@ -120,13 +119,13 @@ const SearchPage = () => {
 
         {mode === "search" && <SearchSection />}
         {mode === "chatbot" && <ChatbotSection />}
-        <div className={styles.moreFilterDiv}>
+        {/* <div className={styles.moreFilterDiv}>
           <hr className={styles.horizontalLine} />
           <p className={styles.morefilter}>discipline filters</p>
           <hr className={styles.horizontalLine} />
-        </div>
+        </div> */}
 
-        <CardFilter />
+        {/* <CardFilter /> */}
       </div>
     </div>
   );
