@@ -7,8 +7,8 @@
 }
 
 .publishercoverIcon {
-  height: 120px;
-  width: 90px;
+  height: 150px;
+  width: 112px;
   position: relative;
   border-radius: var(--br-5xs);
   object-fit: scale-down;
@@ -22,6 +22,15 @@
   font-size: var(--font-size-lg);
   color: var(--color-dimgray-200);
   width: 75%;
+  cursor: pointer;
+  transition: all 150ms ease-in;
+  -webkit-transition: all 150ms ease-in;
+  -moz-transition: all 150ms ease-in;
+  -ms-transition: all 150ms ease-in;
+  -o-transition: all 150ms ease-in;
+}
+.title:hover{
+  color: var(--color-icon);
 }
 .titleParent {
   overflow: hidden;
@@ -35,7 +44,6 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
- 
 }
 .frameChild {
   align-self: stretch;
@@ -100,10 +108,8 @@
 }
 .searchSection {
   padding-top: 15px !important;
-  display: flex;
-  justify-content: center;
   margin-bottom: 48px;
-  margin-right: 15%;
+  width: 100%;
 }
 
 .mainContent {
@@ -161,6 +167,8 @@
   gap: 16px;
   padding-left: 2%;
   padding-right: 2%;
+  margin-bottom: 36px;
+  margin-top: -48px;
 }
 
 .applyBtn {
@@ -181,6 +189,10 @@
   align-items: center;
   justify-content: center;
 }
+.applyBtn:active,
+.applyBottomSheetBtn:active{
+  background-color: var(--color-peru-100);
+}
 
 @media (max-width: 1200px) {
   .listContent {
@@ -190,20 +202,16 @@
 
 @media (max-width: 960px) {
   .sidebar {
-    visibility: hidden;
+    display: none;
   }
 
   .listContent {
     padding-left: 2%;
   }
 
-  .mainContent {
-    margin-right: 130px;
-  }
-
   .publishercoverIcon {
-    width: 48px;
-    height: 64px;
+    width: 72px;
+    height: 96px;
     margin-top: 10px;
     margin-right: 8px;
   }
@@ -228,16 +236,17 @@
   }
 
   .searchSection {
-    margin-right: 0;
-    margin-left: 0;
+    display: flex;
+    justify-content: center;
+    padding-inline: 5%;
   }
 }
 
+@media (max-width: 768px){
+
+}
+
 @media (max-width: 560px) {
-  .searchSection {
-    margin-right: 25%;
-    margin-left: 15%;
-  }
 
   .listContent {
     padding-left: 8%;
@@ -245,8 +254,8 @@
 
 
   .publishercoverIcon {
-    width: 32px;
-    height: 48px;
+    width: 48px;
+    height: 64px;
     margin-top: 10px;
     margin-right: 8px;
   }
@@ -269,12 +278,6 @@
 }
 
 @media (max-width: 440px) {
-  .publishercoverIcon {
-    width: 28px;
-    height: 40px;
-    margin-top: 10px;
-    margin-right: 8px;
-  }
 
   .title {
     font-size: x-small;
@@ -287,19 +290,9 @@
     
   }
   
-  .searchSection {
-    width: 200px;
-    margin-right: 35%;
-    margin-left: 15%;
-  }
-
   .listContent {
     margin-top: 0;
     padding-left: 12%;
-  }
-
-  .searchSection {
-    margin-bottom: 12px;
   }
 
   .frameChild {

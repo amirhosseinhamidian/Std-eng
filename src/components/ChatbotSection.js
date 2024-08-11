@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 const ChatbotSection = () => {
   const navigate = useNavigate();
-  const { setFirstText, clearChats } = useChat();
+  const { setFirstText, clearChats ,setLoading } = useChat();
   const handleChatSendClick = () => {
     clearChats();
     const inputText = document.getElementById("searchKeyword").value;
     if (inputText) {
       setFirstText(inputText);
+      setLoading(true)
       navigate(`/chatbotpage`);
     }
   };

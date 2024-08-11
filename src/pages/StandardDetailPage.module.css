@@ -10,7 +10,7 @@
     box-sizing: border-box; /* Ensure border width is included in the width */
     flex: 1;
     overflow-y: auto; 
-    padding: 0.5%;
+    
     height: 100%; 
   }
   
@@ -29,7 +29,7 @@
     .leftHalf, .rightHalf {
       width: 100%; /* Full width for both halves */
       height: 50%; /* Half height for both halves */
-      padding: 0.5%;
+      
     }
   
     .leftHalf {

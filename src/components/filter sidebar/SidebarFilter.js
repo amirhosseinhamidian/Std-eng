@@ -5,6 +5,7 @@ import DocumentType from './document type/DocumentType';
 import Region from './region/Region';
 import PublicationDate from './year/PublicationDate';
 import { useGetPageFilterData } from '../../services/apiService';
+import Publisher from './publisher/Publisher';
 
 function SidebarFilter() {
   const [filters , setFilters] = useState({})
@@ -14,7 +15,6 @@ function SidebarFilter() {
   useEffect(() => {
     if (data) {
       setFilters(data.data);
-      
     }
   }, [data]);
   
@@ -26,11 +26,12 @@ function SidebarFilter() {
           <div className={Styles.filter}>Filters</div>
         </div>
       
-        { loadFilters && filters.disciplines.length !== 0 && <Discipline items={filters.disciplines}/> }
-        { loadFilters && filters.document_type.length !== 0 && <DocumentType items={filters.document_type}/> }
+        {/* { loadFilters && filters.disciplines.length !== 0 && <Discipline items={filters.disciplines}/> }
+        { loadFilters && filters.document_type.length !== 0 && <DocumentType items={filters.document_type}/> } */}
         {/* <Industry items={filters.industry}/> */}
-        { loadFilters && filters.region.length !== 0 && <Region items={filters.region}/> }
-        <PublicationDate/>
+        {/* { loadFilters && filters.region.length !== 0 && <Region items={filters.region}/> } */}
+        { loadFilters && filters.region.length !== 0 && <Publisher items={filters.publishers}/> }
+        {/* <PublicationDate/> */}
     </section>
   </>
   );

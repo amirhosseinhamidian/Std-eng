@@ -18,13 +18,17 @@ const API_BASE_URL = "http://std-eng.ir:8000/";
 const SearchResultPage = () => {
   const {
     searchText,
+    setSearchText,
     selectedPublisher,
+    setSelectedPublisher,
     categories,
     documentType,
     region,
     year,
-    currentPage, setCurrentPage,
-    keyword, setKeyword
+    currentPage,
+    setCurrentPage,
+    keyword,
+    setKeyword,
   } = useContext(SearchContext);
 
   const location = useLocation();
@@ -37,12 +41,63 @@ const SearchResultPage = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isNewSearch, setIsNewSearch] = useState(false);
 
+  const [isInitialized, setIsInitialized] = useState(false);
+
   useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+
+    const savedSearchText = queryParams.get("searchText");
+    const savedPublisher = queryParams.get("selectedPublisher");
+    // Get other query params similarly
+
+    if (savedSearchText) {
+      console.log("search text :  ", savedSearchText);
+      setSearchText(savedSearchText);
+    }
+    if (savedPublisher) {
+      setSelectedPublisher(savedPublisher);
+    }
+    // Set other states similarly
+
+    setIsInitialized(true); // Set this after initializing state
+  }, []);
+
+  useEffect(() => {
+    if (
+      isInitialized &&
+      (searchText || selectedPublisher) /* || other states */
+    ) {
+      const queryParams = new URLSearchParams();
+      console.log("search set text :  ", searchText);
+      if (searchText) {
+        queryParams.set("searchText", searchText);
+      }
+      if (selectedPublisher) {
+        queryParams.set("selectedPublisher", selectedPublisher);
+      }
+      // Set other query params similarly
+
+      window.history.replaceState(null, null, `?${queryParams.toString()}`);
+    }
+  }, [searchText, selectedPublisher, isInitialized]);
+
+  useEffect(() => {
+    if (!isInitialized) return; // Prevent fetching until state is initialized
+    setIsNewSearch(false);
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        setKeyword(searchText)
-        const data = await searchStandard(keyword,selectedPublisher, currentPage,categories,documentType,region,year);
+        setKeyword(searchText);
+        console.log(searchText);
+        const data = await searchStandard(
+          searchText,
+          selectedPublisher,
+          currentPage,
+          categories,
+          documentType,
+          region,
+          year
+        );
         if (data) {
           console.log("data: ", data);
           setResults(data.data);
@@ -56,10 +111,10 @@ const SearchResultPage = () => {
     };
 
     fetchData();
-  }, [currentPage, isNewSearch]);
+  }, [currentPage, isNewSearch, isInitialized]);
 
   useEffect(() => {
-    console.log("use effect current page")
+    console.log("use effect current page");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
@@ -71,8 +126,13 @@ const SearchResultPage = () => {
     setDrawerOpen(false);
   }, []);
 
+  const getUrlLogo = (suffix) => {
+    return API_BASE_URL + "storage/publisher-logo/" + suffix;
+  };
+
   const pdfClickHandle = (pdfUrl) => {
-    const url = API_BASE_URL + pdfUrl;
+    const url = API_BASE_URL + "storage/" + pdfUrl;
+    console.log(url);
     navigate("./standarddetailpage", { state: { url } });
   };
 
@@ -97,7 +157,12 @@ const SearchResultPage = () => {
           <div className={styles.container}>
             <div className={styles.sidebar}>
               <SidebarFilter />
-              <button className={styles.applyBtn}>Apply</button>
+              <button
+                className={styles.applyBtn}
+                onClick={() => setIsNewSearch(true)}
+              >
+                Apply
+              </button>
             </div>
             <div className={styles.mainContent}>
               <div className={styles.searchSection}>
@@ -107,31 +172,39 @@ const SearchResultPage = () => {
                 />
               </div>
               <ul className={styles.listContent}>
-                {results && results.map((result, index) => (
-                  <li key={index}>
-                    <section className={styles.frameContainer}>
-                      <div className={styles.nave}>
-                        <img
-                          className={styles.publishercoverIcon}
-                          alt={result.title}
-                          src={result.publisher_logo}
-                          onClick={() => pdfClickHandle(result.pdf_path)}
-                        />
-                        <section className={styles.titleParent}>
-                          <b className={styles.title}>{result.title}</b>
-                          <div className={styles.designation}>
-                            Designation: {result.designation_id}
-                          </div>
-                          <SliderComponent
-                            details={result.details}
-                            keyword={keyword}
+                {results &&
+                  results.map((result, index) => (
+                    <li key={index}>
+                      <section className={styles.frameContainer}>
+                        <div className={styles.nave}>
+                          <img
+                            className={styles.publishercoverIcon}
+                            alt={result.title}
+                            src={getUrlLogo(result.publisher_logo)}
+                            onClick={() => pdfClickHandle(result.pdf_path)}
                           />
-                        </section>
-                      </div>
-                    </section>
-                    <hr className={styles.frameChild} />
-                  </li>
-                ))}
+                          <section className={styles.titleParent}>
+                            <b
+                              className={styles.title}
+                              onClick={() => pdfClickHandle(result.pdf_path)}
+                            >
+                              {result.title}
+                            </b>
+                            {result.designation_id && (
+                              <div className={styles.designation}>
+                                Designation: {result.designation_id}
+                              </div>
+                            )}
+                            <SliderComponent
+                              details={result.details}
+                              keyword={keyword}
+                            />
+                          </section>
+                        </div>
+                      </section>
+                      <hr className={styles.frameChild} />
+                    </li>
+                  ))}
               </ul>
               <Pagination
                 totalPages={totalPages}
@@ -151,19 +224,32 @@ const SearchResultPage = () => {
           <Drawer onClose={closeDrawer} />
         </PortalDrawer>
       )}
-      <BottomSheet open={isFilterSheetOpen} blocking={true}>
+      <BottomSheet
+        open={isFilterSheetOpen}
+        blocking={true}
+        footer={
+          <div className={styles.sheetBtns}>
+            <button
+              className={styles.applyBottomSheetBtn}
+              onClick={() => {
+                setIsNewSearch(true);
+                handleCloseBottomSheet();
+              }}
+            >
+              Apply
+            </button>
+            <button
+              className={styles.closeBtn}
+              onClick={handleCloseBottomSheet}
+            >
+              Close
+            </button>
+          </div>
+        }
+      >
         <div className={styles.bottomSheetContent}>
           <div className={styles.filterContainer}>
             <SidebarFilter />
-            <div className={styles.sheetBtns}>
-              <button className={styles.applyBottomSheetBtn}>Apply</button>
-              <button
-                className={styles.closeBtn}
-                onClick={handleCloseBottomSheet}
-              >
-                Close
-              </button>
-            </div>
           </div>
         </div>
       </BottomSheet>
